@@ -30,6 +30,7 @@ public:
 	COutputWnd() noexcept;
 
 	void UpdateFonts();
+    void AppendLog(const CString& strMessage);
 
 // 특성입니다.
 protected:

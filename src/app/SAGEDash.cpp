@@ -24,7 +24,7 @@ BEGIN_MESSAGE_MAP(CSAGEDashApp, CWinAppEx)
 	ON_COMMAND(ID_APP_ABOUT, &CSAGEDashApp::OnAppAbout)
 	// 표준 파일을 기초로 하는 문서 명령입니다.
 	ON_COMMAND(ID_FILE_NEW, &CWinAppEx::OnFileNew)
-	ON_COMMAND(ID_FILE_OPEN, &CWinAppEx::OnFileOpen)
+	ON_COMMAND(ID_FILE_OPEN, &CSAGEDashApp::OnFileOpen)
 	// 표준 인쇄 설정 명령입니다.
 	ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinAppEx::OnFilePrintSetup)
 END_MESSAGE_MAP()
@@ -187,6 +187,22 @@ void CSAGEDashApp::OnAppAbout()
 {
 	CAboutDlg aboutDlg;
 	aboutDlg.DoModal();
+}
+
+void CSAGEDashApp::OnFileOpen()
+{
+    CFileDialog dlg(
+        TRUE,
+        _T("csv"),
+        nullptr,
+        OFN_HIDEREADONLY | OFN_FILEMUSTEXIST,
+        _T("CSV 파일 (*.csv)|*.csv|모든 파일 (*.*)|*.*||"),
+        AfxGetMainWnd());
+
+    if (dlg.DoModal() != IDOK)
+        return;
+
+    OpenDocumentFile(dlg.GetPathName());
 }
 
 // CSAGEDashApp 사용자 지정 로드/저장 방법

@@ -1,48 +1,46 @@
-﻿
-// SAGEDashDoc.h: CSAGEDashDoc 클래스의 인터페이스
-//
 
+// SAGEDashDoc.h: CSAGEDashDoc 클래스의 인터페이스
 
 #pragma once
 
+#include "Workbook.h"
 
 class CSAGEDashDoc : public CDocument
 {
-protected: // serialization에서만 만들어집니다.
-	CSAGEDashDoc() noexcept;
-	DECLARE_DYNCREATE(CSAGEDashDoc)
+protected:
+    CSAGEDashDoc() noexcept;
+    DECLARE_DYNCREATE(CSAGEDashDoc)
 
-// 특성입니다.
+// 특성
 public:
+    CWorkbook* GetWorkbook() const { return m_pWorkbook; }
 
-// 작업입니다.
+// 재정의
 public:
-
-// 재정의입니다.
-public:
-	virtual BOOL OnNewDocument();
-	virtual void Serialize(CArchive& ar);
+    virtual BOOL OnNewDocument();
+    virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
+    virtual void DeleteContents();
+    virtual void Serialize(CArchive& ar);
 #ifdef SHARED_HANDLERS
-	virtual void InitializeSearchContent();
-	virtual void OnDrawThumbnail(CDC& dc, LPRECT lprcBounds);
-#endif // SHARED_HANDLERS
-
-// 구현입니다.
-public:
-	virtual ~CSAGEDashDoc();
-#ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+    virtual void InitializeSearchContent();
+    virtual void OnDrawThumbnail(CDC& dc, LPRECT lprcBounds);
 #endif
 
-protected:
+// 구현
+public:
+    virtual ~CSAGEDashDoc();
+#ifdef _DEBUG
+    virtual void AssertValid() const;
+    virtual void Dump(CDumpContext& dc) const;
+#endif
 
-// 생성된 메시지 맵 함수
+private:
+    CWorkbook* m_pWorkbook;
+
 protected:
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 
 #ifdef SHARED_HANDLERS
-	// 검색 처리기에 대한 검색 콘텐츠를 설정하는 도우미 함수
-	void SetSearchContent(const CString& value);
-#endif // SHARED_HANDLERS
+    void SetSearchContent(const CString& value);
+#endif
 };

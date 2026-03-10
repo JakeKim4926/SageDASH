@@ -19,6 +19,7 @@ public:
 
 // 작업입니다.
 public:
+    void LogMessage(const CString& strMessage);
 
 // 재정의입니다.
 public:

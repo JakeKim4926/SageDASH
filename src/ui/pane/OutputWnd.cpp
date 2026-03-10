@@ -107,9 +107,31 @@ void COutputWnd::AdjustHorzScroll(CListBox& wndListBox)
 
 void COutputWnd::FillBuildWindow()
 {
-	m_wndOutputBuild.AddString(_T("여기에 빌드 출력이 표시됩니다."));
-	m_wndOutputBuild.AddString(_T("출력이 목록 뷰 행에 표시되지만"));
-	m_wndOutputBuild.AddString(_T("표시 방법을 원하는 대로 변경할 수 있습니다."));
+    // 로그 탭은 런타임에 AppendLog()로 채워짐
+}
+
+void COutputWnd::AppendLog(const CString& strMessage)
+{
+    // 타임스탬프 포함 로그 형식: [HH:mm:ss] message
+    SYSTEMTIME st;
+    GetLocalTime(&st);
+
+    CString strEntry;
+    strEntry.Format(_T("[%02d:%02d:%02d] %s"),
+        st.wHour, st.wMinute, st.wSecond,
+        (LPCTSTR)strMessage);
+
+    m_wndOutputBuild.AddString(strEntry);
+
+    // 최신 항목이 보이도록 스크롤
+    int nCount = m_wndOutputBuild.GetCount();
+    if (nCount > 0)
+        m_wndOutputBuild.SetTopIndex(nCount - 1);
+
+    AdjustHorzScroll(m_wndOutputBuild);
+
+    // 로그 탭으로 포커스 전환
+    m_wndTabs.SetActiveTab(0);
 }
 
 void COutputWnd::FillDebugWindow()

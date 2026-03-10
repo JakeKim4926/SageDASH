@@ -25,6 +25,18 @@
     <Filter Include="src\ui\controls">
       <UniqueIdentifier>{A7B8C9D0-E1F2-3456-0123-567890123456}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\domain">
+      <UniqueIdentifier>{B8C9D0E1-F2A3-4567-1234-678901234567}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\application">
+      <UniqueIdentifier>{C9D0E1F2-A3B4-5678-2345-789012345678}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\infrastructure">
+      <UniqueIdentifier>{D0E1F2A3-B4C5-6789-3456-890123456789}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\infrastructure\csv">
+      <UniqueIdentifier>{E1F2A3B4-C5D6-7890-4567-901234567890}</UniqueIdentifier>
+    </Filter>
     <Filter Include="빌드">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
@@ -64,6 +76,15 @@
     </ClInclude>
     <ClInclude Include="..\src\ui\controls\ViewTree.h">
       <Filter>src\ui\controls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\domain\Workbook.h">
+      <Filter>src\domain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\infrastructure\csv\CsvReader.h">
+      <Filter>src\infrastructure\csv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\application\WorkbookService.h">
+      <Filter>src\application</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>빌드</Filter>
@@ -108,6 +129,12 @@
     </ClCompile>
     <ClCompile Include="..\src\ui\controls\ViewTree.cpp">
       <Filter>src\ui\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\infrastructure\csv\CsvReader.cpp">
+      <Filter>src\infrastructure\csv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\application\WorkbookService.cpp">
+      <Filter>src\application</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>빌드</Filter>
