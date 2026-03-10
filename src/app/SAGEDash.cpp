@@ -12,6 +12,7 @@
 #include "ChildFrm.h"
 #include "SAGEDashDoc.h"
 #include "SAGEDashView.h"
+#include "SageMgr.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -75,6 +76,8 @@ BOOL CSAGEDashApp::InitInstance()
 	InitCommonControlsEx(&InitCtrls);
 
 	CWinAppEx::InitInstance();
+
+	theSage.Initialize();
 
 
 	EnableTaskbarInteraction();
@@ -143,8 +146,8 @@ BOOL CSAGEDashApp::InitInstance()
 
 int CSAGEDashApp::ExitInstance()
 {
-	//TODO: 추가한 추가 리소스를 처리합니다.
-	return CWinAppEx::ExitInstance();
+    theSage.Shutdown();
+    return CWinAppEx::ExitInstance();
 }
 
 // CSAGEDashApp 메시지 처리기

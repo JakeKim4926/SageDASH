@@ -243,7 +243,7 @@ void CMainFrame::Dump(CDumpContext& dc) const
 void CMainFrame::LogMessage(const CString& strMessage)
 {
     m_wndOutput.AppendLog(strMessage);
-    m_logger.Write(strMessage);
+    theSage.Log(strMessage);
 }
 
 void CMainFrame::OnWindowManager()

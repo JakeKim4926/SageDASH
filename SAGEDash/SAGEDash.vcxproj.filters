@@ -63,6 +63,9 @@
     <Filter Include="소스 파일\app">
       <UniqueIdentifier>{AA000031-0000-0000-0000-000000000031}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\common">
+      <UniqueIdentifier>{AA000054-0000-0000-0000-000000000054}</UniqueIdentifier>
+    </Filter>
     <Filter Include="소스 파일\application">
       <UniqueIdentifier>{AA000032-0000-0000-0000-000000000032}</UniqueIdentifier>
     </Filter>
@@ -122,6 +125,9 @@
     <ClInclude Include="..\src\common\error\SageException.h">
       <Filter>헤더 파일\common\error</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\common\SageMgr.h">
+      <Filter>헤더 파일\common</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\infrastructure\csv\CsvReader.h">
       <Filter>헤더 파일\infrastructure\csv</Filter>
     </ClInclude>
@@ -174,6 +180,9 @@
     </ClCompile>
     <ClCompile Include="..\src\infrastructure\logging\SageLogger.cpp">
       <Filter>소스 파일\infrastructure\logging</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\SageMgr.cpp">
+      <Filter>소스 파일\common</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ui\controls\ViewTree.cpp">
       <Filter>소스 파일\ui\controls</Filter>
