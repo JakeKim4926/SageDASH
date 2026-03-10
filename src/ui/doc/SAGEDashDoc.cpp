@@ -48,8 +48,7 @@ BOOL CSAGEDashDoc::OnOpenDocument(LPCTSTR lpszPathName)
 
     CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
 
-    if (m_pWorkbook == nullptr)
-    {
+    if (m_pWorkbook == nullptr) {
         CString strLog;
         strLog.Format(_T("[실패] %s → %s"), lpszPathName, (LPCTSTR)strError);
         if (pFrame != nullptr)
@@ -98,16 +97,12 @@ void CSAGEDashDoc::InitializeSearchContent()
 
 void CSAGEDashDoc::SetSearchContent(const CString& value)
 {
-    if (value.IsEmpty())
-    {
+    if (value.IsEmpty()) {
         RemoveChunk(PKEY_Search_Contents.fmtid, PKEY_Search_Contents.pid);
-    }
-    else
-    {
+    } else {
         CMFCFilterChunkValueImpl* pChunk = nullptr;
         ATLTRY(pChunk = new CMFCFilterChunkValueImpl);
-        if (pChunk != nullptr)
-        {
+        if (pChunk != nullptr) {
             pChunk->SetTextValue(PKEY_Search_Contents, value, CHUNK_TEXT);
             SetChunkValue(pChunk);
         }

@@ -11,8 +11,7 @@
 CWorkbook* CWorkbookService::LoadFromFile(const CString& strFilePath, CString& strError)
 {
     int nDot = strFilePath.ReverseFind(_T('.'));
-    if (nDot < 0)
-    {
+    if (nDot < 0) {
         strError = _T("파일 확장자를 확인할 수 없습니다.");
         return nullptr;
     }
