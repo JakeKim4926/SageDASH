@@ -19,7 +19,17 @@ CWorksheet* CCsvReader::ReadFile(const CString& strFilePath, CString& strError)
     pSheet->m_strName = _T("Sheet1");
 
     CString strLine;
+    bool isFirstLine = true;
     while (file.ReadString(strLine)) {
+        // UTF-8 BOM (EF BB BF) 제거 — CStdioFile이 바이트 단위로 읽어 3개 문자로 나타남
+        if (isFirstLine) {
+            if (strLine.GetLength() >= 3 &&
+                strLine[0] == _T('\xEF') &&
+                strLine[1] == _T('\xBB') &&
+                strLine[2] == _T('\xBF'))
+                strLine = strLine.Mid(3);
+            isFirstLine = false;
+        }
         pSheet->m_arrRows.push_back(ParseLine(strLine));
     }
 
