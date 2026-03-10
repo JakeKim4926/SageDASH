@@ -93,6 +93,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\src\app;$(ProjectDir)..\src\ui\frame;$(ProjectDir)..\src\ui\doc;$(ProjectDir)..\src\ui\view;$(ProjectDir)..\src\ui\pane;$(ProjectDir)..\src\ui\controls;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -115,6 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\src\app;$(ProjectDir)..\src\ui\frame;$(ProjectDir)..\src\ui\doc;$(ProjectDir)..\src\ui\view;$(ProjectDir)..\src\ui\pane;$(ProjectDir)..\src\ui\controls;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -139,6 +141,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\src\app;$(ProjectDir)..\src\ui\frame;$(ProjectDir)..\src\ui\doc;$(ProjectDir)..\src\ui\view;$(ProjectDir)..\src\ui\pane;$(ProjectDir)..\src\ui\controls;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -165,6 +168,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\src\app;$(ProjectDir)..\src\ui\frame;$(ProjectDir)..\src\ui\doc;$(ProjectDir)..\src\ui\view;$(ProjectDir)..\src\ui\pane;$(ProjectDir)..\src\ui\controls;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -183,38 +187,38 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ChildFrm.h" />
-    <ClInclude Include="ClassView.h" />
-    <ClInclude Include="FileView.h" />
+    <ClInclude Include="..\src\ui\frame\ChildFrm.h" />
+    <ClInclude Include="..\src\ui\pane\ClassView.h" />
+    <ClInclude Include="..\src\ui\pane\FileView.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="MainFrm.h" />
-    <ClInclude Include="OutputWnd.h" />
+    <ClInclude Include="..\src\ui\frame\MainFrm.h" />
+    <ClInclude Include="..\src\ui\pane\OutputWnd.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="PropertiesWnd.h" />
+    <ClInclude Include="..\src\ui\pane\PropertiesWnd.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="SAGEDash.h" />
-    <ClInclude Include="SAGEDashDoc.h" />
-    <ClInclude Include="SAGEDashView.h" />
+    <ClInclude Include="..\src\app\SAGEDash.h" />
+    <ClInclude Include="..\src\ui\doc\SAGEDashDoc.h" />
+    <ClInclude Include="..\src\ui\view\SAGEDashView.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="ViewTree.h" />
+    <ClInclude Include="..\src\ui\controls\ViewTree.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ChildFrm.cpp" />
-    <ClCompile Include="ClassView.cpp" />
-    <ClCompile Include="FileView.cpp" />
-    <ClCompile Include="MainFrm.cpp" />
-    <ClCompile Include="OutputWnd.cpp" />
+    <ClCompile Include="..\src\ui\frame\ChildFrm.cpp" />
+    <ClCompile Include="..\src\ui\pane\ClassView.cpp" />
+    <ClCompile Include="..\src\ui\pane\FileView.cpp" />
+    <ClCompile Include="..\src\ui\frame\MainFrm.cpp" />
+    <ClCompile Include="..\src\ui\pane\OutputWnd.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="PropertiesWnd.cpp" />
-    <ClCompile Include="SAGEDash.cpp" />
-    <ClCompile Include="SAGEDashDoc.cpp" />
-    <ClCompile Include="SAGEDashView.cpp" />
-    <ClCompile Include="ViewTree.cpp" />
+    <ClCompile Include="..\src\ui\pane\PropertiesWnd.cpp" />
+    <ClCompile Include="..\src\app\SAGEDash.cpp" />
+    <ClCompile Include="..\src\ui\doc\SAGEDashDoc.cpp" />
+    <ClCompile Include="..\src\ui\view\SAGEDashView.cpp" />
+    <ClCompile Include="..\src\ui\controls\ViewTree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SAGEDash.rc" />

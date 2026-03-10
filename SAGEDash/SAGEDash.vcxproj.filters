@@ -1,11 +1,31 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
+    <Filter Include="src">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="헤더 파일">
+    <Filter Include="src\app">
+      <UniqueIdentifier>{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ui">
+      <UniqueIdentifier>{B2C3D4E5-F6A7-8901-BCDE-F12345678901}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ui\frame">
+      <UniqueIdentifier>{C3D4E5F6-A7B8-9012-CDEF-123456789012}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ui\doc">
+      <UniqueIdentifier>{D4E5F6A7-B8C9-0123-DEF0-234567890123}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ui\view">
+      <UniqueIdentifier>{E5F6A7B8-C9D0-1234-EF01-345678901234}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ui\pane">
+      <UniqueIdentifier>{F6A7B8C9-D0E1-2345-F012-456789012345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ui\controls">
+      <UniqueIdentifier>{A7B8C9D0-E1F2-3456-0123-567890123456}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="빌드">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
@@ -15,82 +35,82 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SAGEDash.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="..\src\app\SAGEDash.h">
+      <Filter>src\app</Filter>
     </ClInclude>
-    <ClInclude Include="framework.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="..\src\ui\frame\MainFrm.h">
+      <Filter>src\ui\frame</Filter>
     </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="..\src\ui\frame\ChildFrm.h">
+      <Filter>src\ui\frame</Filter>
     </ClInclude>
-    <ClInclude Include="MainFrm.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="..\src\ui\doc\SAGEDashDoc.h">
+      <Filter>src\ui\doc</Filter>
     </ClInclude>
-    <ClInclude Include="ChildFrm.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="..\src\ui\view\SAGEDashView.h">
+      <Filter>src\ui\view</Filter>
     </ClInclude>
-    <ClInclude Include="SAGEDashDoc.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="..\src\ui\pane\FileView.h">
+      <Filter>src\ui\pane</Filter>
     </ClInclude>
-    <ClInclude Include="SAGEDashView.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="..\src\ui\pane\ClassView.h">
+      <Filter>src\ui\pane</Filter>
     </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="..\src\ui\pane\OutputWnd.h">
+      <Filter>src\ui\pane</Filter>
     </ClInclude>
-    <ClInclude Include="FileView.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="..\src\ui\pane\PropertiesWnd.h">
+      <Filter>src\ui\pane</Filter>
     </ClInclude>
-    <ClInclude Include="ClassView.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ViewTree.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="OutputWnd.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="PropertiesWnd.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="..\src\ui\controls\ViewTree.h">
+      <Filter>src\ui\controls</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>빌드</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>빌드</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>빌드</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>빌드</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SAGEDash.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="..\src\app\SAGEDash.cpp">
+      <Filter>src\app</Filter>
     </ClCompile>
-    <ClCompile Include="MainFrm.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="..\src\ui\frame\MainFrm.cpp">
+      <Filter>src\ui\frame</Filter>
     </ClCompile>
-    <ClCompile Include="ChildFrm.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="..\src\ui\frame\ChildFrm.cpp">
+      <Filter>src\ui\frame</Filter>
     </ClCompile>
-    <ClCompile Include="SAGEDashDoc.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="..\src\ui\doc\SAGEDashDoc.cpp">
+      <Filter>src\ui\doc</Filter>
     </ClCompile>
-    <ClCompile Include="SAGEDashView.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="..\src\ui\view\SAGEDashView.cpp">
+      <Filter>src\ui\view</Filter>
     </ClCompile>
-    <ClCompile Include="FileView.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="..\src\ui\pane\FileView.cpp">
+      <Filter>src\ui\pane</Filter>
     </ClCompile>
-    <ClCompile Include="ClassView.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="..\src\ui\pane\ClassView.cpp">
+      <Filter>src\ui\pane</Filter>
     </ClCompile>
-    <ClCompile Include="ViewTree.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="..\src\ui\pane\OutputWnd.cpp">
+      <Filter>src\ui\pane</Filter>
     </ClCompile>
-    <ClCompile Include="OutputWnd.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="..\src\ui\pane\PropertiesWnd.cpp">
+      <Filter>src\ui\pane</Filter>
     </ClCompile>
-    <ClCompile Include="PropertiesWnd.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="..\src\ui\controls\ViewTree.cpp">
+      <Filter>src\ui\controls</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>빌드</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
