@@ -1,16 +1,15 @@
-﻿
+
 // SAGEDashDoc.cpp: CSAGEDashDoc 클래스의 구현
-//
 
 #include "pch.h"
 #include "framework.h"
-// SHARED_HANDLERS는 미리 보기, 축소판 그림 및 검색 필터 처리기를 구현하는 ATL 프로젝트에서 정의할 수 있으며
-// 해당 프로젝트와 문서 코드를 공유하도록 해 줍니다.
 #ifndef SHARED_HANDLERS
 #include "SAGEDash.h"
 #endif
 
 #include "SAGEDashDoc.h"
+#include "MainFrm.h"
+#include "WorkbookService.h"
 
 #include <propkey.h>
 
@@ -18,20 +17,14 @@
 #define new DEBUG_NEW
 #endif
 
-// CSAGEDashDoc
-
 IMPLEMENT_DYNCREATE(CSAGEDashDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CSAGEDashDoc, CDocument)
 END_MESSAGE_MAP()
 
-
-// CSAGEDashDoc 생성/소멸
-
 CSAGEDashDoc::CSAGEDashDoc() noexcept
+    : m_pWorkbook(nullptr)
 {
-	// TODO: 여기에 일회성 생성 코드를 추가합니다.
-
 }
 
 CSAGEDashDoc::~CSAGEDashDoc()
@@ -40,99 +33,97 @@ CSAGEDashDoc::~CSAGEDashDoc()
 
 BOOL CSAGEDashDoc::OnNewDocument()
 {
-	if (!CDocument::OnNewDocument())
-		return FALSE;
-
-	// TODO: 여기에 재초기화 코드를 추가합니다.
-	// SDI 문서는 이 문서를 다시 사용합니다.
-
-	return TRUE;
+    if (!CDocument::OnNewDocument())
+        return FALSE;
+    return TRUE;
 }
 
+BOOL CSAGEDashDoc::OnOpenDocument(LPCTSTR lpszPathName)
+{
+    DeleteContents();
 
+    CString strError;
+    CWorkbookService service;
+    m_pWorkbook = service.LoadFromFile(lpszPathName, strError);
 
+    CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
 
-// CSAGEDashDoc serialization
+    if (m_pWorkbook == nullptr)
+    {
+        CString strLog;
+        strLog.Format(_T("[실패] %s → %s"), lpszPathName, (LPCTSTR)strError);
+        if (pFrame != nullptr)
+            pFrame->LogMessage(strLog);
+        return FALSE;
+    }
+
+    CWorksheet* pSheet = m_pWorkbook->GetSheet(0);
+    CString strLog;
+    strLog.Format(_T("[성공] %s 로드 완료 (%d행 × %d열)"),
+        lpszPathName,
+        pSheet->GetRowCount(),
+        pSheet->GetColumnCount());
+    if (pFrame != nullptr)
+        pFrame->LogMessage(strLog);
+
+    SetModifiedFlag(FALSE);
+    UpdateAllViews(nullptr);
+    return TRUE;
+}
+
+void CSAGEDashDoc::DeleteContents()
+{
+    delete m_pWorkbook;
+    m_pWorkbook = nullptr;
+    CDocument::DeleteContents();
+}
 
 void CSAGEDashDoc::Serialize(CArchive& ar)
 {
-	if (ar.IsStoring())
-	{
-		// TODO: 여기에 저장 코드를 추가합니다.
-	}
-	else
-	{
-		// TODO: 여기에 로딩 코드를 추가합니다.
-	}
+    // CSV 파일은 OnOpenDocument에서 직접 로드하므로 Serialize 사용 안 함
+    UNREFERENCED_PARAMETER(ar);
 }
 
 #ifdef SHARED_HANDLERS
 
-// 축소판 그림을 지원합니다.
 void CSAGEDashDoc::OnDrawThumbnail(CDC& dc, LPRECT lprcBounds)
 {
-	// 문서의 데이터를 그리려면 이 코드를 수정하십시오.
-	dc.FillSolidRect(lprcBounds, RGB(255, 255, 255));
-
-	CString strText = _T("TODO: implement thumbnail drawing here");
-	LOGFONT lf;
-
-	CFont* pDefaultGUIFont = CFont::FromHandle((HFONT) GetStockObject(DEFAULT_GUI_FONT));
-	pDefaultGUIFont->GetLogFont(&lf);
-	lf.lfHeight = 36;
-
-	CFont fontDraw;
-	fontDraw.CreateFontIndirect(&lf);
-
-	CFont* pOldFont = dc.SelectObject(&fontDraw);
-	dc.DrawText(strText, lprcBounds, DT_CENTER | DT_WORDBREAK);
-	dc.SelectObject(pOldFont);
+    dc.FillSolidRect(lprcBounds, RGB(255, 255, 255));
 }
 
-// 검색 처리기를 지원합니다.
 void CSAGEDashDoc::InitializeSearchContent()
 {
-	CString strSearchContent;
-	// 문서의 데이터에서 검색 콘텐츠를 설정합니다.
-	// 콘텐츠 부분은 ";"로 구분되어야 합니다.
-
-	// 예: strSearchContent = _T("point;rectangle;circle;ole object;");
-	SetSearchContent(strSearchContent);
+    SetSearchContent(_T(""));
 }
 
 void CSAGEDashDoc::SetSearchContent(const CString& value)
 {
-	if (value.IsEmpty())
-	{
-		RemoveChunk(PKEY_Search_Contents.fmtid, PKEY_Search_Contents.pid);
-	}
-	else
-	{
-		CMFCFilterChunkValueImpl *pChunk = nullptr;
-		ATLTRY(pChunk = new CMFCFilterChunkValueImpl);
-		if (pChunk != nullptr)
-		{
-			pChunk->SetTextValue(PKEY_Search_Contents, value, CHUNK_TEXT);
-			SetChunkValue(pChunk);
-		}
-	}
+    if (value.IsEmpty())
+    {
+        RemoveChunk(PKEY_Search_Contents.fmtid, PKEY_Search_Contents.pid);
+    }
+    else
+    {
+        CMFCFilterChunkValueImpl* pChunk = nullptr;
+        ATLTRY(pChunk = new CMFCFilterChunkValueImpl);
+        if (pChunk != nullptr)
+        {
+            pChunk->SetTextValue(PKEY_Search_Contents, value, CHUNK_TEXT);
+            SetChunkValue(pChunk);
+        }
+    }
 }
 
 #endif // SHARED_HANDLERS
 
-// CSAGEDashDoc 진단
-
 #ifdef _DEBUG
 void CSAGEDashDoc::AssertValid() const
 {
-	CDocument::AssertValid();
+    CDocument::AssertValid();
 }
 
 void CSAGEDashDoc::Dump(CDumpContext& dc) const
 {
-	CDocument::Dump(dc);
+    CDocument::Dump(dc);
 }
 #endif //_DEBUG
-
-
-// CSAGEDashDoc 명령
