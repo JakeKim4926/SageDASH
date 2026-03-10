@@ -36,6 +36,9 @@
     <Filter Include="헤더 파일\infrastructure\csv">
       <UniqueIdentifier>{AA000015-0000-0000-0000-000000000015}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\infrastructure\logging">
+      <UniqueIdentifier>{AA000052-0000-0000-0000-000000000052}</UniqueIdentifier>
+    </Filter>
     <Filter Include="헤더 파일\ui">
       <UniqueIdentifier>{AA000016-0000-0000-0000-000000000016}</UniqueIdentifier>
     </Filter>
@@ -68,6 +71,9 @@
     </Filter>
     <Filter Include="소스 파일\infrastructure\csv">
       <UniqueIdentifier>{AA000034-0000-0000-0000-000000000034}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\infrastructure\logging">
+      <UniqueIdentifier>{AA000053-0000-0000-0000-000000000053}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\ui">
       <UniqueIdentifier>{AA000035-0000-0000-0000-000000000035}</UniqueIdentifier>
@@ -119,6 +125,9 @@
     <ClInclude Include="..\src\infrastructure\csv\CsvReader.h">
       <Filter>헤더 파일\infrastructure\csv</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\infrastructure\logging\SageLogger.h">
+      <Filter>헤더 파일\infrastructure\logging</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\ui\controls\ViewTree.h">
       <Filter>헤더 파일\ui\controls</Filter>
     </ClInclude>
@@ -162,6 +171,9 @@
     </ClCompile>
     <ClCompile Include="..\src\infrastructure\csv\CsvReader.cpp">
       <Filter>소스 파일\infrastructure\csv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\infrastructure\logging\SageLogger.cpp">
+      <Filter>소스 파일\infrastructure\logging</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ui\controls\ViewTree.cpp">
       <Filter>소스 파일\ui\controls</Filter>
