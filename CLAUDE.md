@@ -65,6 +65,7 @@ SAGEDash/
 - **함수명**: 동사 + 목적어 형태 (예: `LoadTemplate`, `ValidateMapping`)
 - **클래스 이름**: 역할이 드러나야 함 (`MyDoc`, `Manager1` 같은 모호한 이름 금지)
 - **bool/BOOL**: MFC 코드에서는 `bool` 대신 `BOOL` 타입을 사용한다. 변수명은 `is/has/can` 패턴 우선 (예: `isCompleted`, `hasError`)
+- **함수 리턴 타입**: 실패 가능성이 있는 작업(`Initialize`, `Load`, `Save`, `Validate` 등)은 `void` 대신 `BOOL`을 반환한다. 실패 원인까지 전달해야 할 경우 `strError` 출력 매개변수를 조합한다 (예: `BOOL LoadTemplate(const CString& strPath, CString& strError)`). 단, 순수 상태 변경(setter), 정리/해제(Cleanup/Reset), UI 갱신 함수는 `void`를 유지한다.
 - **`psz`, `lpsz`, `dw`, `lp`** 남발은 신규 코드에서 지양
 
 ### 컨트롤 변수 접두사
