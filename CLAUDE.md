@@ -64,7 +64,7 @@ SAGEDash/
 - **상수 선언**: `constexpr` 우선, MFC 레거시의 경우 `#define` 허용 (예: `#define WM_COMPLETE WM_USER + 1`)
 - **함수명**: 동사 + 목적어 형태 (예: `LoadTemplate`, `ValidateMapping`)
 - **클래스 이름**: 역할이 드러나야 함 (`MyDoc`, `Manager1` 같은 모호한 이름 금지)
-- **bool/BOOL**: `is/has/can` 패턴 우선 (예: `isCompleted`, `hasError`)
+- **bool/BOOL**: MFC 코드에서는 `bool` 대신 `BOOL` 타입을 사용한다. 변수명은 `is/has/can` 패턴 우선 (예: `isCompleted`, `hasError`)
 - **`psz`, `lpsz`, `dw`, `lp`** 남발은 신규 코드에서 지양
 
 ### 컨트롤 변수 접두사
