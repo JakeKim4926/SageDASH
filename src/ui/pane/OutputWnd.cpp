@@ -117,8 +117,9 @@ void COutputWnd::AppendLog(const CString& strMessage)
     GetLocalTime(&st);
 
     CString strEntry;
-    strEntry.Format(_T("[%02d:%02d:%02d] %s"),
-        st.wHour, st.wMinute, st.wSecond,
+    strEntry.Format(_T("[%04d-%02d-%02d %02d:%02d:%02d.%03d] %s"),
+        st.wYear, st.wMonth, st.wDay,
+        st.wHour, st.wMinute, st.wSecond, st.wMilliseconds,
         (LPCTSTR)strMessage);
 
     m_wndOutputBuild.AddString(strEntry);

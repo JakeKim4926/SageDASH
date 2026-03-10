@@ -21,6 +21,12 @@
     <Filter Include="헤더 파일\application">
       <UniqueIdentifier>{AA000012-0000-0000-0000-000000000012}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\common">
+      <UniqueIdentifier>{AA000050-0000-0000-0000-000000000050}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\common\error">
+      <UniqueIdentifier>{AA000051-0000-0000-0000-000000000051}</UniqueIdentifier>
+    </Filter>
     <Filter Include="헤더 파일\domain">
       <UniqueIdentifier>{AA000013-0000-0000-0000-000000000013}</UniqueIdentifier>
     </Filter>
@@ -106,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="..\src\domain\Workbook.h">
       <Filter>헤더 파일\domain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\error\SageException.h">
+      <Filter>헤더 파일\common\error</Filter>
     </ClInclude>
     <ClInclude Include="..\src\infrastructure\csv\CsvReader.h">
       <Filter>헤더 파일\infrastructure\csv</Filter>

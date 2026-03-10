@@ -10,6 +10,7 @@
 #include "SAGEDashDoc.h"
 #include "MainFrm.h"
 #include "WorkbookService.h"
+#include "SageException.h"
 
 #include <propkey.h>
 
@@ -42,15 +43,14 @@ BOOL CSAGEDashDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
     DeleteContents();
 
-    CString strError;
-    CWorkbookService service;
-    m_pWorkbook = service.LoadFromFile(lpszPathName, strError);
-
     CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+    CWorkbookService service;
 
-    if (m_pWorkbook == nullptr) {
+    try {
+        m_pWorkbook = service.LoadFromFile(lpszPathName);
+    } catch (const SageException& e) {
         CString strLog;
-        strLog.Format(_T("[실패] %s → %s"), lpszPathName, (LPCTSTR)strError);
+        strLog.Format(_T("[실패] %s"), (LPCTSTR)e.Format());
         if (pFrame != nullptr)
             pFrame->LogMessage(strLog);
         return FALSE;

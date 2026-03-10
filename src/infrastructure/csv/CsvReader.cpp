@@ -2,18 +2,17 @@
 #include "pch.h"
 #include "framework.h"
 #include "CsvReader.h"
+#include "SageException.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
-CWorksheet* CCsvReader::ReadFile(const CString& strFilePath, CString& strError)
+CWorksheet* CCsvReader::ReadFile(const CString& strFilePath)
 {
     CStdioFile file;
-    if (!file.Open(strFilePath, CFile::modeRead | CFile::typeText | CFile::shareDenyWrite)) {
-        strError.Format(_T("파일을 열 수 없습니다: %s"), (LPCTSTR)strFilePath);
-        return nullptr;
-    }
+    if (!file.Open(strFilePath, CFile::modeRead | CFile::typeText | CFile::shareDenyWrite))
+        throw SageException(_T("파일을 열 수 없습니다."), strFilePath);
 
     CWorksheet* pSheet = new CWorksheet();
     pSheet->m_strName = _T("Sheet1");
@@ -36,9 +35,8 @@ CWorksheet* CCsvReader::ReadFile(const CString& strFilePath, CString& strError)
     file.Close();
 
     if (pSheet->GetRowCount() == 0) {
-        strError = _T("파일이 비어 있습니다.");
         delete pSheet;
-        return nullptr;
+        throw SageException(_T("파일이 비어 있습니다."), strFilePath);
     }
 
     return pSheet;

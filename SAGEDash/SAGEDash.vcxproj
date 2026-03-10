@@ -93,7 +93,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\src\app;$(ProjectDir)..\src\ui\frame;$(ProjectDir)..\src\ui\doc;$(ProjectDir)..\src\ui\view;$(ProjectDir)..\src\ui\pane;$(ProjectDir)..\src\ui\controls;$(ProjectDir)..\src\domain;$(ProjectDir)..\src\application;$(ProjectDir)..\src\infrastructure\csv;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\src\app;$(ProjectDir)..\src\ui\frame;$(ProjectDir)..\src\ui\doc;$(ProjectDir)..\src\ui\view;$(ProjectDir)..\src\ui\pane;$(ProjectDir)..\src\ui\controls;$(ProjectDir)..\src\domain;$(ProjectDir)..\src\application;$(ProjectDir)..\src\infrastructure\csv;$(ProjectDir)..\src\common\error;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -116,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\src\app;$(ProjectDir)..\src\ui\frame;$(ProjectDir)..\src\ui\doc;$(ProjectDir)..\src\ui\view;$(ProjectDir)..\src\ui\pane;$(ProjectDir)..\src\ui\controls;$(ProjectDir)..\src\domain;$(ProjectDir)..\src\application;$(ProjectDir)..\src\infrastructure\csv;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\src\app;$(ProjectDir)..\src\ui\frame;$(ProjectDir)..\src\ui\doc;$(ProjectDir)..\src\ui\view;$(ProjectDir)..\src\ui\pane;$(ProjectDir)..\src\ui\controls;$(ProjectDir)..\src\domain;$(ProjectDir)..\src\application;$(ProjectDir)..\src\infrastructure\csv;$(ProjectDir)..\src\common\error;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -141,7 +141,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\src\app;$(ProjectDir)..\src\ui\frame;$(ProjectDir)..\src\ui\doc;$(ProjectDir)..\src\ui\view;$(ProjectDir)..\src\ui\pane;$(ProjectDir)..\src\ui\controls;$(ProjectDir)..\src\domain;$(ProjectDir)..\src\application;$(ProjectDir)..\src\infrastructure\csv;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\src\app;$(ProjectDir)..\src\ui\frame;$(ProjectDir)..\src\ui\doc;$(ProjectDir)..\src\ui\view;$(ProjectDir)..\src\ui\pane;$(ProjectDir)..\src\ui\controls;$(ProjectDir)..\src\domain;$(ProjectDir)..\src\application;$(ProjectDir)..\src\infrastructure\csv;$(ProjectDir)..\src\common\error;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -168,7 +168,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\src\app;$(ProjectDir)..\src\ui\frame;$(ProjectDir)..\src\ui\doc;$(ProjectDir)..\src\ui\view;$(ProjectDir)..\src\ui\pane;$(ProjectDir)..\src\ui\controls;$(ProjectDir)..\src\domain;$(ProjectDir)..\src\application;$(ProjectDir)..\src\infrastructure\csv;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\src\app;$(ProjectDir)..\src\ui\frame;$(ProjectDir)..\src\ui\doc;$(ProjectDir)..\src\ui\view;$(ProjectDir)..\src\ui\pane;$(ProjectDir)..\src\ui\controls;$(ProjectDir)..\src\domain;$(ProjectDir)..\src\application;$(ProjectDir)..\src\infrastructure\csv;$(ProjectDir)..\src\common\error;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -202,6 +202,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="..\src\ui\controls\ViewTree.h" />
     <ClInclude Include="..\src\domain\Workbook.h" />
+    <ClInclude Include="..\src\common\error\SageException.h" />
     <ClInclude Include="..\src\infrastructure\csv\CsvReader.h" />
     <ClInclude Include="..\src\application\WorkbookService.h" />
   </ItemGroup>
