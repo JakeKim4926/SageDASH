@@ -106,12 +106,12 @@ void CSAGEDashView::PopulateGrid(CWorksheet* pSheet)
 
     for (int nCol = 0; nCol < nColCount; nCol++)
     {
+        CString strHeader = pHeaderRow->GetAt(nCol);
         LVCOLUMN lvc;
         lvc.mask    = LVCF_TEXT | LVCF_WIDTH;
         lvc.cx      = 120;
-        lvc.pszText = pHeaderRow->GetAt(nCol).GetBuffer();
+        lvc.pszText = (LPTSTR)(LPCTSTR)strHeader;
         m_lstGrid.InsertColumn(nCol, &lvc);
-        pHeaderRow->GetAt(nCol).ReleaseBuffer();
     }
 
     // 2행~: 데이터
@@ -121,18 +121,17 @@ void CSAGEDashView::PopulateGrid(CWorksheet* pSheet)
         CStringArray* pRow = pSheet->m_arrRows[nRow];
         int nCellCount = (int)pRow->GetSize();
 
+        CString strFirst = (nCellCount > 0) ? pRow->GetAt(0) : CString(_T(""));
         LVITEM lvi;
-        lvi.mask    = LVIF_TEXT;
-        lvi.iItem   = nRow - 1;
+        lvi.mask     = LVIF_TEXT;
+        lvi.iItem    = nRow - 1;
         lvi.iSubItem = 0;
-        lvi.pszText = (nCellCount > 0) ? pRow->GetAt(0).GetBuffer() : _T("");
+        lvi.pszText  = (LPTSTR)(LPCTSTR)strFirst;
         int nInserted = m_lstGrid.InsertItem(&lvi);
-        if (nCellCount > 0)
-            pRow->GetAt(0).ReleaseBuffer();
 
         for (int nCol = 1; nCol < nColCount; nCol++)
         {
-            CString strCell = (nCol < nCellCount) ? pRow->GetAt(nCol) : _T("");
+            CString strCell = (nCol < nCellCount) ? pRow->GetAt(nCol) : CString(_T(""));
             m_lstGrid.SetItemText(nInserted, nCol, strCell);
         }
     }
