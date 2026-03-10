@@ -77,7 +77,7 @@ BOOL CSAGEDashApp::InitInstance()
 
 	CWinAppEx::InitInstance();
 
-	theSage.Initialize();
+	sageMgr.Initialize();
 
 
 	EnableTaskbarInteraction();
@@ -146,7 +146,7 @@ BOOL CSAGEDashApp::InitInstance()
 
 int CSAGEDashApp::ExitInstance()
 {
-    theSage.Shutdown();
+    sageMgr.Shutdown();
     return CWinAppEx::ExitInstance();
 }
 
