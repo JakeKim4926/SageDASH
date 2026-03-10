@@ -11,5 +11,5 @@ public:
     CWorksheet* ReadFile(const CString& strFilePath, CString& strError);
 
 private:
-    CStringArray* ParseLine(const CString& strLine);
+    std::vector<CString> ParseLine(const CString& strLine);
 };

@@ -20,8 +20,7 @@ CWorksheet* CCsvReader::ReadFile(const CString& strFilePath, CString& strError)
 
     CString strLine;
     while (file.ReadString(strLine)) {
-        CStringArray* pRow = ParseLine(strLine);
-        pSheet->m_arrRows.Add(pRow);
+        pSheet->m_arrRows.push_back(ParseLine(strLine));
     }
 
     file.Close();
@@ -35,9 +34,9 @@ CWorksheet* CCsvReader::ReadFile(const CString& strFilePath, CString& strError)
     return pSheet;
 }
 
-CStringArray* CCsvReader::ParseLine(const CString& strLine)
+std::vector<CString> CCsvReader::ParseLine(const CString& strLine)
 {
-    CStringArray* pRow = new CStringArray();
+    std::vector<CString> row;
     CString strCell;
     bool isInQuote = false;
     int nLen = strLine.GetLength();
@@ -61,7 +60,7 @@ CStringArray* CCsvReader::ParseLine(const CString& strLine)
             if (ch == _T('"')) {
                 isInQuote = true;
             } else if (ch == _T(',')) {
-                pRow->Add(strCell);
+                row.push_back(strCell);
                 strCell.Empty();
             } else {
                 strCell += ch;
@@ -69,6 +68,6 @@ CStringArray* CCsvReader::ParseLine(const CString& strLine)
         }
     }
 
-    pRow->Add(strCell);
-    return pRow;
+    row.push_back(strCell);
+    return row;
 }

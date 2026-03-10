@@ -35,7 +35,7 @@ CWorkbook* CWorkbookService::LoadCsvFile(const CString& strFilePath, CString& st
 
     CWorkbook* pWorkbook = new CWorkbook();
     pWorkbook->m_strFilePath = strFilePath;
-    pWorkbook->m_arrSheets.Add(pSheet);
+    pWorkbook->m_arrSheets.push_back(pSheet);
 
     return pWorkbook;
 }

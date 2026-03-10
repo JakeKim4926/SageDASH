@@ -1,32 +1,23 @@
 
 #pragma once
 
+#include <vector>
+
 // CWorksheet: 단일 시트의 행/열 데이터를 보관
 class CWorksheet
 {
 public:
-    CString                              m_strName;
-    CArray<CStringArray*, CStringArray*> m_arrRows;
+    CString                             m_strName;
+    std::vector<std::vector<CString>>   m_arrRows;
 
-    CWorksheet() {}
-
-    ~CWorksheet()
-    {
-        for (int i = 0; i < m_arrRows.GetSize(); i++)
-            delete m_arrRows[i];
-        m_arrRows.RemoveAll();
+    int GetRowCount() const {
+        return (int)m_arrRows.size();
     }
 
-    int GetRowCount() const
-    {
-        return (int)m_arrRows.GetSize();
-    }
-
-    int GetColumnCount() const
-    {
-        if (m_arrRows.IsEmpty())
+    int GetColumnCount() const {
+        if (m_arrRows.empty())
             return 0;
-        return (int)m_arrRows[0]->GetSize();
+        return (int)m_arrRows[0].size();
     }
 };
 
@@ -34,25 +25,22 @@ public:
 class CWorkbook
 {
 public:
-    CString                          m_strFilePath;
-    CArray<CWorksheet*, CWorksheet*> m_arrSheets;
+    CString                  m_strFilePath;
+    std::vector<CWorksheet*> m_arrSheets;
 
     CWorkbook() {}
 
-    ~CWorkbook()
-    {
-        for (int i = 0; i < m_arrSheets.GetSize(); i++)
+    ~CWorkbook() {
+        for (int i = 0; i < (int)m_arrSheets.size(); i++)
             delete m_arrSheets[i];
-        m_arrSheets.RemoveAll();
+        m_arrSheets.clear();
     }
 
-    int GetSheetCount() const
-    {
-        return (int)m_arrSheets.GetSize();
+    int GetSheetCount() const {
+        return (int)m_arrSheets.size();
     }
 
-    CWorksheet* GetSheet(int nIndex) const
-    {
+    CWorksheet* GetSheet(int nIndex) const {
         return m_arrSheets[nIndex];
     }
 };

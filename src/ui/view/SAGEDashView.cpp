@@ -100,11 +100,11 @@ void CSAGEDashView::PopulateGrid(CWorksheet* pSheet)
         return;
 
     // 1행: 컬럼 헤더
-    CStringArray* pHeaderRow = pSheet->m_arrRows[0];
-    int nColCount = (int)pHeaderRow->GetSize();
+    const std::vector<CString>& headerRow = pSheet->m_arrRows[0];
+    int nColCount = (int)headerRow.size();
 
     for (int nCol = 0; nCol < nColCount; nCol++) {
-        CString strHeader = pHeaderRow->GetAt(nCol);
+        CString strHeader = headerRow[nCol];
         LVCOLUMN lvc;
         lvc.mask    = LVCF_TEXT | LVCF_WIDTH;
         lvc.cx      = 120;
@@ -115,10 +115,10 @@ void CSAGEDashView::PopulateGrid(CWorksheet* pSheet)
     // 2행~: 데이터
     int nDataRows = min(nRowCount - 1, MAX_PREVIEW_ROWS);
     for (int nRow = 1; nRow <= nDataRows; nRow++) {
-        CStringArray* pRow = pSheet->m_arrRows[nRow];
-        int nCellCount = (int)pRow->GetSize();
+        const std::vector<CString>& row = pSheet->m_arrRows[nRow];
+        int nCellCount = (int)row.size();
 
-        CString strFirst = (nCellCount > 0) ? pRow->GetAt(0) : CString(_T(""));
+        CString strFirst = (nCellCount > 0) ? row[0] : CString(_T(""));
         LVITEM lvi;
         lvi.mask     = LVIF_TEXT;
         lvi.iItem    = nRow - 1;
@@ -127,7 +127,7 @@ void CSAGEDashView::PopulateGrid(CWorksheet* pSheet)
         int nInserted = m_lstGrid.InsertItem(&lvi);
 
         for (int nCol = 1; nCol < nColCount; nCol++) {
-            CString strCell = (nCol < nCellCount) ? pRow->GetAt(nCol) : CString(_T(""));
+            CString strCell = (nCol < nCellCount) ? row[nCol] : CString(_T(""));
             m_lstGrid.SetItemText(nInserted, nCol, strCell);
         }
     }
