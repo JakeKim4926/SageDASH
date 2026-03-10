@@ -12,29 +12,6 @@ SAGEDash는 C++/MFC 기반의 **문서 중심 멀티 작업형 업무 자동화 
 - **IDE/빌드**: Visual Studio 2026, x64 Debug/Release
 - **프로젝트 구조**: MDI (Multiple Document Interface)
 
-## 현재 프로젝트 구조
-
-```
-SAGEDash/
-├─ SAGEDash/                    # 소스 코드 루트
-│  ├─ SAGEDash.h/cpp            # CSAGEDashApp (CWinAppEx) - 앱 진입점
-│  ├─ MainFrm.h/cpp             # CMainFrame (CMDIFrameWndEx) - MDI 메인 프레임
-│  ├─ ChildFrm.h/cpp            # CChildFrame (CMDIChildWndEx) - MDI 자식 프레임
-│  ├─ SAGEDashDoc.h/cpp         # CSAGEDashDoc (CDocument) - 문서 모델
-│  ├─ SAGEDashView.h/cpp        # CSAGEDashView (CView) - 뷰
-│  ├─ FileView.h/cpp            # CFileView (CDockablePane) - 파일 탐색 패널
-│  ├─ ClassView.h/cpp           # CClassView (CDockablePane) - 클래스 뷰 패널
-│  ├─ OutputWnd.h/cpp           # COutputWnd (CDockablePane) - 출력 패널
-│  ├─ PropertiesWnd.h/cpp       # CPropertiesWnd (CDockablePane) - 속성 패널
-│  ├─ ViewTree.h/cpp            # CViewTree (CTreeCtrl) - 트리 컨트롤 기반
-│  ├─ Resource.h                # 리소스 ID 정의
-│  ├─ SAGEDash.rc               # 리소스 스크립트
-│  ├─ pch.h/cpp                 # 미리 컴파일된 헤더
-│  ├─ framework.h / targetver.h # 프레임워크/타겟 버전 헤더
-│  └─ res/                      # 아이콘, 비트맵 등 리소스 파일
-└─ SAGEDash.slnx                # 솔루션 파일
-```
-
 ## 권장 목표 구조
 
 현재는 VS 마법사가 생성한 초기 상태이며, 아래 구조로 발전시킨다.
@@ -74,7 +51,7 @@ SAGEDash/
 - 함수 길이 200줄 초과 금지
 - 매직 넘버 금지 → `Define.h`에 도메인별 주석 블록을 먼저 표시하고, 해당 주석 아래에 그 도메인의 상수를 선언
 - Enum은 `EnumDefine.h`에 선언
-- 전역 상태(전역 변수) 금지
+- 비즈니스 로직 전역 상태(전역 변수) 금지 — 앱 공통 인프라 서비스(로거, 설정 등)는 `SageApp` 싱글톤으로 단일 관리 (`theSage` 매크로로 접근)
 - UI 스레드에서 비즈니스 로직/통신 등 무거운 작업 금지
 - 워커 스레드에서 View, MainFrame 직접 접근 금지
 - **`nullptr` 반환 금지** → 실패 시 예외(`SageException` 계열)를 던지거나, 출력 매개변수(`strError` 등)로 오류를 전달하고 호출자가 판단하도록 한다
