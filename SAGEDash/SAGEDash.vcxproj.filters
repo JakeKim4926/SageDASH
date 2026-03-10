@@ -1,227 +1,252 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="src">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-    </Filter>
+    <!-- ── src/app ── -->
     <Filter Include="src\app">
       <UniqueIdentifier>{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\ui">
-      <UniqueIdentifier>{B2C3D4E5-F6A7-8901-BCDE-F12345678901}</UniqueIdentifier>
+    <Filter Include="src\app\헤더 파일">
+      <UniqueIdentifier>{A1B2C3D4-E5F6-7890-ABCD-EF1234567891}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\app\소스 파일">
+      <UniqueIdentifier>{A1B2C3D4-E5F6-7890-ABCD-EF1234567892}</UniqueIdentifier>
+    </Filter>
+
+    <!-- ── src/ui/frame ── -->
     <Filter Include="src\ui\frame">
       <UniqueIdentifier>{C3D4E5F6-A7B8-9012-CDEF-123456789012}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\ui\frame\헤더 파일">
+      <UniqueIdentifier>{C3D4E5F6-A7B8-9012-CDEF-123456789013}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ui\frame\소스 파일">
+      <UniqueIdentifier>{C3D4E5F6-A7B8-9012-CDEF-123456789014}</UniqueIdentifier>
+    </Filter>
+
+    <!-- ── src/ui/doc ── -->
     <Filter Include="src\ui\doc">
       <UniqueIdentifier>{D4E5F6A7-B8C9-0123-DEF0-234567890123}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\ui\doc\헤더 파일">
+      <UniqueIdentifier>{D4E5F6A7-B8C9-0123-DEF0-234567890124}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ui\doc\소스 파일">
+      <UniqueIdentifier>{D4E5F6A7-B8C9-0123-DEF0-234567890125}</UniqueIdentifier>
+    </Filter>
+
+    <!-- ── src/ui/view ── -->
     <Filter Include="src\ui\view">
       <UniqueIdentifier>{E5F6A7B8-C9D0-1234-EF01-345678901234}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\ui\view\헤더 파일">
+      <UniqueIdentifier>{E5F6A7B8-C9D0-1234-EF01-345678901235}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ui\view\소스 파일">
+      <UniqueIdentifier>{E5F6A7B8-C9D0-1234-EF01-345678901236}</UniqueIdentifier>
+    </Filter>
+
+    <!-- ── src/ui/pane ── -->
     <Filter Include="src\ui\pane">
       <UniqueIdentifier>{F6A7B8C9-D0E1-2345-F012-456789012345}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\ui\pane\헤더 파일">
+      <UniqueIdentifier>{F6A7B8C9-D0E1-2345-F012-456789012346}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ui\pane\소스 파일">
+      <UniqueIdentifier>{F6A7B8C9-D0E1-2345-F012-456789012347}</UniqueIdentifier>
+    </Filter>
+
+    <!-- ── src/ui/controls ── -->
     <Filter Include="src\ui\controls">
       <UniqueIdentifier>{A7B8C9D0-E1F2-3456-0123-567890123456}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\ui\controls\헤더 파일">
+      <UniqueIdentifier>{A7B8C9D0-E1F2-3456-0123-567890123457}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ui\controls\소스 파일">
+      <UniqueIdentifier>{A7B8C9D0-E1F2-3456-0123-567890123458}</UniqueIdentifier>
+    </Filter>
+
+    <!-- ── src/domain ── -->
     <Filter Include="src\domain">
       <UniqueIdentifier>{B8C9D0E1-F2A3-4567-1234-678901234567}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\domain\헤더 파일">
+      <UniqueIdentifier>{B8C9D0E1-F2A3-4567-1234-678901234568}</UniqueIdentifier>
+    </Filter>
+
+    <!-- ── src/application ── -->
     <Filter Include="src\application">
       <UniqueIdentifier>{C9D0E1F2-A3B4-5678-2345-789012345678}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\infrastructure">
-      <UniqueIdentifier>{D0E1F2A3-B4C5-6789-3456-890123456789}</UniqueIdentifier>
+    <Filter Include="src\application\헤더 파일">
+      <UniqueIdentifier>{C9D0E1F2-A3B4-5678-2345-789012345679}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\application\소스 파일">
+      <UniqueIdentifier>{C9D0E1F2-A3B4-5678-2345-789012345680}</UniqueIdentifier>
+    </Filter>
+
+    <!-- ── src/infrastructure/csv ── -->
     <Filter Include="src\infrastructure\csv">
       <UniqueIdentifier>{E1F2A3B4-C5D6-7890-4567-901234567890}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\infrastructure\csv\헤더 파일">
+      <UniqueIdentifier>{E1F2A3B4-C5D6-7890-4567-901234567891}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\infrastructure\csv\소스 파일">
+      <UniqueIdentifier>{E1F2A3B4-C5D6-7890-4567-901234567892}</UniqueIdentifier>
+    </Filter>
+
+    <!-- ── 빌드 인프라 ── -->
     <Filter Include="빌드">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
+    <Filter Include="빌드\헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="빌드\소스 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFD}</UniqueIdentifier>
+    </Filter>
+
+    <!-- ── 리소스 ── -->
     <Filter Include="리소스 파일">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
+
   <ItemGroup>
+    <!-- 헤더 파일 -->
     <ClInclude Include="..\src\app\SAGEDash.h">
-      <Filter>src\app</Filter>
+      <Filter>src\app\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ui\frame\MainFrm.h">
-      <Filter>src\ui\frame</Filter>
+      <Filter>src\ui\frame\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ui\frame\ChildFrm.h">
-      <Filter>src\ui\frame</Filter>
+      <Filter>src\ui\frame\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ui\doc\SAGEDashDoc.h">
-      <Filter>src\ui\doc</Filter>
+      <Filter>src\ui\doc\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ui\view\SAGEDashView.h">
-      <Filter>src\ui\view</Filter>
+      <Filter>src\ui\view\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ui\pane\FileView.h">
-      <Filter>src\ui\pane</Filter>
+      <Filter>src\ui\pane\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ui\pane\ClassView.h">
-      <Filter>src\ui\pane</Filter>
+      <Filter>src\ui\pane\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ui\pane\OutputWnd.h">
-      <Filter>src\ui\pane</Filter>
+      <Filter>src\ui\pane\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ui\pane\PropertiesWnd.h">
-      <Filter>src\ui\pane</Filter>
+      <Filter>src\ui\pane\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ui\controls\ViewTree.h">
-      <Filter>src\ui\controls</Filter>
+      <Filter>src\ui\controls\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\src\domain\Workbook.h">
-      <Filter>src\domain</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\infrastructure\csv\CsvReader.h">
-      <Filter>src\infrastructure\csv</Filter>
+      <Filter>src\domain\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\src\application\WorkbookService.h">
-      <Filter>src\application</Filter>
+      <Filter>src\application\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\infrastructure\csv\CsvReader.h">
+      <Filter>src\infrastructure\csv\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
-      <Filter>빌드</Filter>
+      <Filter>빌드\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="framework.h">
-      <Filter>빌드</Filter>
+      <Filter>빌드\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
-      <Filter>빌드</Filter>
+      <Filter>빌드\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
-      <Filter>빌드</Filter>
+      <Filter>빌드\헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
+
   <ItemGroup>
+    <!-- 소스 파일 -->
     <ClCompile Include="..\src\app\SAGEDash.cpp">
-      <Filter>src\app</Filter>
+      <Filter>src\app\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ui\frame\MainFrm.cpp">
-      <Filter>src\ui\frame</Filter>
+      <Filter>src\ui\frame\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ui\frame\ChildFrm.cpp">
-      <Filter>src\ui\frame</Filter>
+      <Filter>src\ui\frame\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ui\doc\SAGEDashDoc.cpp">
-      <Filter>src\ui\doc</Filter>
+      <Filter>src\ui\doc\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ui\view\SAGEDashView.cpp">
-      <Filter>src\ui\view</Filter>
+      <Filter>src\ui\view\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ui\pane\FileView.cpp">
-      <Filter>src\ui\pane</Filter>
+      <Filter>src\ui\pane\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ui\pane\ClassView.cpp">
-      <Filter>src\ui\pane</Filter>
+      <Filter>src\ui\pane\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ui\pane\OutputWnd.cpp">
-      <Filter>src\ui\pane</Filter>
+      <Filter>src\ui\pane\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ui\pane\PropertiesWnd.cpp">
-      <Filter>src\ui\pane</Filter>
+      <Filter>src\ui\pane\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ui\controls\ViewTree.cpp">
-      <Filter>src\ui\controls</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\infrastructure\csv\CsvReader.cpp">
-      <Filter>src\infrastructure\csv</Filter>
+      <Filter>src\ui\controls\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\src\application\WorkbookService.cpp">
-      <Filter>src\application</Filter>
+      <Filter>src\application\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\infrastructure\csv\CsvReader.cpp">
+      <Filter>src\infrastructure\csv\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
-      <Filter>빌드</Filter>
+      <Filter>빌드\소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
+
   <ItemGroup>
     <ResourceCompile Include="SAGEDash.rc">
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
   </ItemGroup>
+
   <ItemGroup>
-    <Image Include="res\file_view.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\file_view_hc.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\class_view.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\class_view_hc.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\fileview.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\fileview_hc.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\classview.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\classview_hc.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\explorer.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\explorer_hc.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\sort.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\sort_hc.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\menuimages.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\menuimages_hc.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\output_wnd.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\output_wnd_hc.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\properties_wnd.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\properties_wnd_hc.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\properties.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\properties_hc.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\userimages.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\SAGEDashDoc.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\SAGEDash.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\Toolbar.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\Toolbar256.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
+    <Image Include="res\file_view.ico"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\file_view_hc.ico"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\class_view.ico"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\class_view_hc.ico"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\fileview.bmp"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\fileview_hc.bmp"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\classview.bmp"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\classview_hc.bmp"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\explorer.bmp"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\explorer_hc.bmp"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\sort.bmp"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\sort_hc.bmp"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\menuimages.bmp"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\menuimages_hc.bmp"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\output_wnd.ico"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\output_wnd_hc.ico"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\properties_wnd.ico"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\properties_wnd_hc.ico"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\properties.bmp"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\properties_hc.bmp"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\userimages.bmp"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\SAGEDashDoc.ico"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\SAGEDash.ico"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\Toolbar.bmp"><Filter>리소스 파일</Filter></Image>
+    <Image Include="res\Toolbar256.bmp"><Filter>리소스 파일</Filter></Image>
   </ItemGroup>
+
   <ItemGroup>
     <None Include="res\SAGEDash.rc2">
       <Filter>리소스 파일</Filter>
