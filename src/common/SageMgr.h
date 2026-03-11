@@ -21,7 +21,7 @@ private:
     SageMgr(const SageMgr&);
 
     SageLogger m_logger;
-    BOOL    m_bInitialized = false;
+    BOOL    m_bInitialized = FALSE;
 };
 
 #define sageMgr SageMgr::GetInstance()

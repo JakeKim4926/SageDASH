@@ -11,6 +11,7 @@
 #include "MainFrm.h"
 #include "WorkbookService.h"
 #include "SageException.h"
+#include "SageMgr.h"
 
 #include <propkey.h>
 
@@ -52,6 +53,7 @@ BOOL CSAGEDashDoc::OnOpenDocument(LPCTSTR lpszPathName)
     } catch (const SageException& e) {
         CString strLog;
         strLog.Format(_T("[실패] %s"), (LPCTSTR)e.Format());
+        sageMgr.Log(strLog);
         if (pFrame != nullptr)
             pFrame->LogMessage(strLog);
         return FALSE;
@@ -63,6 +65,7 @@ BOOL CSAGEDashDoc::OnOpenDocument(LPCTSTR lpszPathName)
         lpszPathName,
         sheet.GetRowCount(),
         sheet.GetColumnCount());
+    sageMgr.Log(strLog);
     if (pFrame != nullptr)
         pFrame->LogMessage(strLog);
 
