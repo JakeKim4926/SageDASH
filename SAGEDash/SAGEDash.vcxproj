@@ -74,9 +74,13 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup>
-  <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
-  <IntDir>$(SolutionDir)intermediate\$(MSBuildProjectName)\$(Configuration)\</IntDir>
+  <PropertyGroup Condition="'$(Platform)'=='x64'">
+	<OutDir>$(SolutionDir)$(Configuration)_x64\</OutDir>
+	<IntDir>$(SolutionDir)intermediate\$(MSBuildProjectName)\$(Configuration)_x64\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)'=='Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)_x32\</OutDir>
+    <IntDir>$(SolutionDir)intermediate\$(MSBuildProjectName)\$(Configuration)_x32\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
