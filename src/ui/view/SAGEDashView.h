@@ -36,7 +36,7 @@ public:
 private:
     CListCtrl m_lstGrid;
 
-    void PopulateGrid(CWorksheet* pSheet);
+    void PopulateGrid(const CWorksheet& sheet);
     void ClearGrid();
 
 protected:

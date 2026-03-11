@@ -8,14 +8,14 @@
 #define new DEBUG_NEW
 #endif
 
-CWorksheet* CCsvReader::ReadFile(const CString& strFilePath)
+void CCsvReader::ReadFile(const CString& strFilePath, CWorksheet& outSheet)
 {
     CStdioFile file;
     if (!file.Open(strFilePath, CFile::modeRead | CFile::typeText | CFile::shareDenyWrite))
         throw SageException(_T("파일을 열 수 없습니다."), strFilePath);
 
-    CWorksheet* pSheet = new CWorksheet();
-    pSheet->m_strName = _T("Sheet1");
+    outSheet.m_strName = _T("Sheet1");
+    outSheet.m_arrRows.clear();
 
     CString strLine;
     bool isFirstLine = true;
@@ -29,17 +29,13 @@ CWorksheet* CCsvReader::ReadFile(const CString& strFilePath)
                 strLine = strLine.Mid(3);
             isFirstLine = false;
         }
-        pSheet->m_arrRows.push_back(ParseLine(strLine));
+        outSheet.m_arrRows.push_back(ParseLine(strLine));
     }
 
     file.Close();
 
-    if (pSheet->GetRowCount() == 0) {
-        delete pSheet;
+    if (outSheet.GetRowCount() == 0)
         throw SageException(_T("파일이 비어 있습니다."), strFilePath);
-    }
-
-    return pSheet;
 }
 
 std::vector<CString> CCsvReader::ParseLine(const CString& strLine)

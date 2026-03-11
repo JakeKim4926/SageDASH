@@ -24,7 +24,7 @@ BEGIN_MESSAGE_MAP(CSAGEDashDoc, CDocument)
 END_MESSAGE_MAP()
 
 CSAGEDashDoc::CSAGEDashDoc() noexcept
-    : m_pWorkbook(nullptr)
+    : m_isWorkbookLoaded(FALSE)
 {
 }
 
@@ -47,7 +47,8 @@ BOOL CSAGEDashDoc::OnOpenDocument(LPCTSTR lpszPathName)
     CWorkbookService service;
 
     try {
-        m_pWorkbook = service.LoadFromFile(lpszPathName);
+        service.LoadFromFile(lpszPathName, m_workbook);
+        m_isWorkbookLoaded = TRUE;
     } catch (const SageException& e) {
         CString strLog;
         strLog.Format(_T("[실패] %s"), (LPCTSTR)e.Format());
@@ -56,12 +57,12 @@ BOOL CSAGEDashDoc::OnOpenDocument(LPCTSTR lpszPathName)
         return FALSE;
     }
 
-    CWorksheet* pSheet = m_pWorkbook->GetSheet(0);
+    const CWorksheet& sheet = m_workbook.GetSheet(0);
     CString strLog;
     strLog.Format(_T("[성공] %s 로드 완료 (%d행 × %d열)"),
         lpszPathName,
-        pSheet->GetRowCount(),
-        pSheet->GetColumnCount());
+        sheet.GetRowCount(),
+        sheet.GetColumnCount());
     if (pFrame != nullptr)
         pFrame->LogMessage(strLog);
 
@@ -72,8 +73,8 @@ BOOL CSAGEDashDoc::OnOpenDocument(LPCTSTR lpszPathName)
 
 void CSAGEDashDoc::DeleteContents()
 {
-    delete m_pWorkbook;
-    m_pWorkbook = nullptr;
+    m_workbook.Clear();
+    m_isWorkbookLoaded = FALSE;
     CDocument::DeleteContents();
 }
 

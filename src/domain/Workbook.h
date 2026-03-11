@@ -26,21 +26,22 @@ class CWorkbook
 {
 public:
     CString                  m_strFilePath;
-    std::vector<CWorksheet*> m_arrSheets;
-
-    CWorkbook() {}
-
-    ~CWorkbook() {
-        for (int i = 0; i < (int)m_arrSheets.size(); i++)
-            delete m_arrSheets[i];
-        m_arrSheets.clear();
-    }
+    std::vector<CWorksheet>  m_arrSheets;
 
     int GetSheetCount() const {
         return (int)m_arrSheets.size();
     }
 
-    CWorksheet* GetSheet(int nIndex) const {
+    CWorksheet& GetSheet(int nIndex) {
         return m_arrSheets[nIndex];
+    }
+
+    const CWorksheet& GetSheet(int nIndex) const {
+        return m_arrSheets[nIndex];
+    }
+
+    void Clear() {
+        m_strFilePath.Empty();
+        m_arrSheets.clear();
     }
 };

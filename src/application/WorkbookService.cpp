@@ -9,7 +9,7 @@
 #define new DEBUG_NEW
 #endif
 
-CWorkbook* CWorkbookService::LoadFromFile(const CString& strFilePath)
+void CWorkbookService::LoadFromFile(const CString& strFilePath, CWorkbook& outWorkbook)
 {
     int nDot = strFilePath.ReverseFind(_T('.'));
     if (nDot < 0)
@@ -18,22 +18,21 @@ CWorkbook* CWorkbookService::LoadFromFile(const CString& strFilePath)
     CString strExt = strFilePath.Mid(nDot + 1);
     strExt.MakeLower();
 
-    if (strExt == _T("csv"))
-        return LoadCsvFile(strFilePath);
+    if (strExt == _T("csv")) {
+        LoadCsvFile(strFilePath, outWorkbook);
+        return;
+    }
 
     CString strMsg;
     strMsg.Format(_T("지원하지 않는 파일 형식입니다: .%s"), (LPCTSTR)strExt);
     throw SageException(strMsg, strFilePath);
 }
 
-CWorkbook* CWorkbookService::LoadCsvFile(const CString& strFilePath)
+void CWorkbookService::LoadCsvFile(const CString& strFilePath, CWorkbook& outWorkbook)
 {
+    outWorkbook.m_strFilePath = strFilePath;
+    outWorkbook.m_arrSheets.emplace_back();
+
     CCsvReader reader;
-    CWorksheet* pSheet = reader.ReadFile(strFilePath); // 실패 시 SageException 전파
-
-    CWorkbook* pWorkbook = new CWorkbook();
-    pWorkbook->m_strFilePath = strFilePath;
-    pWorkbook->m_arrSheets.push_back(pSheet);
-
-    return pWorkbook;
+    reader.ReadFile(strFilePath, outWorkbook.m_arrSheets.back());
 }

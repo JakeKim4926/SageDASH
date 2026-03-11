@@ -83,24 +83,24 @@ void CSAGEDashView::OnUpdate(CView* /*pSender*/, LPARAM /*lHint*/, CObject* /*pH
 
     ClearGrid();
 
-    if (pDoc == nullptr || pDoc->GetWorkbook() == nullptr)
+    if (pDoc == nullptr || !pDoc->HasWorkbook())
         return;
 
-    CWorksheet* pSheet = pDoc->GetWorkbook()->GetSheet(0);
-    if (pSheet == nullptr || pSheet->GetRowCount() == 0)
+    const CWorksheet& sheet = pDoc->GetWorkbook().GetSheet(0);
+    if (sheet.GetRowCount() == 0)
         return;
 
-    PopulateGrid(pSheet);
+    PopulateGrid(sheet);
 }
 
-void CSAGEDashView::PopulateGrid(CWorksheet* pSheet)
+void CSAGEDashView::PopulateGrid(const CWorksheet& sheet)
 {
-    int nRowCount = pSheet->GetRowCount();
+    int nRowCount = sheet.GetRowCount();
     if (nRowCount == 0)
         return;
 
     // 1행: 컬럼 헤더
-    const std::vector<CString>& headerRow = pSheet->m_arrRows[0];
+    const std::vector<CString>& headerRow = sheet.m_arrRows[0];
     int nColCount = (int)headerRow.size();
 
     for (int nCol = 0; nCol < nColCount; nCol++) {
@@ -115,7 +115,7 @@ void CSAGEDashView::PopulateGrid(CWorksheet* pSheet)
     // 2행~: 데이터
     int nDataRows = min(nRowCount - 1, MAX_PREVIEW_ROWS);
     for (int nRow = 1; nRow <= nDataRows; nRow++) {
-        const std::vector<CString>& row = pSheet->m_arrRows[nRow];
+        const std::vector<CString>& row = sheet.m_arrRows[nRow];
         int nCellCount = (int)row.size();
 
         CString strFirst = (nCellCount > 0) ? row[0] : CString(_T(""));

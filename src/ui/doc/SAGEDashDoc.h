@@ -13,7 +13,8 @@ protected:
 
 // 특성
 public:
-    CWorkbook* GetWorkbook() const { return m_pWorkbook; }
+    BOOL HasWorkbook() const { return m_isWorkbookLoaded; }
+    const CWorkbook& GetWorkbook() const { return m_workbook; }
 
 // 재정의
 public:
@@ -35,7 +36,8 @@ public:
 #endif
 
 private:
-    CWorkbook* m_pWorkbook;
+    CWorkbook   m_workbook;
+    BOOL        m_isWorkbookLoaded;
 
 protected:
     DECLARE_MESSAGE_MAP()
