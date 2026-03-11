@@ -16,6 +16,10 @@
 [Rr]elease/
 x64/
 x86/
+Debug_x64/
+Release_x64/
+Debug_x32/
+Release_x32/
 ARM/
 ARM64/
 Win32/
