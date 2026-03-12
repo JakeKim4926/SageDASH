@@ -10,7 +10,7 @@ public:
     SageLogger() {}
     ~SageLogger() {}
 
-    void Write(const CString& strMessage);
+    BOOL Write(const CString& strMessage);
 
 private:
     CString BuildLogFilePath(const SYSTEMTIME& st) const;

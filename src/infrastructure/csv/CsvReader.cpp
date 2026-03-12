@@ -18,7 +18,7 @@ void CCsvReader::ReadFile(const CString& strFilePath, CWorksheet& outSheet)
     outSheet.m_arrRows.clear();
 
     CString strLine;
-    bool isFirstLine = true;
+    BOOL isFirstLine = TRUE;
     while (file.ReadString(strLine)) {
         // UTF-8 BOM (EF BB BF) 제거 — CStdioFile이 바이트 단위로 읽어 3개 문자로 나타남
         if (isFirstLine) {
@@ -27,7 +27,7 @@ void CCsvReader::ReadFile(const CString& strFilePath, CWorksheet& outSheet)
                 strLine[1] == _T('\xBB') &&
                 strLine[2] == _T('\xBF'))
                 strLine = strLine.Mid(3);
-            isFirstLine = false;
+            isFirstLine = FALSE;
         }
         outSheet.m_arrRows.push_back(ParseLine(strLine));
     }
@@ -42,7 +42,7 @@ std::vector<CString> CCsvReader::ParseLine(const CString& strLine)
 {
     std::vector<CString> row;
     CString strCell;
-    bool isInQuote = false;
+    BOOL isInQuote = FALSE;
     int nLen = strLine.GetLength();
 
     for (int i = 0; i < nLen; i++) {
@@ -55,14 +55,14 @@ std::vector<CString> CCsvReader::ParseLine(const CString& strLine)
                     strCell += _T('"');
                     i++;
                 } else {
-                    isInQuote = false;
+                    isInQuote = FALSE;
                 }
             } else {
                 strCell += ch;
             }
         } else {
             if (ch == _T('"')) {
-                isInQuote = true;
+                isInQuote = TRUE;
             } else if (ch == _T(',')) {
                 row.push_back(strCell);
                 strCell.Empty();

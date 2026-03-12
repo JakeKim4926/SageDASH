@@ -50,7 +50,7 @@ void SageLogger::EnsureDirectoryExists(const CString& strDirPath) const
     CreateDirectory(strDirPath, NULL);
 }
 
-void SageLogger::Write(const CString& strMessage)
+BOOL SageLogger::Write(const CString& strMessage)
 {
     SYSTEMTIME st;
     GetLocalTime(&st);
@@ -60,7 +60,7 @@ void SageLogger::Write(const CString& strMessage)
     CStdioFile file;
     if (!file.Open(strFilePath,
         CFile::modeCreate | CFile::modeNoTruncate | CFile::modeWrite | CFile::typeText | CFile::shareDenyNone))
-        return;
+        return FALSE;
 
     file.SeekToEnd();
 
@@ -72,4 +72,5 @@ void SageLogger::Write(const CString& strMessage)
 
     file.WriteString(strEntry);
     file.Close();
+    return TRUE;
 }

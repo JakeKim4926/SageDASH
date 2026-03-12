@@ -18,6 +18,7 @@ void SageMgr::Initialize()
     if (m_bInitialized)
         return;
 
+    m_bInitialized = TRUE;
     // 추후 확장: 설정 로드, 서비스 초기화 등
 }
 
