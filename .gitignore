@@ -112,6 +112,9 @@ secrets.json
 Thumbs.db
 Desktop.ini
 
+#claude
+.claude/
+
 # =========================
 # Keep these in Git
 # =========================
