@@ -43,6 +43,8 @@ SAGEDash/
 └─ SAGEDash.slnx
 ```
 
+## 아키텍처 원칙
+
 ### 계층 분리
 - **UI 계층 (MFC)**: Document/View/Frame은 UI 셸. 상태 표시 중심으로 사용
 - **Application 계층**: 서비스/유스케이스/커맨드. 실제 업무 처리 로직 담당
