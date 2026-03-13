@@ -7,6 +7,12 @@
 #define new DEBUG_NEW
 #endif
 
+SageLogger::SageLogger()
+    : m_wLastYear(0)
+    , m_wLastMonth(0)
+{
+}
+
 CString SageLogger::GetExeDirectory() const
 {
     TCHAR szPath[MAX_PATH];
@@ -20,14 +26,18 @@ CString SageLogger::GetExeDirectory() const
     return strPath;
 }
 
-CString SageLogger::BuildLogFilePath(const SYSTEMTIME& st) const
+CString SageLogger::BuildLogFilePath(const SYSTEMTIME& st)
 {
     CString strDir;
     strDir.Format(_T("%s\\logs\\%04d\\%02d"),
         (LPCTSTR)GetExeDirectory(),
         st.wYear, st.wMonth);
 
-    EnsureDirectoryExists(strDir);
+    if (st.wYear != m_wLastYear || st.wMonth != m_wLastMonth) {
+        EnsureDirectoryExists(strDir);
+        m_wLastYear  = st.wYear;
+        m_wLastMonth = st.wMonth;
+    }
 
     CString strFile;
     strFile.Format(_T("%s\\%04d-%02d-%02d.log"),
@@ -52,6 +62,8 @@ void SageLogger::EnsureDirectoryExists(const CString& strDirPath) const
 
 BOOL SageLogger::Write(const CString& strMessage)
 {
+    CSingleLock lock(&m_cs, TRUE);
+
     SYSTEMTIME st;
     GetLocalTime(&st);
 
