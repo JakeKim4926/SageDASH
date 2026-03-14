@@ -75,6 +75,12 @@ void CSAGEDashDoc::Serialize(CArchive& ar)
 	UNREFERENCED_PARAMETER(ar);
 }
 
+void CSAGEDashDoc::ReportSaveLoadException(LPCTSTR /*lpszPathName*/, CException* /*e*/, BOOL /*bSaving*/, UINT /*nIDPDefault*/)
+{
+	// 오류 메시지는 OnOpenDocument에서 Output Pane과 로그 파일에 이미 기록됨
+	// MFC 기본 에러 다이얼로그 억제
+}
+
 #ifdef _DEBUG
 void CSAGEDashDoc::AssertValid() const
 {

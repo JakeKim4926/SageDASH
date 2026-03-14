@@ -19,6 +19,7 @@ public:
 	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
 	virtual void DeleteContents();
 	virtual void Serialize(CArchive& ar);
+	virtual void ReportSaveLoadException(LPCTSTR lpszPathName, CException* e, BOOL bSaving, UINT nIDPDefault);
 
 public:
 	virtual ~CSAGEDashDoc();
