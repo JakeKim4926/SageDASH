@@ -1,17 +1,10 @@
 ﻿
 #pragma once
 
-/////////////////////////////////////////////////////////////////////////////
-// COutputList 창
-
 class COutputList : public CListBox
 {
-// 생성입니다.
 public:
 	COutputList() noexcept;
-
-// 구현입니다.
-public:
 	virtual ~COutputList();
 
 protected:
@@ -25,31 +18,25 @@ protected:
 
 class COutputWnd : public CDockablePane
 {
-// 생성입니다.
 public:
 	COutputWnd() noexcept;
+	virtual ~COutputWnd();
 
 	void UpdateFonts();
-    void AppendLog(const CString& strMessage);
+	void AppendLog(const CString& strMessage);
 
-// 특성입니다.
 protected:
-	CMFCTabCtrl	m_wndTabs;
+	CMFCTabCtrl m_wndTabs;
 
 	COutputList m_wndOutputBuild;
 	COutputList m_wndOutputDebug;
 	COutputList m_wndOutputFind;
 
-protected:
 	void FillBuildWindow();
 	void FillDebugWindow();
 	void FillFindWindow();
 
 	void AdjustHorzScroll(CListBox& wndListBox);
-
-// 구현입니다.
-public:
-	virtual ~COutputWnd();
 
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);

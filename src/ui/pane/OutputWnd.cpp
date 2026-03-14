@@ -12,9 +12,6 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
-// COutputBar
-
 COutputWnd::COutputWnd() noexcept
 {
 }
@@ -36,14 +33,12 @@ int COutputWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CRect rectDummy;
 	rectDummy.SetRectEmpty();
 
-	// 탭 창을 만듭니다.
 	if (!m_wndTabs.Create(CMFCTabCtrl::STYLE_FLAT, rectDummy, this, 1))
 	{
 		TRACE0("출력 탭 창을 만들지 못했습니다.\n");
-		return -1;      // 만들지 못했습니다.
+		return -1;
 	}
 
-	// 출력 창을 만듭니다.
 	const DWORD dwStyle = LBS_NOINTEGRALHEIGHT | WS_CHILD | WS_VISIBLE | WS_HSCROLL | WS_VSCROLL;
 
 	if (!m_wndOutputBuild.Create(dwStyle, rectDummy, &m_wndTabs, 2) ||
@@ -51,7 +46,7 @@ int COutputWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		!m_wndOutputFind.Create(dwStyle, rectDummy, &m_wndTabs, 4))
 	{
 		TRACE0("출력 창을 만들지 못했습니다.\n");
-		return -1;      // 만들지 못했습니다.
+		return -1;
 	}
 
 	UpdateFonts();
@@ -59,7 +54,6 @@ int COutputWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CString strTabName;
 	BOOL bNameValid;
 
-	// 탭에 목록 창을 연결합니다.
 	bNameValid = strTabName.LoadString(IDS_BUILD_TAB);
 	ASSERT(bNameValid);
 	m_wndTabs.AddTab(&m_wndOutputBuild, strTabName, (UINT)0);
@@ -70,7 +64,6 @@ int COutputWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	ASSERT(bNameValid);
 	m_wndTabs.AddTab(&m_wndOutputFind, strTabName, (UINT)2);
 
-	// 출력 탭을 더미 텍스트로 채웁니다.
 	FillBuildWindow();
 	FillDebugWindow();
 	FillFindWindow();
@@ -82,7 +75,6 @@ void COutputWnd::OnSize(UINT nType, int cx, int cy)
 {
 	CDockablePane::OnSize(nType, cx, cy);
 
-	// Tab 컨트롤은 전체 클라이언트 영역을 처리해야 합니다.
 	m_wndTabs.SetWindowPos (nullptr, -1, -1, cx, cy, SWP_NOMOVE | SWP_NOACTIVATE | SWP_NOZORDER);
 }
 
@@ -107,12 +99,10 @@ void COutputWnd::AdjustHorzScroll(CListBox& wndListBox)
 
 void COutputWnd::FillBuildWindow()
 {
-    // 로그 탭은 런타임에 AppendLog()로 채워짐
 }
 
 void COutputWnd::AppendLog(const CString& strMessage)
 {
-    // 타임스탬프 포함 로그 형식: [HH:mm:ss] message
     SYSTEMTIME st;
     GetLocalTime(&st);
 
@@ -124,29 +114,20 @@ void COutputWnd::AppendLog(const CString& strMessage)
 
     m_wndOutputBuild.AddString(strEntry);
 
-    // 최신 항목이 보이도록 스크롤
     int nCount = m_wndOutputBuild.GetCount();
     if (nCount > 0)
         m_wndOutputBuild.SetTopIndex(nCount - 1);
 
     AdjustHorzScroll(m_wndOutputBuild);
-
-    // 로그 탭으로 포커스 전환
     m_wndTabs.SetActiveTab(0);
 }
 
 void COutputWnd::FillDebugWindow()
 {
-	m_wndOutputDebug.AddString(_T("여기에 디버그 출력이 표시됩니다."));
-	m_wndOutputDebug.AddString(_T("출력이 목록 뷰 행에 표시되지만"));
-	m_wndOutputDebug.AddString(_T("표시 방법을 원하는 대로 변경할 수 있습니다."));
 }
 
 void COutputWnd::FillFindWindow()
 {
-	m_wndOutputFind.AddString(_T("여기에 찾기 출력이 표시됩니다."));
-	m_wndOutputFind.AddString(_T("출력이 목록 뷰 행에 표시되지만"));
-	m_wndOutputFind.AddString(_T("표시 방법을 원하는 대로 변경할 수 있습니다."));
 }
 
 void COutputWnd::UpdateFonts()
@@ -174,8 +155,6 @@ BEGIN_MESSAGE_MAP(COutputList, CListBox)
 	ON_COMMAND(ID_VIEW_OUTPUTWND, OnViewOutput)
 	ON_WM_WINDOWPOSCHANGING()
 END_MESSAGE_MAP()
-/////////////////////////////////////////////////////////////////////////////
-// COutputList 메시지 처리기
 
 void COutputList::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 {
