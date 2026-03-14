@@ -3,7 +3,6 @@
 
 #include "SageLogger.h"
 
-// SageMgr: 앱 공통 인프라 서비스 레지스트리 (싱글톤)
 // sageMgr 매크로로 접근: sageMgr.Log(), sageMgr.GetLogger() 등
 class SageMgr
 {

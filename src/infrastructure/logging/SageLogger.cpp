@@ -49,7 +49,6 @@ CString SageLogger::BuildLogFilePath(const SYSTEMTIME& st)
 
 void SageLogger::EnsureDirectoryExists(const CString& strDirPath) const
 {
-    // 경로의 각 구성 요소를 순서대로 생성 (이미 존재하면 무시)
     for (int i = 0; i < strDirPath.GetLength(); i++) {
         if (strDirPath[i] == _T('\\')) {
             CString strPartial = strDirPath.Left(i);

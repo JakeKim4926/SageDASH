@@ -19,15 +19,12 @@ void SageMgr::Initialize()
         return;
 
     m_bInitialized = TRUE;
-    // 추후 확장: 설정 로드, 서비스 초기화 등
 }
 
 void SageMgr::Shutdown()
 {
     if (!m_bInitialized)
         return;
-
-    // 추후 확장: 리소스 정리
 }
 
 void SageMgr::Log(const CString& strMessage)

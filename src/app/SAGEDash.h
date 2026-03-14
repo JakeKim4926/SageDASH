@@ -1,6 +1,4 @@
 
-// SAGEDash.h: SAGEDash 애플리케이션의 기본 헤더 파일
-//
 #pragma once
 
 #ifndef __AFXWIN_H__

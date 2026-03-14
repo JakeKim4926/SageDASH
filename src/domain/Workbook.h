@@ -3,7 +3,6 @@
 
 #include <vector>
 
-// CWorksheet: 단일 시트의 행/열 데이터를 보관
 class CWorksheet
 {
 public:
@@ -21,7 +20,6 @@ public:
     }
 };
 
-// CWorkbook: 파일 하나를 표현하는 최상위 데이터 모델
 class CWorkbook
 {
 public:
