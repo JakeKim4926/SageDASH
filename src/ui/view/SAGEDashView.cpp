@@ -7,12 +7,11 @@
 #include "SAGEDashDoc.h"
 #include "SAGEDashView.h"
 #include "Workbook.h"
+#include "Define.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
-static const int MAX_PREVIEW_ROWS = 500;
 
 IMPLEMENT_DYNCREATE(CSAGEDashView, CView)
 
@@ -85,37 +84,53 @@ void CSAGEDashView::PopulateGrid(const CWorksheet& sheet)
 	if (nRowCount == 0)
 		return;
 
-	// 1행: 컬럼 헤더
+	LVCOLUMN lvc;
+	lvc.mask    = LVCF_TEXT | LVCF_WIDTH | LVCF_FMT;
+	lvc.fmt     = LVCFMT_RIGHT;
+	lvc.cx      = GRID_ROW_NUM_COLUMN_WIDTH;
+	lvc.pszText = _T("#");
+	m_lstGrid.InsertColumn(0, &lvc);
+
 	const std::vector<CString>& headerRow = sheet.m_arrRows[0];
 	int nColCount = (int)headerRow.size();
 
 	for (int nCol = 0; nCol < nColCount; nCol++) {
 		CString strHeader = headerRow[nCol];
-		LVCOLUMN lvc;
-		lvc.mask    = LVCF_TEXT | LVCF_WIDTH;
-		lvc.cx      = 120;
+		lvc.mask    = LVCF_TEXT | LVCF_WIDTH | LVCF_FMT;
+		lvc.fmt     = LVCFMT_LEFT;
+		lvc.cx      = GRID_COLUMN_WIDTH_DEFAULT;
 		lvc.pszText = (LPTSTR)(LPCTSTR)strHeader;
-		m_lstGrid.InsertColumn(nCol, &lvc);
+		m_lstGrid.InsertColumn(nCol + 1, &lvc);
 	}
 
-	// 2행~: 데이터
 	int nDataRows = min(nRowCount - 1, MAX_PREVIEW_ROWS);
 	for (int nRow = 1; nRow <= nDataRows; nRow++) {
 		const std::vector<CString>& row = sheet.m_arrRows[nRow];
 		int nCellCount = (int)row.size();
 
-		CString strFirst = (nCellCount > 0) ? row[0] : CString(_T(""));
+		CString strRowNum;
+		strRowNum.Format(_T("%d"), nRow);
+
 		LVITEM lvi;
 		lvi.mask     = LVIF_TEXT;
 		lvi.iItem    = nRow - 1;
 		lvi.iSubItem = 0;
-		lvi.pszText  = (LPTSTR)(LPCTSTR)strFirst;
+		lvi.pszText  = (LPTSTR)(LPCTSTR)strRowNum;
 		int nInserted = m_lstGrid.InsertItem(&lvi);
 
-		for (int nCol = 1; nCol < nColCount; nCol++) {
+		for (int nCol = 0; nCol < nColCount; nCol++) {
 			CString strCell = (nCol < nCellCount) ? row[nCol] : CString(_T(""));
-			m_lstGrid.SetItemText(nInserted, nCol, strCell);
+			m_lstGrid.SetItemText(nInserted, nCol + 1, strCell);
 		}
+	}
+
+	for (int nCol = 1; nCol <= nColCount; nCol++) {
+		m_lstGrid.SetColumnWidth(nCol, LVSCW_AUTOSIZE_USEHEADER);
+		int nWidth = m_lstGrid.GetColumnWidth(nCol);
+		if (nWidth > GRID_COLUMN_WIDTH_MAX)
+			m_lstGrid.SetColumnWidth(nCol, GRID_COLUMN_WIDTH_MAX);
+		else if (nWidth < GRID_COLUMN_WIDTH_MIN)
+			m_lstGrid.SetColumnWidth(nCol, GRID_COLUMN_WIDTH_MIN);
 	}
 }
 
