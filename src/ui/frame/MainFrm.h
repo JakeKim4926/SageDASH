@@ -2,10 +2,7 @@
 // MainFrm.h: CMainFrame 클래스의 인터페이스
 
 #pragma once
-#include "FileView.h"
-#include "ClassView.h"
 #include "OutputWnd.h"
-#include "PropertiesWnd.h"
 #include "SageMgr.h"
 
 class CMainFrame : public CMDIFrameWndEx
@@ -30,10 +27,7 @@ protected:
 	CMFCMenuBar       m_wndMenuBar;
 	CMFCToolBar       m_wndToolBar;
 	CMFCStatusBar     m_wndStatusBar;
-	CFileView         m_wndFileView;
-	CClassView        m_wndClassView;
 	COutputWnd        m_wndOutput;
-	CPropertiesWnd    m_wndProperties;
 
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
