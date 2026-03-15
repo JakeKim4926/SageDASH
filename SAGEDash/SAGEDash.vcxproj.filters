@@ -134,9 +134,6 @@
     <ClInclude Include="..\src\infrastructure\logging\SageLogger.h">
       <Filter>헤더 파일\infrastructure\logging</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\ui\controls\ViewTree.h">
-      <Filter>헤더 파일\ui\controls</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\ui\doc\SAGEDashDoc.h">
       <Filter>헤더 파일\ui\doc</Filter>
     </ClInclude>
@@ -146,12 +143,6 @@
     <ClInclude Include="..\src\ui\frame\MainFrm.h">
       <Filter>헤더 파일\ui\frame</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\ui\pane\ClassView.h">
-      <Filter>헤더 파일\ui\pane</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\ui\pane\FileView.h">
-      <Filter>헤더 파일\ui\pane</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\ui\pane\NavigatorPane.h">
       <Filter>헤더 파일\ui\pane</Filter>
     </ClInclude>
@@ -159,9 +150,6 @@
       <Filter>헤더 파일\ui\pane</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ui\pane\PropertiesPane.h">
-      <Filter>헤더 파일\ui\pane</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\ui\pane\PropertiesWnd.h">
       <Filter>헤더 파일\ui\pane</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ui\view\SAGEDashView.h">
@@ -190,9 +178,6 @@
     <ClCompile Include="..\src\common\SageMgr.cpp">
       <Filter>소스 파일\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ui\controls\ViewTree.cpp">
-      <Filter>소스 파일\ui\controls</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\ui\doc\SAGEDashDoc.cpp">
       <Filter>소스 파일\ui\doc</Filter>
     </ClCompile>
@@ -202,12 +187,6 @@
     <ClCompile Include="..\src\ui\frame\MainFrm.cpp">
       <Filter>소스 파일\ui\frame</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ui\pane\ClassView.cpp">
-      <Filter>소스 파일\ui\pane</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\ui\pane\FileView.cpp">
-      <Filter>소스 파일\ui\pane</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\ui\pane\NavigatorPane.cpp">
       <Filter>소스 파일\ui\pane</Filter>
     </ClCompile>
@@ -215,9 +194,6 @@
       <Filter>소스 파일\ui\pane</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ui\pane\PropertiesPane.cpp">
-      <Filter>소스 파일\ui\pane</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\ui\pane\PropertiesWnd.cpp">
       <Filter>소스 파일\ui\pane</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ui\view\SAGEDashView.cpp">
