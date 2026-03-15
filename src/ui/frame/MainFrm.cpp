@@ -20,6 +20,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_COMMAND_RANGE(ID_VIEW_APPLOOK_WIN_2000, ID_VIEW_APPLOOK_WINDOWS_7, &CMainFrame::OnApplicationLook)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_VIEW_APPLOOK_WIN_2000, ID_VIEW_APPLOOK_WINDOWS_7, &CMainFrame::OnUpdateApplicationLook)
 	ON_WM_SETTINGCHANGE()
+	ON_WM_GETMINMAXINFO()
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -104,8 +105,12 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 	}
 
+	m_wndNavigator.EnableDocking(CBRS_ALIGN_ANY);
+	m_wndProperties.EnableDocking(CBRS_ALIGN_ANY);
 	m_wndOutput.EnableDocking(CBRS_ALIGN_ANY);
-	DockPane(&m_wndOutput);
+	DockPane(&m_wndNavigator);
+	DockPane(&m_wndProperties, AFX_IDW_DOCKBAR_RIGHT);
+	DockPane(&m_wndOutput, AFX_IDW_DOCKBAR_BOTTOM);
 
 	OnApplicationLook(theApp.m_nAppLook);
 
@@ -128,14 +133,35 @@ BOOL CMainFrame::CreateDockingWindows()
 {
 	BOOL bNameValid;
 
+	CString strNavigatorWnd;
+	bNameValid = strNavigatorWnd.LoadString(IDS_NAVIGATOR_WND);
+	ASSERT(bNameValid);
+	if (!m_wndNavigator.Create(strNavigatorWnd, this, CRect(0, 0, 184, 400), TRUE, ID_VIEW_NAVIGATORWND, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_LEFT | CBRS_FLOAT_MULTI))
+	{
+		TRACE0("네비게이터 창을 만들지 못했습니다.\n");
+		return FALSE;
+	}
+	m_wndNavigator.SetMinSize(CSize(120, 100));
+
+	CString strPropertiesWnd;
+	bNameValid = strPropertiesWnd.LoadString(IDS_PROPERTIES_WND);
+	ASSERT(bNameValid);
+	if (!m_wndProperties.Create(strPropertiesWnd, this, CRect(0, 0, 200, 400), TRUE, ID_VIEW_PROPERTIESWND, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_RIGHT | CBRS_FLOAT_MULTI))
+	{
+		TRACE0("속성 창을 만들지 못했습니다.\n");
+		return FALSE;
+	}
+	m_wndProperties.SetMinSize(CSize(140, 100));
+
 	CString strOutputWnd;
 	bNameValid = strOutputWnd.LoadString(IDS_OUTPUT_WND);
 	ASSERT(bNameValid);
-	if (!m_wndOutput.Create(strOutputWnd, this, CRect(0, 0, 100, 100), TRUE, ID_VIEW_OUTPUTWND, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_BOTTOM | CBRS_FLOAT_MULTI))
+	if (!m_wndOutput.Create(strOutputWnd, this, CRect(0, 0, 100, 120), TRUE, ID_VIEW_OUTPUTWND, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_BOTTOM | CBRS_FLOAT_MULTI))
 	{
 		TRACE0("출력 창을 만들지 못했습니다.\n");
 		return FALSE;
 	}
+	m_wndOutput.SetMinSize(CSize(100, 72));
 
 	SetDockingWindowIcons(theApp.m_bHiColorIcons);
 	return TRUE;
@@ -147,6 +173,13 @@ void CMainFrame::SetDockingWindowIcons(BOOL bHiColorIcons)
 	m_wndOutput.SetIcon(hOutputBarIcon, FALSE);
 
 	UpdateMDITabbedBarsIcons();
+}
+
+void CMainFrame::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
+{
+	lpMMI->ptMinTrackSize.x = 800;
+	lpMMI->ptMinTrackSize.y = 600;
+	CMDIFrameWndEx::OnGetMinMaxInfo(lpMMI);
 }
 
 #ifdef _DEBUG
