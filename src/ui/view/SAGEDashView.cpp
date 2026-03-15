@@ -13,11 +13,14 @@
 #define new DEBUG_NEW
 #endif
 
+#define IDC_SEARCH_EDIT 100
+
 IMPLEMENT_DYNCREATE(CSAGEDashView, CView)
 
 BEGIN_MESSAGE_MAP(CSAGEDashView, CView)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
+	ON_EN_CHANGE(IDC_SEARCH_EDIT, OnEnChangeSearch)
 END_MESSAGE_MAP()
 
 CSAGEDashView::CSAGEDashView() noexcept
@@ -36,9 +39,16 @@ int CSAGEDashView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CRect rectDummy;
 	rectDummy.SetRectEmpty();
 
+	if (!m_edtSearch.Create(
+			WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL,
+			rectDummy, this, IDC_SEARCH_EDIT)) {
+		TRACE0("검색 컨트롤을 만들지 못했습니다.\n");
+		return -1;
+	}
+
 	if (!m_lstGrid.Create(
 			WS_CHILD | WS_VISIBLE | LVS_REPORT | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER,
-			rectDummy, this, 1)) {
+			rectDummy, this, 2)) {
 		TRACE0("그리드 컨트롤을 만들지 못했습니다.\n");
 		return -1;
 	}
@@ -51,8 +61,20 @@ void CSAGEDashView::OnSize(UINT nType, int cx, int cy)
 {
 	CView::OnSize(nType, cx, cy);
 
-	if (m_lstGrid.GetSafeHwnd() != nullptr)
-		m_lstGrid.SetWindowPos(nullptr, 0, 0, cx, cy, SWP_NOZORDER | SWP_NOACTIVATE);
+	if (m_edtSearch.GetSafeHwnd() == nullptr || m_lstGrid.GetSafeHwnd() == nullptr)
+		return;
+
+	int nSearchTop  = SEARCH_BAR_MARGIN;
+	int nSearchH    = SEARCH_BAR_HEIGHT;
+	int nGridTop    = nSearchTop + nSearchH + SEARCH_BAR_MARGIN;
+	int nGridHeight = cy - nGridTop;
+	if (nGridHeight < 0)
+		nGridHeight = 0;
+
+	m_edtSearch.SetWindowPos(nullptr, SEARCH_BAR_MARGIN, nSearchTop,
+		cx - SEARCH_BAR_MARGIN * 2, nSearchH, SWP_NOZORDER | SWP_NOACTIVATE);
+	m_lstGrid.SetWindowPos(nullptr, 0, nGridTop,
+		cx, nGridHeight, SWP_NOZORDER | SWP_NOACTIVATE);
 }
 
 void CSAGEDashView::OnInitialUpdate()
@@ -68,6 +90,9 @@ void CSAGEDashView::OnUpdate(CView* /*pSender*/, LPARAM /*lHint*/, CObject* /*pH
 
 	ClearGrid();
 
+	if (m_edtSearch.GetSafeHwnd() != nullptr)
+		m_edtSearch.SetWindowText(_T(""));
+
 	if (pDoc == nullptr || !pDoc->HasData())
 		return;
 
@@ -76,6 +101,85 @@ void CSAGEDashView::OnUpdate(CView* /*pSender*/, LPARAM /*lHint*/, CObject* /*pH
 		return;
 
 	PopulateGrid(sheet);
+}
+
+void CSAGEDashView::OnEnChangeSearch()
+{
+	CString strKeyword;
+	m_edtSearch.GetWindowText(strKeyword);
+	FilterGrid(strKeyword);
+}
+
+void CSAGEDashView::FilterGrid(const CString& strKeyword)
+{
+	CSAGEDashDoc* pDoc = GetDocument();
+	if (pDoc == nullptr || !pDoc->HasData())
+		return;
+
+	const DataSheet& sheet = pDoc->GetData().GetSheet(0);
+	if (sheet.GetRowCount() == 0)
+		return;
+
+	m_lstGrid.DeleteAllItems();
+
+	if (strKeyword.IsEmpty()) {
+		int nColCount = m_lstGrid.GetHeaderCtrl() ? m_lstGrid.GetHeaderCtrl()->GetItemCount() - 1 : 0;
+		int nDataRows = min(sheet.GetRowCount() - 1, MAX_PREVIEW_ROWS);
+		int nInsertIdx = 0;
+		for (int nRow = 1; nRow <= nDataRows; nRow++) {
+			const std::vector<CString>& row = sheet.m_arrRows[nRow];
+			CString strRowNum;
+			strRowNum.Format(_T("%d"), nRow);
+
+			LVITEM lvi   = {};
+			lvi.mask     = LVIF_TEXT;
+			lvi.iItem    = nInsertIdx++;
+			lvi.pszText  = (LPTSTR)(LPCTSTR)strRowNum;
+			int nIdx = m_lstGrid.InsertItem(&lvi);
+
+			for (int nCol = 0; nCol < nColCount; nCol++) {
+				CString strCell = (nCol < (int)row.size()) ? row[nCol] : CString(_T(""));
+				m_lstGrid.SetItemText(nIdx, nCol + 1, strCell);
+			}
+		}
+		return;
+	}
+
+	CString strKeyLower = strKeyword;
+	strKeyLower.MakeLower();
+
+	int nColCount  = m_lstGrid.GetHeaderCtrl() ? m_lstGrid.GetHeaderCtrl()->GetItemCount() - 1 : 0;
+	int nDataRows  = min(sheet.GetRowCount() - 1, MAX_PREVIEW_ROWS);
+	int nInsertIdx = 0;
+
+	for (int nRow = 1; nRow <= nDataRows; nRow++) {
+		const std::vector<CString>& row = sheet.m_arrRows[nRow];
+		BOOL bMatch = FALSE;
+		for (int nCol = 0; nCol < (int)row.size(); nCol++) {
+			CString strCell = row[nCol];
+			strCell.MakeLower();
+			if (strCell.Find(strKeyLower) >= 0) {
+				bMatch = TRUE;
+				break;
+			}
+		}
+		if (!bMatch)
+			continue;
+
+		CString strRowNum;
+		strRowNum.Format(_T("%d"), nRow);
+
+		LVITEM lvi  = {};
+		lvi.mask    = LVIF_TEXT;
+		lvi.iItem   = nInsertIdx++;
+		lvi.pszText = (LPTSTR)(LPCTSTR)strRowNum;
+		int nIdx    = m_lstGrid.InsertItem(&lvi);
+
+		for (int nCol = 0; nCol < nColCount; nCol++) {
+			CString strCell = (nCol < (int)row.size()) ? row[nCol] : CString(_T(""));
+			m_lstGrid.SetItemText(nIdx, nCol + 1, strCell);
+		}
+	}
 }
 
 void CSAGEDashView::PopulateGrid(const DataSheet& sheet)
