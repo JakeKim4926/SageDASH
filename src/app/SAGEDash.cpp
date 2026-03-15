@@ -42,7 +42,7 @@ BOOL CSAGEDashApp::InitInstance()
 	sageMgr.Initialize();
 	EnableTaskbarInteraction();
 
-	SetRegistryKey(_T("로컬 애플리케이션 마법사에서 생성된 애플리케이션"));
+	SetRegistryKey(_T("SAGEDash"));
 	LoadStdProfileSettings(4);
 
 	InitContextMenuManager();
