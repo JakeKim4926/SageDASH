@@ -20,7 +20,7 @@ BEGIN_MESSAGE_MAP(CSAGEDashDoc, CDocument)
 END_MESSAGE_MAP()
 
 CSAGEDashDoc::CSAGEDashDoc() noexcept
-	: m_isWorkbookLoaded(FALSE)
+	: m_isDataLoaded(FALSE)
 {
 }
 
@@ -36,8 +36,8 @@ BOOL CSAGEDashDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	WorkbookService service;
 
 	try {
-		service.LoadFromFile(lpszPathName, m_workbook);
-		m_isWorkbookLoaded = TRUE;
+		service.LoadFromFile(lpszPathName, m_data);
+		m_isDataLoaded = TRUE;
 	} catch (const SageException& e) {
 		CString strLog;
 		strLog.Format(_T("[실패] %s"), (LPCTSTR)e.Format());
@@ -48,7 +48,7 @@ BOOL CSAGEDashDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		return FALSE;
 	}
 
-	const CWorksheet& sheet = m_workbook.GetSheet(0);
+	const CDataSheet& sheet = m_data.GetSheet(0);
 
 	// 헤더만 있고 데이터 행이 없는 경우 경고 로그
 	if (sheet.GetRowCount() <= 1) {
@@ -77,8 +77,8 @@ BOOL CSAGEDashDoc::OnOpenDocument(LPCTSTR lpszPathName)
 
 void CSAGEDashDoc::DeleteContents()
 {
-	m_workbook.Clear();
-	m_isWorkbookLoaded = FALSE;
+	m_data.Clear();
+	m_isDataLoaded = FALSE;
 
 	CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
 	if (pFrame != nullptr)
@@ -89,7 +89,7 @@ void CSAGEDashDoc::DeleteContents()
 
 void CSAGEDashDoc::Serialize(CArchive& ar)
 {
-	// CSV 파일은 OnOpenDocument에서 직접 로드하므로 Serialize 사용 안 함
+	// 파일은 OnOpenDocument에서 직접 로드하므로 Serialize 사용 안 함
 	UNREFERENCED_PARAMETER(ar);
 }
 

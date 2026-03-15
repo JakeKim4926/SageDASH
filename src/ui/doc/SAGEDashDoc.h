@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "Workbook.h"
+#include "TabularData.h"
 
 class CSAGEDashDoc : public CDocument
 {
@@ -12,8 +12,8 @@ protected:
 	DECLARE_DYNCREATE(CSAGEDashDoc)
 
 public:
-	BOOL HasWorkbook() const { return m_isWorkbookLoaded; }
-	const CWorkbook& GetWorkbook() const { return m_workbook; }
+	BOOL HasData() const { return m_isDataLoaded; }
+	const CTabularData& GetData() const { return m_data; }
 
 public:
 	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
@@ -29,8 +29,8 @@ public:
 #endif
 
 private:
-	CWorkbook   m_workbook;
-	BOOL        m_isWorkbookLoaded;
+	CTabularData m_data;
+	BOOL         m_isDataLoaded;
 
 protected:
 	DECLARE_MESSAGE_MAP()
