@@ -67,6 +67,7 @@ BOOL CSAGEDashDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	if (pFrame != nullptr) {
 		pFrame->LogMessage(strLog);
 		pFrame->GetPropertiesPane().SetFileInfo(lpszPathName, m_data);
+		pFrame->GetNavigatorPane().ActivatePipelineItems(TRUE);
 	}
 
 	SetModifiedFlag(FALSE);
@@ -80,8 +81,10 @@ void CSAGEDashDoc::DeleteContents()
 	m_isDataLoaded = FALSE;
 
 	CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-	if (pFrame != nullptr)
+	if (pFrame != nullptr) {
+		pFrame->GetNavigatorPane().ActivatePipelineItems(FALSE);
 		pFrame->GetPropertiesPane().ClearInfo();
+	}
 
 	CDocument::DeleteContents();
 }

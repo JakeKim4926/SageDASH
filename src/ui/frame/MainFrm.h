@@ -17,6 +17,7 @@ public:
 
 public:
 	void LogMessage(const CString& strMessage);
+	CNavigatorPane&  GetNavigatorPane()  { return m_wndNavigator; }
 	CPropertiesPane& GetPropertiesPane() { return m_wndProperties; }
 
 public:
