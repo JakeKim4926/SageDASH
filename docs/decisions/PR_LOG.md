@@ -5,3 +5,9 @@
 - **변경 내용**: Navigator/Properties Pane 신규 추가, COLOR_* 색상 토큰 정의, 최소 윈도우 크기 800×600 적용
 - **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/1
 - **결과**: merged
+
+## [2026-03-15] feature/phase1-error-handling
+- **목적**: Phase 1 오류 처리 안정화 (1-4) 구현
+- **변경 내용**: 에러 다이얼로그, 헤더 전용 파일 경고, Properties Pane 연동, CSV 인코딩 결정 문서화
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/2
+- **결과**: merged
