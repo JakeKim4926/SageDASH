@@ -66,7 +66,7 @@ BOOL CSAGEDashDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	sageMgr.Log(strLog);
 	if (pFrame != nullptr) {
 		pFrame->LogMessage(strLog);
-		pFrame->GetPropertiesPane().SetFileInfo(lpszPathName, sheet.GetRowCount(), sheet.GetColumnCount());
+		pFrame->GetPropertiesPane().SetFileInfo(lpszPathName, m_data);
 	}
 
 	SetModifiedFlag(FALSE);
