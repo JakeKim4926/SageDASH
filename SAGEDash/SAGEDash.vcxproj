@@ -198,7 +198,9 @@
     <ClInclude Include="..\src\ui\frame\ChildFrm.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="..\src\ui\frame\MainFrm.h" />
+    <ClInclude Include="..\src\ui\pane\NavigatorPane.h" />
     <ClInclude Include="..\src\ui\pane\OutputWnd.h" />
+    <ClInclude Include="..\src\ui\pane\PropertiesPane.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="..\src\app\SAGEDash.h" />
@@ -215,7 +217,9 @@
   <ItemGroup>
     <ClCompile Include="..\src\ui\frame\ChildFrm.cpp" />
     <ClCompile Include="..\src\ui\frame\MainFrm.cpp" />
+    <ClCompile Include="..\src\ui\pane\NavigatorPane.cpp" />
     <ClCompile Include="..\src\ui\pane\OutputWnd.cpp" />
+    <ClCompile Include="..\src\ui\pane\PropertiesPane.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
