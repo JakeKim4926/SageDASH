@@ -13,7 +13,7 @@ protected:
 
 public:
 	BOOL HasData() const { return m_isDataLoaded; }
-	const CTabularData& GetData() const { return m_data; }
+	const TabularData& GetData() const { return m_data; }
 
 public:
 	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
@@ -29,8 +29,8 @@ public:
 #endif
 
 private:
-	CTabularData m_data;
-	BOOL         m_isDataLoaded;
+	TabularData m_data;
+	BOOL        m_isDataLoaded;
 
 protected:
 	DECLARE_MESSAGE_MAP()

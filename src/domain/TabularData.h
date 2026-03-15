@@ -3,7 +3,7 @@
 
 #include <vector>
 
-class CDataSheet
+class DataSheet
 {
 public:
     CString                             m_strName;
@@ -20,21 +20,21 @@ public:
     }
 };
 
-class CTabularData
+class TabularData
 {
 public:
-    CString                  m_strFilePath;
-    std::vector<CDataSheet>  m_arrSheets;
+    CString                m_strFilePath;
+    std::vector<DataSheet> m_arrSheets;
 
     int GetSheetCount() const {
         return (int)m_arrSheets.size();
     }
 
-    CDataSheet& GetSheet(int nIndex) {
+    DataSheet& GetSheet(int nIndex) {
         return m_arrSheets[nIndex];
     }
 
-    const CDataSheet& GetSheet(int nIndex) const {
+    const DataSheet& GetSheet(int nIndex) const {
         return m_arrSheets[nIndex];
     }
 

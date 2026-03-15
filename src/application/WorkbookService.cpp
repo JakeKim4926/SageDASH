@@ -2,7 +2,6 @@
 #include "pch.h"
 #include "framework.h"
 #include "WorkbookService.h"
-#include "IInputReader.h"
 #include "CsvInputReader.h"
 #include "ExcelInputReader.h"
 #include "SageException.h"
@@ -11,7 +10,7 @@
 #define new DEBUG_NEW
 #endif
 
-void WorkbookService::LoadFromFile(const CString& strFilePath, CTabularData& outData)
+void WorkbookService::LoadFromFile(const CString& strFilePath, TabularData& outData)
 {
     int nDot = strFilePath.ReverseFind(_T('.'));
     if (nDot < 0)
@@ -20,19 +19,19 @@ void WorkbookService::LoadFromFile(const CString& strFilePath, CTabularData& out
     CString strExt = strFilePath.Mid(nDot + 1);
     strExt.MakeLower();
 
-    auto reader = CreateReader(strExt);
-    reader->Read(strFilePath, outData);
-}
+    if (strExt == _T("csv")) {
+        CsvInputReader reader;
+        reader.Read(strFilePath, outData);
+        return;
+    }
 
-std::unique_ptr<IInputReader> WorkbookService::CreateReader(const CString& strExt)
-{
-    if (strExt == _T("csv"))
-        return std::make_unique<CsvInputReader>();
-
-    if (strExt == _T("xlsx") || strExt == _T("xls"))
-        return std::make_unique<ExcelInputReader>();
+    if (strExt == _T("xlsx") || strExt == _T("xls")) {
+        ExcelInputReader reader;
+        reader.Read(strFilePath, outData);
+        return;
+    }
 
     CString strMsg;
     strMsg.Format(_T("지원하지 않는 파일 형식입니다: .%s"), (LPCTSTR)strExt);
-    throw SageException(strMsg, _T(""));
+    throw SageException(strMsg, strFilePath);
 }

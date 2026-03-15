@@ -3,6 +3,8 @@
 
 #pragma once
 
+class DataSheet;
+
 class CSAGEDashView : public CView
 {
 protected:
@@ -27,7 +29,7 @@ public:
 private:
 	CListCtrl m_lstGrid;
 
-	void PopulateGrid(const CDataSheet& sheet);
+	void PopulateGrid(const DataSheet& sheet);
 	void ClearGrid();
 
 protected:

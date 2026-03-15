@@ -71,14 +71,14 @@ void CSAGEDashView::OnUpdate(CView* /*pSender*/, LPARAM /*lHint*/, CObject* /*pH
 	if (pDoc == nullptr || !pDoc->HasData())
 		return;
 
-	const CDataSheet& sheet = pDoc->GetData().GetSheet(0);
+	const DataSheet& sheet = pDoc->GetData().GetSheet(0);
 	if (sheet.GetRowCount() == 0)
 		return;
 
 	PopulateGrid(sheet);
 }
 
-void CSAGEDashView::PopulateGrid(const CDataSheet& sheet)
+void CSAGEDashView::PopulateGrid(const DataSheet& sheet)
 {
 	int nRowCount = sheet.GetRowCount();
 	if (nRowCount == 0)

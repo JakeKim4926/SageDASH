@@ -8,16 +8,15 @@
 #define new DEBUG_NEW
 #endif
 
-// IDispatch 호출을 위한 헬퍼 — Microsoft KB 예제 기반
 HRESULT ExcelInputReader::AutoWrap(int autoType, VARIANT* pvResult,
                                    IDispatch* pDisp, LPOLESTR ptName, int cArgs, ...)
 {
     va_list marker;
     va_start(marker, cArgs);
 
-    DISPPARAMS dp   = { nullptr, nullptr, 0, 0 };
+    DISPPARAMS dp      = { nullptr, nullptr, 0, 0 };
     DISPID dispidNamed = DISPID_PROPERTYPUT;
-    DISPID dispID   = 0;
+    DISPID dispID      = 0;
 
     HRESULT hr = pDisp->GetIDsOfNames(IID_NULL, &ptName, 1,
                                        LOCALE_USER_DEFAULT, &dispID);
@@ -75,7 +74,7 @@ CString ExcelInputReader::VariantToCString(const VARIANT& v)
     return str;
 }
 
-void ExcelInputReader::Read(const CString& strFilePath, CTabularData& outData)
+void ExcelInputReader::Read(const CString& strFilePath, TabularData& outData)
 {
     CLSID clsid;
     HRESULT hr = CLSIDFromProgID(L"Excel.Application", &clsid);
@@ -88,30 +87,23 @@ void ExcelInputReader::Read(const CString& strFilePath, CTabularData& outData)
     if (FAILED(hr) || pXlApp == nullptr)
         throw SageException(_T("Excel 애플리케이션을 시작할 수 없습니다."), strFilePath);
 
-    auto cleanup = [&](bool bQuit) {
-        if (bQuit) {
-            AutoWrap(DISPATCH_METHOD, nullptr, pXlApp, L"Quit", 0);
-        }
-        pXlApp->Release();
-    };
-
-    // Visible = False, DisplayAlerts = False
     VARIANT vFalse;
     vFalse.vt = VT_BOOL; vFalse.boolVal = VARIANT_FALSE;
     AutoWrap(DISPATCH_PROPERTYPUT, nullptr, pXlApp, L"Visible", 1, vFalse);
     AutoWrap(DISPATCH_PROPERTYPUT, nullptr, pXlApp, L"DisplayAlerts", 1, vFalse);
 
-    // Workbooks.Open(filePath)
-    VARIANT vWbs, vPath;
+    VARIANT vWbs;
     VariantInit(&vWbs);
     AutoWrap(DISPATCH_PROPERTYGET, &vWbs, pXlApp, L"Workbooks", 0);
     if (vWbs.vt != VT_DISPATCH || vWbs.pdispVal == nullptr) {
-        cleanup(true);
+        AutoWrap(DISPATCH_METHOD, nullptr, pXlApp, L"Quit", 0);
+        pXlApp->Release();
         throw SageException(_T("Excel Workbooks 컬렉션을 가져올 수 없습니다."), strFilePath);
     }
     IDispatch* pWorkbooks = vWbs.pdispVal;
 
-    vPath.vt = VT_BSTR;
+    VARIANT vPath;
+    vPath.vt      = VT_BSTR;
     vPath.bstrVal = strFilePath.AllocSysString();
     VARIANT vWb;
     VariantInit(&vWb);
@@ -120,14 +112,14 @@ void ExcelInputReader::Read(const CString& strFilePath, CTabularData& outData)
     pWorkbooks->Release();
 
     if (vWb.vt != VT_DISPATCH || vWb.pdispVal == nullptr) {
-        cleanup(true);
+        AutoWrap(DISPATCH_METHOD, nullptr, pXlApp, L"Quit", 0);
+        pXlApp->Release();
         throw SageException(_T("Excel 파일을 열 수 없습니다."), strFilePath);
     }
     IDispatch* pWorkbook = vWb.pdispVal;
 
     outData.m_strFilePath = strFilePath;
 
-    // Worksheets 컬렉션
     VARIANT vSheets;
     VariantInit(&vSheets);
     AutoWrap(DISPATCH_PROPERTYGET, &vSheets, pWorkbook, L"Worksheets", 0);
@@ -148,17 +140,15 @@ void ExcelInputReader::Read(const CString& strFilePath, CTabularData& outData)
             continue;
         IDispatch* pSheet = vSheet.pdispVal;
 
-        // Sheet name
         VARIANT vName;
         VariantInit(&vName);
         AutoWrap(DISPATCH_PROPERTYGET, &vName, pSheet, L"Name", 0);
 
         outData.m_arrSheets.emplace_back();
-        CDataSheet& sheet = outData.m_arrSheets.back();
+        DataSheet& sheet = outData.m_arrSheets.back();
         sheet.m_strName = (vName.vt == VT_BSTR) ? CString(vName.bstrVal) : _T("Sheet");
         VariantClear(&vName);
 
-        // UsedRange.Value2 → 2D SAFEARRAY
         VARIANT vRange;
         VariantInit(&vRange);
         AutoWrap(DISPATCH_PROPERTYGET, &vRange, pSheet, L"UsedRange", 0);
@@ -194,7 +184,6 @@ void ExcelInputReader::Read(const CString& strFilePath, CTabularData& outData)
                 sheet.m_arrRows.push_back(std::move(row));
             }
         } else if (vValues.vt != VT_EMPTY && vValues.vt != VT_NULL) {
-            // UsedRange가 단일 셀인 경우 — SAFEARRAY가 아닌 단일 VARIANT
             std::vector<CString> row;
             row.push_back(VariantToCString(vValues));
             sheet.m_arrRows.push_back(std::move(row));
@@ -206,13 +195,13 @@ void ExcelInputReader::Read(const CString& strFilePath, CTabularData& outData)
 
     pSheets->Release();
 
-    // Close workbook (저장 안 함)
     VARIANT vSave;
     vSave.vt = VT_BOOL; vSave.boolVal = VARIANT_FALSE;
     AutoWrap(DISPATCH_METHOD, nullptr, pWorkbook, L"Close", 1, vSave);
     pWorkbook->Release();
 
-    cleanup(true);
+    AutoWrap(DISPATCH_METHOD, nullptr, pXlApp, L"Quit", 0);
+    pXlApp->Release();
 
     if (outData.m_arrSheets.empty() || outData.m_arrSheets[0].GetRowCount() == 0)
         throw SageException(_T("Excel 파일이 비어 있습니다."), strFilePath);

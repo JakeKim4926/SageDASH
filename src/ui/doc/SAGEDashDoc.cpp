@@ -48,9 +48,8 @@ BOOL CSAGEDashDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		return FALSE;
 	}
 
-	const CDataSheet& sheet = m_data.GetSheet(0);
+	const DataSheet& sheet = m_data.GetSheet(0);
 
-	// 헤더만 있고 데이터 행이 없는 경우 경고 로그
 	if (sheet.GetRowCount() <= 1) {
 		CString strWarn;
 		strWarn.Format(_T("[경고] %s — 헤더만 있고 데이터가 없습니다."), lpszPathName);
@@ -89,14 +88,11 @@ void CSAGEDashDoc::DeleteContents()
 
 void CSAGEDashDoc::Serialize(CArchive& ar)
 {
-	// 파일은 OnOpenDocument에서 직접 로드하므로 Serialize 사용 안 함
 	UNREFERENCED_PARAMETER(ar);
 }
 
 void CSAGEDashDoc::ReportSaveLoadException(LPCTSTR /*lpszPathName*/, CException* /*e*/, BOOL /*bSaving*/, UINT /*nIDPDefault*/)
 {
-	// 오류 메시지는 OnOpenDocument에서 Output Pane과 로그 파일에 이미 기록됨
-	// MFC 기본 에러 다이얼로그 억제
 }
 
 #ifdef _DEBUG

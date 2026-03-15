@@ -8,7 +8,7 @@
 #define new DEBUG_NEW
 #endif
 
-void CsvInputReader::Read(const CString& strFilePath, CTabularData& outData)
+void CsvInputReader::Read(const CString& strFilePath, TabularData& outData)
 {
     CStdioFile file;
     if (!file.Open(strFilePath, CFile::modeRead | CFile::typeText | CFile::shareDenyWrite))
@@ -16,13 +16,12 @@ void CsvInputReader::Read(const CString& strFilePath, CTabularData& outData)
 
     outData.m_strFilePath = strFilePath;
     outData.m_arrSheets.emplace_back();
-    CDataSheet& sheet = outData.m_arrSheets.back();
+    DataSheet& sheet = outData.m_arrSheets.back();
     sheet.m_strName = _T("Sheet1");
 
     CString strLine;
     BOOL isFirstLine = TRUE;
     while (file.ReadString(strLine)) {
-        // UTF-8 BOM (EF BB BF) 제거
         if (isFirstLine) {
             if (strLine.GetLength() >= 3 &&
                 strLine[0] == _T('\xEF') &&
