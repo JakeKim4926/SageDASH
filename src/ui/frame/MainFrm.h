@@ -43,6 +43,12 @@ protected:
 	afx_msg void OnUpdateApplicationLook(CCmdUI* pCmdUI);
 	afx_msg void OnSettingChange(UINT uFlags, LPCTSTR lpszSection);
 	afx_msg void OnGetMinMaxInfo(MINMAXINFO* lpMMI);
+	afx_msg void OnViewNavigatorWnd();
+	afx_msg void OnUpdateViewNavigatorWnd(CCmdUI* pCmdUI);
+	afx_msg void OnViewPropertiesWnd();
+	afx_msg void OnUpdateViewPropertiesWnd(CCmdUI* pCmdUI);
+	afx_msg void OnViewOutputWnd();
+	afx_msg void OnUpdateViewOutputWnd(CCmdUI* pCmdUI);
 	DECLARE_MESSAGE_MAP()
 
 	BOOL CreateDockingWindows();

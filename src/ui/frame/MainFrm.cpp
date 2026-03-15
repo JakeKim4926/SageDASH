@@ -21,6 +21,12 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_VIEW_APPLOOK_WIN_2000, ID_VIEW_APPLOOK_WINDOWS_7, &CMainFrame::OnUpdateApplicationLook)
 	ON_WM_SETTINGCHANGE()
 	ON_WM_GETMINMAXINFO()
+	ON_COMMAND(ID_VIEW_NAVIGATORWND,            &CMainFrame::OnViewNavigatorWnd)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_NAVIGATORWND,  &CMainFrame::OnUpdateViewNavigatorWnd)
+	ON_COMMAND(ID_VIEW_PROPERTIESWND,           &CMainFrame::OnViewPropertiesWnd)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_PROPERTIESWND, &CMainFrame::OnUpdateViewPropertiesWnd)
+	ON_COMMAND(ID_VIEW_OUTPUTWND,               &CMainFrame::OnViewOutputWnd)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_OUTPUTWND,     &CMainFrame::OnUpdateViewOutputWnd)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -296,4 +302,37 @@ void CMainFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 {
 	CMDIFrameWndEx::OnSettingChange(uFlags, lpszSection);
 	m_wndOutput.UpdateFonts();
+}
+
+void CMainFrame::OnViewNavigatorWnd()
+{
+	BOOL bVisible = m_wndNavigator.IsWindowVisible();
+	m_wndNavigator.ShowPane(!bVisible, FALSE, TRUE);
+}
+
+void CMainFrame::OnUpdateViewNavigatorWnd(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(m_wndNavigator.IsWindowVisible());
+}
+
+void CMainFrame::OnViewPropertiesWnd()
+{
+	BOOL bVisible = m_wndProperties.IsWindowVisible();
+	m_wndProperties.ShowPane(!bVisible, FALSE, TRUE);
+}
+
+void CMainFrame::OnUpdateViewPropertiesWnd(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(m_wndProperties.IsWindowVisible());
+}
+
+void CMainFrame::OnViewOutputWnd()
+{
+	BOOL bVisible = m_wndOutput.IsWindowVisible();
+	m_wndOutput.ShowPane(!bVisible, FALSE, TRUE);
+}
+
+void CMainFrame::OnUpdateViewOutputWnd(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(m_wndOutput.IsWindowVisible());
 }
