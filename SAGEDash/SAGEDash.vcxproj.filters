@@ -152,7 +152,13 @@
     <ClInclude Include="..\src\ui\pane\FileView.h">
       <Filter>헤더 파일\ui\pane</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\ui\pane\NavigatorPane.h">
+      <Filter>헤더 파일\ui\pane</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\ui\pane\OutputWnd.h">
+      <Filter>헤더 파일\ui\pane</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\pane\PropertiesPane.h">
       <Filter>헤더 파일\ui\pane</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ui\pane\PropertiesWnd.h">
@@ -202,7 +208,13 @@
     <ClCompile Include="..\src\ui\pane\FileView.cpp">
       <Filter>소스 파일\ui\pane</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ui\pane\NavigatorPane.cpp">
+      <Filter>소스 파일\ui\pane</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\ui\pane\OutputWnd.cpp">
+      <Filter>소스 파일\ui\pane</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ui\pane\PropertiesPane.cpp">
       <Filter>소스 파일\ui\pane</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ui\pane\PropertiesWnd.cpp">
