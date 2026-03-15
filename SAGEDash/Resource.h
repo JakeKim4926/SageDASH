@@ -100,6 +100,8 @@
 
 // View (10301~10399)
 #define IDS_VIEW_GRID_ROW_NUM           10301
+#define IDS_VIEW_MAPPING_TITLE          10302
+#define IDS_VIEW_VALIDATION_TITLE       10303
 
 // Properties (10401~10499)
 #define IDS_PROP_SECTION_FILE           10401

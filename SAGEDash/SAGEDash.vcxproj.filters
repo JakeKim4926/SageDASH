@@ -188,6 +188,12 @@
     <ClInclude Include="..\src\ui\view\SAGEDashView.h">
       <Filter>헤더 파일\ui\view</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\ui\view\MappingPanel.h">
+      <Filter>헤더 파일\ui\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\view\ValidationPanel.h">
+      <Filter>헤더 파일\ui\view</Filter>
+    </ClInclude>
   </ItemGroup>
 
   <ItemGroup>
@@ -233,6 +239,12 @@
       <Filter>소스 파일\ui\pane</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ui\view\SAGEDashView.cpp">
+      <Filter>소스 파일\ui\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ui\view\MappingPanel.cpp">
+      <Filter>소스 파일\ui\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ui\view\ValidationPanel.cpp">
       <Filter>소스 파일\ui\view</Filter>
     </ClCompile>
   </ItemGroup>
