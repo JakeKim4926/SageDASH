@@ -2,7 +2,6 @@
 #include "pch.h"
 #include "framework.h"
 #include "PropertiesPane.h"
-#include "Resource.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
