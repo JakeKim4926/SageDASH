@@ -1,6 +1,8 @@
 
 #pragma once
 
+#include "EnumDefine.h"
+
 class CNavigatorPane : public CDockablePane
 {
 public:
@@ -12,5 +14,9 @@ protected:
 
     afx_msg int  OnCreate(LPCREATESTRUCT lpCreateStruct);
     afx_msg void OnSize(UINT nType, int cx, int cy);
+    afx_msg void OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult);
     DECLARE_MESSAGE_MAP()
+
+private:
+    HTREEITEM InsertNavItem(LPCTSTR pszLabel, HTREEITEM hParent, NavItemType type);
 };
