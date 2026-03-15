@@ -11,3 +11,9 @@
 - **변경 내용**: 에러 다이얼로그, 헤더 전용 파일 경고, Properties Pane 연동, CSV 인코딩 결정 문서화
 - **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/2
 - **결과**: merged
+
+## [2026-03-15] develop → main (Phase 1 완료)
+- **목적**: Phase 1 완료 버전 main 반영
+- **변경 내용**: PR #1, #2 포함 — Navigator/Properties Pane, 오류 처리, 색상 토큰, CSV 인코딩 결정
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/3
+- **결과**: merged
