@@ -36,6 +36,9 @@
     <Filter Include="헤더 파일\infrastructure\csv">
       <UniqueIdentifier>{AA000015-0000-0000-0000-000000000015}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\infrastructure\excel">
+      <UniqueIdentifier>{AA000055-0000-0000-0000-000000000055}</UniqueIdentifier>
+    </Filter>
     <Filter Include="헤더 파일\infrastructure\logging">
       <UniqueIdentifier>{AA000052-0000-0000-0000-000000000052}</UniqueIdentifier>
     </Filter>
@@ -74,6 +77,9 @@
     </Filter>
     <Filter Include="소스 파일\infrastructure\csv">
       <UniqueIdentifier>{AA000034-0000-0000-0000-000000000034}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\infrastructure\excel">
+      <UniqueIdentifier>{AA000056-0000-0000-0000-000000000056}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\infrastructure\logging">
       <UniqueIdentifier>{AA000053-0000-0000-0000-000000000053}</UniqueIdentifier>
@@ -119,23 +125,38 @@
     <ClInclude Include="..\src\application\WorkbookService.h">
       <Filter>헤더 파일\application</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\domain\Workbook.h">
+    <ClInclude Include="..\src\application\IInputReader.h">
+      <Filter>헤더 파일\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\application\IInputSource.h">
+      <Filter>헤더 파일\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\application\IOutputWriter.h">
+      <Filter>헤더 파일\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\application\IOutputTarget.h">
+      <Filter>헤더 파일\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\domain\TabularData.h">
       <Filter>헤더 파일\domain</Filter>
     </ClInclude>
     <ClInclude Include="..\src\common\error\SageException.h">
       <Filter>헤더 파일\common\error</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\common\EnumDefine.h">
+      <Filter>헤더 파일\common</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\common\SageMgr.h">
       <Filter>헤더 파일\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\infrastructure\csv\CsvReader.h">
+    <ClInclude Include="..\src\infrastructure\csv\CsvInputReader.h">
       <Filter>헤더 파일\infrastructure\csv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\infrastructure\excel\ExcelInputReader.h">
+      <Filter>헤더 파일\infrastructure\excel</Filter>
     </ClInclude>
     <ClInclude Include="..\src\infrastructure\logging\SageLogger.h">
       <Filter>헤더 파일\infrastructure\logging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\ui\controls\ViewTree.h">
-      <Filter>헤더 파일\ui\controls</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ui\doc\SAGEDashDoc.h">
       <Filter>헤더 파일\ui\doc</Filter>
@@ -146,16 +167,13 @@
     <ClInclude Include="..\src\ui\frame\MainFrm.h">
       <Filter>헤더 파일\ui\frame</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\ui\pane\ClassView.h">
-      <Filter>헤더 파일\ui\pane</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\ui\pane\FileView.h">
+    <ClInclude Include="..\src\ui\pane\NavigatorPane.h">
       <Filter>헤더 파일\ui\pane</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ui\pane\OutputWnd.h">
       <Filter>헤더 파일\ui\pane</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\ui\pane\PropertiesWnd.h">
+    <ClInclude Include="..\src\ui\pane\PropertiesPane.h">
       <Filter>헤더 파일\ui\pane</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ui\view\SAGEDashView.h">
@@ -175,17 +193,17 @@
     <ClCompile Include="..\src\application\WorkbookService.cpp">
       <Filter>소스 파일\application</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\infrastructure\csv\CsvReader.cpp">
+    <ClCompile Include="..\src\infrastructure\csv\CsvInputReader.cpp">
       <Filter>소스 파일\infrastructure\csv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\infrastructure\excel\ExcelInputReader.cpp">
+      <Filter>소스 파일\infrastructure\excel</Filter>
     </ClCompile>
     <ClCompile Include="..\src\infrastructure\logging\SageLogger.cpp">
       <Filter>소스 파일\infrastructure\logging</Filter>
     </ClCompile>
     <ClCompile Include="..\src\common\SageMgr.cpp">
       <Filter>소스 파일\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\ui\controls\ViewTree.cpp">
-      <Filter>소스 파일\ui\controls</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ui\doc\SAGEDashDoc.cpp">
       <Filter>소스 파일\ui\doc</Filter>
@@ -196,16 +214,13 @@
     <ClCompile Include="..\src\ui\frame\MainFrm.cpp">
       <Filter>소스 파일\ui\frame</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ui\pane\ClassView.cpp">
-      <Filter>소스 파일\ui\pane</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\ui\pane\FileView.cpp">
+    <ClCompile Include="..\src\ui\pane\NavigatorPane.cpp">
       <Filter>소스 파일\ui\pane</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ui\pane\OutputWnd.cpp">
       <Filter>소스 파일\ui\pane</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ui\pane\PropertiesWnd.cpp">
+    <ClCompile Include="..\src\ui\pane\PropertiesPane.cpp">
       <Filter>소스 파일\ui\pane</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ui\view\SAGEDashView.cpp">

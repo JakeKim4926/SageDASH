@@ -42,7 +42,7 @@ BOOL CSAGEDashApp::InitInstance()
 	sageMgr.Initialize();
 	EnableTaskbarInteraction();
 
-	SetRegistryKey(_T("로컬 애플리케이션 마법사에서 생성된 애플리케이션"));
+	SetRegistryKey(_T("SAGEDash"));
 	LoadStdProfileSettings(4);
 
 	InitContextMenuManager();
@@ -127,7 +127,7 @@ void CSAGEDashApp::OnFileOpen()
 		_T("csv"),
 		nullptr,
 		OFN_HIDEREADONLY | OFN_FILEMUSTEXIST,
-		_T("CSV 파일 (*.csv)|*.csv|모든 파일 (*.*)|*.*||"),
+		_T("지원 파일 (*.csv;*.xlsx;*.xls)|*.csv;*.xlsx;*.xls|CSV 파일 (*.csv)|*.csv|Excel 파일 (*.xlsx;*.xls)|*.xlsx;*.xls|모든 파일 (*.*)|*.*||"),
 		AfxGetMainWnd());
 
 	if (dlg.DoModal() != IDOK)
