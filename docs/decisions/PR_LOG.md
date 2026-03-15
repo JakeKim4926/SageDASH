@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-15] feature/phase3-view-switching
+- **목적**: Center View 모드 전환 구조 구축 — Grid / Mapping / Validation 세 가지 뷰 모드 간 전환 인프라
+- **변경 내용**: CenterViewMode enum 추가, MappingPanel/ValidationPanel placeholder CWnd 생성, CSAGEDashView에 SwitchViewMode 구현, MainFrame에 WM_SWITCH_CENTER_VIEW 핸들러 추가, IDS_VIEW_MAPPING_TITLE/IDS_VIEW_VALIDATION_TITLE 문자열 추가
+- **PR 링크**: (gh CLI 미설치로 직접 머지)
+- **결과**: merged into develop
+
 ## [2026-03-15] feature/phase3-domain-model
 - **목적**: Phase 3 자동화 핵심 기능의 도메인 모델 기반 구축
 - **변경 내용**: MappingRule, ValidationRule, ValidationResult/ValidationIssue 헤더 신규 추가. EnumDefine.h에 ExecutionStepType/ValidationType/ValidationSeverity enum 추가
