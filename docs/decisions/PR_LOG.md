@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-15] feature/phase3-domain-model
+- **목적**: Phase 3 자동화 핵심 기능의 도메인 모델 기반 구축
+- **변경 내용**: MappingRule, ValidationRule, ValidationResult/ValidationIssue 헤더 신규 추가. EnumDefine.h에 ExecutionStepType/ValidationType/ValidationSeverity enum 추가
+- **PR 링크**: (gh CLI 미설치로 직접 머지)
+- **결과**: merged into develop
+
 ## [2026-03-15] feature/phase2-ui
 - **목적**: Phase 2 UI 활성화 — Navigator 전체 구조, Properties Summary 카드, 검색/필터, 다국어 String Table 기반 구조 적용
 - **변경 내용**: Navigator INPUT/PIPELINE/ACTIONS 섹션 추가 + NM_CUSTOMDRAW 색상 구분, Properties FILE/DATA/SHEETS 섹션 카드화 + XLSX 시트 정보 표시, View 상단 실시간 검색/필터, IDS_ 상수 + RC STRINGTABLE + LoadString 패턴 적용
