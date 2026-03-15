@@ -143,6 +143,9 @@
     <ClInclude Include="..\src\common\error\SageException.h">
       <Filter>헤더 파일\common\error</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\common\EnumDefine.h">
+      <Filter>헤더 파일\common</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\common\SageMgr.h">
       <Filter>헤더 파일\common</Filter>
     </ClInclude>

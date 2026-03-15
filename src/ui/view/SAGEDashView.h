@@ -27,14 +27,17 @@ public:
 #endif
 
 private:
+	CEdit     m_edtSearch;
 	CListCtrl m_lstGrid;
 
 	void PopulateGrid(const DataSheet& sheet);
+	void FilterGrid(const CString& strKeyword);
 	void ClearGrid();
 
 protected:
 	afx_msg int  OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnEnChangeSearch();
 	DECLARE_MESSAGE_MAP()
 };
 
