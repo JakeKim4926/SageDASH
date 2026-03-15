@@ -23,6 +23,7 @@ BEGIN_MESSAGE_MAP(CNavigatorPane, CDockablePane)
     ON_WM_CREATE()
     ON_WM_SIZE()
     ON_NOTIFY_REFLECT(NM_CUSTOMDRAW, OnCustomDraw)
+    ON_NOTIFY_REFLECT(TVN_SELCHANGED, OnSelChanged)
 END_MESSAGE_MAP()
 
 int CNavigatorPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -54,11 +55,11 @@ int CNavigatorPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
     str.LoadString(IDS_NAV_SECTION_PIPELINE);
     HTREEITEM hPipeline = InsertNavItem(str, TVI_ROOT, NAV_ITEM_SECTION);
     str.LoadString(IDS_NAV_ITEM_PREVIEW);
-    InsertNavItem(str, hPipeline, NAV_ITEM_DISABLED);
+    m_hPreview = InsertNavItem(str, hPipeline, NAV_ITEM_DISABLED);
     str.LoadString(IDS_NAV_ITEM_MAPPING);
-    InsertNavItem(str, hPipeline, NAV_ITEM_DISABLED);
+    m_hMapping = InsertNavItem(str, hPipeline, NAV_ITEM_DISABLED);
     str.LoadString(IDS_NAV_ITEM_VALIDATION);
-    InsertNavItem(str, hPipeline, NAV_ITEM_DISABLED);
+    m_hValidation = InsertNavItem(str, hPipeline, NAV_ITEM_DISABLED);
     str.LoadString(IDS_NAV_ITEM_OUTPUT);
     InsertNavItem(str, hPipeline, NAV_ITEM_DISABLED);
     m_wndTree.Expand(hPipeline, TVE_EXPAND);
@@ -92,6 +93,45 @@ void CNavigatorPane::OnSize(UINT nType, int cx, int cy)
 
     if (m_wndTree.GetSafeHwnd() != nullptr)
         m_wndTree.SetWindowPos(nullptr, 0, 0, cx, cy, SWP_NOZORDER | SWP_NOACTIVATE);
+}
+
+void CNavigatorPane::ActivatePipelineItems(BOOL bActive)
+{
+    if (m_wndTree.GetSafeHwnd() == nullptr)
+        return;
+
+    NavItemType type = bActive ? NAV_ITEM_ACTIVE : NAV_ITEM_DISABLED;
+    m_wndTree.SetItemData(m_hPreview,    (DWORD_PTR)type);
+    m_wndTree.SetItemData(m_hMapping,    (DWORD_PTR)type);
+    m_wndTree.SetItemData(m_hValidation, (DWORD_PTR)type);
+    m_wndTree.Invalidate();
+}
+
+void CNavigatorPane::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
+{
+    NMTREEVIEW* pNMTV = reinterpret_cast<NMTREEVIEW*>(pNMHDR);
+    *pResult = 0;
+
+    HTREEITEM hSel = pNMTV->itemNew.hItem;
+    if (hSel == nullptr)
+        return;
+
+    // ACTIVE 상태인 항목만 반응한다
+    NavItemType type = (NavItemType)m_wndTree.GetItemData(hSel);
+    if (type != NAV_ITEM_ACTIVE)
+        return;
+
+    CWnd* pMain = AfxGetMainWnd();
+    if (pMain == nullptr)
+        return;
+
+    if (hSel == m_hPreview) {
+        pMain->PostMessage(WM_SWITCH_CENTER_VIEW, (WPARAM)VIEW_MODE_GRID);
+    } else if (hSel == m_hMapping) {
+        pMain->PostMessage(WM_SWITCH_CENTER_VIEW, (WPARAM)VIEW_MODE_MAPPING);
+    } else if (hSel == m_hValidation) {
+        pMain->PostMessage(WM_SWITCH_CENTER_VIEW, (WPARAM)VIEW_MODE_VALIDATION);
+    }
 }
 
 void CNavigatorPane::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
