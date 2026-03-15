@@ -19,3 +19,32 @@ enum PropRowType
     PROP_ROW_SECTION = 0,
     PROP_ROW_DATA    = 1,
 };
+
+// ============================================================
+// 자동화 실행 단계
+// ============================================================
+enum ExecutionStepType
+{
+    STEP_INPUT      = 0,
+    STEP_MAPPING    = 1,
+    STEP_VALIDATION = 2,
+    STEP_OUTPUT     = 3,
+};
+
+// ============================================================
+// 검증 규칙 타입
+// ============================================================
+enum ValidationType
+{
+    VALIDATION_REQUIRED = 0,  // 필수값 검증
+    VALIDATION_FORMAT   = 1,  // 포맷(정규식) 검증
+};
+
+// ============================================================
+// 검증 결과 심각도
+// ============================================================
+enum ValidationSeverity
+{
+    VALIDATION_SEVERITY_ERROR   = 0,
+    VALIDATION_SEVERITY_WARNING = 1,
+};
