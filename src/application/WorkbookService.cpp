@@ -2,14 +2,15 @@
 #include "pch.h"
 #include "framework.h"
 #include "WorkbookService.h"
-#include "CsvReader.h"
+#include "CsvInputReader.h"
+#include "ExcelInputReader.h"
 #include "SageException.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
-void WorkbookService::LoadFromFile(const CString& strFilePath, CWorkbook& outWorkbook)
+void WorkbookService::LoadFromFile(const CString& strFilePath, TabularData& outData)
 {
     int nDot = strFilePath.ReverseFind(_T('.'));
     if (nDot < 0)
@@ -19,20 +20,18 @@ void WorkbookService::LoadFromFile(const CString& strFilePath, CWorkbook& outWor
     strExt.MakeLower();
 
     if (strExt == _T("csv")) {
-        LoadCsvFile(strFilePath, outWorkbook);
+        CsvInputReader reader;
+        reader.Read(strFilePath, outData);
+        return;
+    }
+
+    if (strExt == _T("xlsx") || strExt == _T("xls")) {
+        ExcelInputReader reader;
+        reader.Read(strFilePath, outData);
         return;
     }
 
     CString strMsg;
     strMsg.Format(_T("지원하지 않는 파일 형식입니다: .%s"), (LPCTSTR)strExt);
     throw SageException(strMsg, strFilePath);
-}
-
-void WorkbookService::LoadCsvFile(const CString& strFilePath, CWorkbook& outWorkbook)
-{
-    outWorkbook.m_strFilePath = strFilePath;
-    outWorkbook.m_arrSheets.emplace_back();
-
-    CSVReader reader;
-    reader.ReadFile(strFilePath, outWorkbook.m_arrSheets.back());
 }

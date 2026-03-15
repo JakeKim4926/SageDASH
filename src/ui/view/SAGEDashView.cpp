@@ -6,7 +6,7 @@
 #include "SAGEDash.h"
 #include "SAGEDashDoc.h"
 #include "SAGEDashView.h"
-#include "Workbook.h"
+#include "TabularData.h"
 #include "Define.h"
 
 #ifdef _DEBUG
@@ -68,17 +68,17 @@ void CSAGEDashView::OnUpdate(CView* /*pSender*/, LPARAM /*lHint*/, CObject* /*pH
 
 	ClearGrid();
 
-	if (pDoc == nullptr || !pDoc->HasWorkbook())
+	if (pDoc == nullptr || !pDoc->HasData())
 		return;
 
-	const CWorksheet& sheet = pDoc->GetWorkbook().GetSheet(0);
+	const DataSheet& sheet = pDoc->GetData().GetSheet(0);
 	if (sheet.GetRowCount() == 0)
 		return;
 
 	PopulateGrid(sheet);
 }
 
-void CSAGEDashView::PopulateGrid(const CWorksheet& sheet)
+void CSAGEDashView::PopulateGrid(const DataSheet& sheet)
 {
 	int nRowCount = sheet.GetRowCount();
 	if (nRowCount == 0)

@@ -20,7 +20,7 @@ BEGIN_MESSAGE_MAP(CSAGEDashDoc, CDocument)
 END_MESSAGE_MAP()
 
 CSAGEDashDoc::CSAGEDashDoc() noexcept
-	: m_isWorkbookLoaded(FALSE)
+	: m_isDataLoaded(FALSE)
 {
 }
 
@@ -36,8 +36,8 @@ BOOL CSAGEDashDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	WorkbookService service;
 
 	try {
-		service.LoadFromFile(lpszPathName, m_workbook);
-		m_isWorkbookLoaded = TRUE;
+		service.LoadFromFile(lpszPathName, m_data);
+		m_isDataLoaded = TRUE;
 	} catch (const SageException& e) {
 		CString strLog;
 		strLog.Format(_T("[실패] %s"), (LPCTSTR)e.Format());
@@ -48,9 +48,8 @@ BOOL CSAGEDashDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		return FALSE;
 	}
 
-	const CWorksheet& sheet = m_workbook.GetSheet(0);
+	const DataSheet& sheet = m_data.GetSheet(0);
 
-	// 헤더만 있고 데이터 행이 없는 경우 경고 로그
 	if (sheet.GetRowCount() <= 1) {
 		CString strWarn;
 		strWarn.Format(_T("[경고] %s — 헤더만 있고 데이터가 없습니다."), lpszPathName);
@@ -77,8 +76,8 @@ BOOL CSAGEDashDoc::OnOpenDocument(LPCTSTR lpszPathName)
 
 void CSAGEDashDoc::DeleteContents()
 {
-	m_workbook.Clear();
-	m_isWorkbookLoaded = FALSE;
+	m_data.Clear();
+	m_isDataLoaded = FALSE;
 
 	CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
 	if (pFrame != nullptr)
@@ -89,14 +88,11 @@ void CSAGEDashDoc::DeleteContents()
 
 void CSAGEDashDoc::Serialize(CArchive& ar)
 {
-	// CSV 파일은 OnOpenDocument에서 직접 로드하므로 Serialize 사용 안 함
 	UNREFERENCED_PARAMETER(ar);
 }
 
 void CSAGEDashDoc::ReportSaveLoadException(LPCTSTR /*lpszPathName*/, CException* /*e*/, BOOL /*bSaving*/, UINT /*nIDPDefault*/)
 {
-	// 오류 메시지는 OnOpenDocument에서 Output Pane과 로그 파일에 이미 기록됨
-	// MFC 기본 에러 다이얼로그 억제
 }
 
 #ifdef _DEBUG
