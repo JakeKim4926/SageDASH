@@ -14,7 +14,9 @@
 #define new DEBUG_NEW
 #endif
 
-#define IDC_SEARCH_EDIT 100
+#define IDC_SEARCH_EDIT      100
+#define IDC_MAPPING_PANEL    110
+#define IDC_VALIDATION_PANEL 111
 
 IMPLEMENT_DYNCREATE(CSAGEDashView, CView)
 
@@ -25,6 +27,7 @@ BEGIN_MESSAGE_MAP(CSAGEDashView, CView)
 END_MESSAGE_MAP()
 
 CSAGEDashView::CSAGEDashView() noexcept
+	: m_eViewMode(VIEW_MODE_GRID)
 {
 }
 
@@ -53,8 +56,18 @@ int CSAGEDashView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		TRACE0("그리드 컨트롤을 만들지 못했습니다.\n");
 		return -1;
 	}
-
 	m_lstGrid.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
+
+	if (!m_wndMapping.Create(this, IDC_MAPPING_PANEL)) {
+		TRACE0("매핑 패널을 만들지 못했습니다.\n");
+		return -1;
+	}
+
+	if (!m_wndValidation.Create(this, IDC_VALIDATION_PANEL)) {
+		TRACE0("검증 패널을 만들지 못했습니다.\n");
+		return -1;
+	}
+
 	return 0;
 }
 
@@ -62,20 +75,72 @@ void CSAGEDashView::OnSize(UINT nType, int cx, int cy)
 {
 	CView::OnSize(nType, cx, cy);
 
-	if (m_edtSearch.GetSafeHwnd() == nullptr || m_lstGrid.GetSafeHwnd() == nullptr)
+	if (m_edtSearch.GetSafeHwnd() == nullptr)
 		return;
 
-	int nSearchTop  = SEARCH_BAR_MARGIN;
-	int nSearchH    = SEARCH_BAR_HEIGHT;
-	int nGridTop    = nSearchTop + nSearchH + SEARCH_BAR_MARGIN;
-	int nGridHeight = cy - nGridTop;
-	if (nGridHeight < 0)
-		nGridHeight = 0;
+	UpdateLayout(cx, cy);
+}
 
-	m_edtSearch.SetWindowPos(nullptr, SEARCH_BAR_MARGIN, nSearchTop,
-		cx - SEARCH_BAR_MARGIN * 2, nSearchH, SWP_NOZORDER | SWP_NOACTIVATE);
-	m_lstGrid.SetWindowPos(nullptr, 0, nGridTop,
-		cx, nGridHeight, SWP_NOZORDER | SWP_NOACTIVATE);
+void CSAGEDashView::UpdateLayout(int cx, int cy)
+{
+	BOOL bGrid       = (m_eViewMode == VIEW_MODE_GRID);
+	BOOL bMapping    = (m_eViewMode == VIEW_MODE_MAPPING);
+	BOOL bValidation = (m_eViewMode == VIEW_MODE_VALIDATION);
+
+	// Grid 모드: 검색바 + 그리드
+	if (m_edtSearch.GetSafeHwnd() != nullptr) {
+		m_edtSearch.ShowWindow(bGrid ? SW_SHOW : SW_HIDE);
+	}
+	if (m_lstGrid.GetSafeHwnd() != nullptr) {
+		m_lstGrid.ShowWindow(bGrid ? SW_SHOW : SW_HIDE);
+	}
+
+	// Mapping 모드: 매핑 패널 전체 영역
+	if (m_wndMapping.GetSafeHwnd() != nullptr) {
+		m_wndMapping.ShowWindow(bMapping ? SW_SHOW : SW_HIDE);
+	}
+
+	// Validation 모드: 검증 패널 전체 영역
+	if (m_wndValidation.GetSafeHwnd() != nullptr) {
+		m_wndValidation.ShowWindow(bValidation ? SW_SHOW : SW_HIDE);
+	}
+
+	// 각 모드별 위치/크기 설정
+	if (bGrid) {
+		int nSearchTop  = SEARCH_BAR_MARGIN;
+		int nSearchH    = SEARCH_BAR_HEIGHT;
+		int nGridTop    = nSearchTop + nSearchH + SEARCH_BAR_MARGIN;
+		int nGridHeight = cy - nGridTop;
+		if (nGridHeight < 0)
+			nGridHeight = 0;
+
+		if (m_edtSearch.GetSafeHwnd() != nullptr) {
+			m_edtSearch.SetWindowPos(nullptr, SEARCH_BAR_MARGIN, nSearchTop,
+				cx - SEARCH_BAR_MARGIN * 2, nSearchH, SWP_NOZORDER | SWP_NOACTIVATE);
+		}
+		if (m_lstGrid.GetSafeHwnd() != nullptr) {
+			m_lstGrid.SetWindowPos(nullptr, 0, nGridTop,
+				cx, nGridHeight, SWP_NOZORDER | SWP_NOACTIVATE);
+		}
+	} else if (bMapping && m_wndMapping.GetSafeHwnd() != nullptr) {
+		m_wndMapping.SetWindowPos(nullptr, 0, 0,
+			cx, cy, SWP_NOZORDER | SWP_NOACTIVATE);
+	} else if (bValidation && m_wndValidation.GetSafeHwnd() != nullptr) {
+		m_wndValidation.SetWindowPos(nullptr, 0, 0,
+			cx, cy, SWP_NOZORDER | SWP_NOACTIVATE);
+	}
+}
+
+void CSAGEDashView::SwitchViewMode(CenterViewMode eMode)
+{
+	if (m_eViewMode == eMode)
+		return;
+
+	m_eViewMode = eMode;
+
+	CRect rect;
+	GetClientRect(&rect);
+	UpdateLayout(rect.Width(), rect.Height());
 }
 
 void CSAGEDashView::OnInitialUpdate()
@@ -96,6 +161,11 @@ void CSAGEDashView::OnUpdate(CView* /*pSender*/, LPARAM /*lHint*/, CObject* /*pH
 
 	if (pDoc == nullptr || !pDoc->HasData())
 		return;
+
+	// 파일을 새로 열면 Grid 모드로 전환
+	if (m_eViewMode != VIEW_MODE_GRID) {
+		SwitchViewMode(VIEW_MODE_GRID);
+	}
 
 	const DataSheet& sheet = pDoc->GetData().GetSheet(0);
 	if (sheet.GetRowCount() == 0)
@@ -252,7 +322,7 @@ void CSAGEDashView::ClearGrid()
 
 void CSAGEDashView::OnDraw(CDC* /*pDC*/)
 {
-	// 그리기는 CListCtrl이 담당
+	// 그리기는 각 패널이 담당
 }
 
 #ifdef _DEBUG
