@@ -140,6 +140,15 @@
     <ClInclude Include="..\src\domain\TabularData.h">
       <Filter>헤더 파일\domain</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\domain\MappingRule.h">
+      <Filter>헤더 파일\domain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\domain\ValidationRule.h">
+      <Filter>헤더 파일\domain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\domain\ValidationResult.h">
+      <Filter>헤더 파일\domain</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\common\error\SageException.h">
       <Filter>헤더 파일\common\error</Filter>
     </ClInclude>

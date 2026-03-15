@@ -212,6 +212,9 @@
     <ClInclude Include="..\src\ui\view\SAGEDashView.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="..\src\domain\TabularData.h" />
+    <ClInclude Include="..\src\domain\MappingRule.h" />
+    <ClInclude Include="..\src\domain\ValidationRule.h" />
+    <ClInclude Include="..\src\domain\ValidationResult.h" />
     <ClInclude Include="..\src\common\error\SageException.h" />
     <ClInclude Include="..\src\common\EnumDefine.h" />
     <ClInclude Include="..\src\common\SageMgr.h" />
