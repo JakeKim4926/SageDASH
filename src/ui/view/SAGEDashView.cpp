@@ -8,6 +8,7 @@
 #include "SAGEDashView.h"
 #include "TabularData.h"
 #include "Define.h"
+#include "Resource.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -189,10 +190,12 @@ void CSAGEDashView::PopulateGrid(const DataSheet& sheet)
 		return;
 
 	LVCOLUMN lvc;
+	CString strRowNumHeader;
+	strRowNumHeader.LoadString(IDS_VIEW_GRID_ROW_NUM);
 	lvc.mask    = LVCF_TEXT | LVCF_WIDTH | LVCF_FMT;
 	lvc.fmt     = LVCFMT_RIGHT;
 	lvc.cx      = GRID_ROW_NUM_COLUMN_WIDTH;
-	lvc.pszText = _T("#");
+	lvc.pszText = (LPTSTR)(LPCTSTR)strRowNumHeader;
 	m_lstGrid.InsertColumn(0, &lvc);
 
 	const std::vector<CString>& headerRow = sheet.m_arrRows[0];

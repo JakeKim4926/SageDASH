@@ -151,27 +151,38 @@ void CPropertiesPane::RebuildList()
         strName = strName.Mid(nSlash + 1);
 
     // FILE 섹션
-    AddSectionRow(_T("FILE"));
-    AddDataRow(_T("파일명"), strName);
-    AddDataRow(_T("형식"),   m_strFormat);
+    CString sSecFile, sLabelName, sLabelFmt;
+    sSecFile.LoadString(IDS_PROP_SECTION_FILE);
+    sLabelName.LoadString(IDS_PROP_LABEL_FILENAME);
+    sLabelFmt.LoadString(IDS_PROP_LABEL_FORMAT);
+    AddSectionRow(sSecFile);
+    AddDataRow(sLabelName, strName);
+    AddDataRow(sLabelFmt,  m_strFormat);
 
     // DATA 섹션
-    CString strRows, strCols;
+    CString sSecData, sLabelRows, sLabelCols, strRows, strCols;
+    sSecData.LoadString(IDS_PROP_SECTION_DATA);
+    sLabelRows.LoadString(IDS_PROP_LABEL_ROWS);
+    sLabelCols.LoadString(IDS_PROP_LABEL_COLS);
     strRows.Format(_T("%d"), m_nRows);
     strCols.Format(_T("%d"), m_nCols);
-    AddSectionRow(_T("DATA"));
-    AddDataRow(_T("행 수"), strRows);
-    AddDataRow(_T("열 수"), strCols);
+    AddSectionRow(sSecData);
+    AddDataRow(sLabelRows, strRows);
+    AddDataRow(sLabelCols, strCols);
 
     // SHEETS 섹션 (시트가 2개 이상이거나 Excel 포맷일 때)
     if (!m_arrSheetNames.empty() && (m_arrSheetNames.size() > 1 || m_strFormat == _T("Excel"))) {
+        CString sSecSheets, sLabelSheetCount, sLabelSheetN;
+        sSecSheets.LoadString(IDS_PROP_SECTION_SHEETS);
+        sLabelSheetCount.LoadString(IDS_PROP_LABEL_SHEET_COUNT);
+        sLabelSheetN.LoadString(IDS_PROP_LABEL_SHEET_N);
         CString strCount;
         strCount.Format(_T("%d"), (int)m_arrSheetNames.size());
-        AddSectionRow(_T("SHEETS"));
-        AddDataRow(_T("시트 수"), strCount);
+        AddSectionRow(sSecSheets);
+        AddDataRow(sLabelSheetCount, strCount);
         for (int i = 0; i < (int)m_arrSheetNames.size(); i++) {
             CString strLabel;
-            strLabel.Format(_T("시트 %d"), i + 1);
+            strLabel.Format((LPCTSTR)sLabelSheetN, i + 1);
             AddDataRow(strLabel, m_arrSheetNames[i]);
         }
     }

@@ -18,5 +18,5 @@ protected:
     DECLARE_MESSAGE_MAP()
 
 private:
-    HTREEITEM InsertNavItem(LPCTSTR pszLabel, HTREEITEM hParent, NavItemType type);
+    HTREEITEM InsertNavItem(const CString& strLabel, HTREEITEM hParent, NavItemType type);
 };

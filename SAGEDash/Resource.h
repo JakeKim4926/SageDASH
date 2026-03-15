@@ -85,6 +85,33 @@
 #define IDS_FIND_TAB                    302
 #define IDS_EXPLORER                    305
 #define IDS_EDIT_MENU                   306
+
+// Navigator (10201~10299)
+#define IDS_NAV_SECTION_INPUT           10201
+#define IDS_NAV_ITEM_FILE               10202
+#define IDS_NAV_SECTION_PIPELINE        10203
+#define IDS_NAV_ITEM_PREVIEW            10204
+#define IDS_NAV_ITEM_MAPPING            10205
+#define IDS_NAV_ITEM_VALIDATION         10206
+#define IDS_NAV_ITEM_OUTPUT             10207
+#define IDS_NAV_SECTION_ACTIONS         10208
+#define IDS_NAV_ITEM_EXPORT             10209
+#define IDS_NAV_ITEM_SCHEDULE           10210
+
+// View (10301~10399)
+#define IDS_VIEW_GRID_ROW_NUM           10301
+
+// Properties (10401~10499)
+#define IDS_PROP_SECTION_FILE           10401
+#define IDS_PROP_LABEL_FILENAME         10402
+#define IDS_PROP_LABEL_FORMAT           10403
+#define IDS_PROP_SECTION_DATA           10404
+#define IDS_PROP_LABEL_ROWS             10405
+#define IDS_PROP_LABEL_COLS             10406
+#define IDS_PROP_SECTION_SHEETS         10407
+#define IDS_PROP_LABEL_SHEET_COUNT      10408
+#define IDS_PROP_LABEL_SHEET_N          10409
+
 #define ID_Menu                         32771
 #define ID_Menu32772                    32772
 

@@ -3,6 +3,7 @@
 
 #include "TabularData.h"
 #include "EnumDefine.h"
+#include "Resource.h"
 
 class CPropertiesPane : public CDockablePane
 {
