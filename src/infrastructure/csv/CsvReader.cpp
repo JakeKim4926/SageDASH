@@ -8,7 +8,7 @@
 #define new DEBUG_NEW
 #endif
 
-void CCsvReader::ReadFile(const CString& strFilePath, CWorksheet& outSheet)
+void CSVReader::ReadFile(const CString& strFilePath, CWorksheet& outSheet)
 {
     CStdioFile file;
     if (!file.Open(strFilePath, CFile::modeRead | CFile::typeText | CFile::shareDenyWrite))
@@ -38,7 +38,7 @@ void CCsvReader::ReadFile(const CString& strFilePath, CWorksheet& outSheet)
         throw SageException(_T("파일이 비어 있습니다."), strFilePath);
 }
 
-std::vector<CString> CCsvReader::ParseLine(const CString& strLine)
+std::vector<CString> CSVReader::ParseLine(const CString& strLine)
 {
     std::vector<CString> row;
     CString strCell;

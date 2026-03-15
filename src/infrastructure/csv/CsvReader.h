@@ -4,7 +4,7 @@
 #include "Workbook.h"
 
 // 실패 시 SageException을 던진다
-class CCsvReader
+class CSVReader
 {
 public:
     void ReadFile(const CString& strFilePath, CWorksheet& outSheet);

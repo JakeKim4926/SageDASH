@@ -33,7 +33,7 @@ BOOL CSAGEDashDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	DeleteContents();
 
 	CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-	CWorkbookService service;
+	WorkbookService service;
 
 	try {
 		service.LoadFromFile(lpszPathName, m_workbook);

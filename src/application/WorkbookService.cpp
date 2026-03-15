@@ -9,7 +9,7 @@
 #define new DEBUG_NEW
 #endif
 
-void CWorkbookService::LoadFromFile(const CString& strFilePath, CWorkbook& outWorkbook)
+void WorkbookService::LoadFromFile(const CString& strFilePath, CWorkbook& outWorkbook)
 {
     int nDot = strFilePath.ReverseFind(_T('.'));
     if (nDot < 0)
@@ -28,11 +28,11 @@ void CWorkbookService::LoadFromFile(const CString& strFilePath, CWorkbook& outWo
     throw SageException(strMsg, strFilePath);
 }
 
-void CWorkbookService::LoadCsvFile(const CString& strFilePath, CWorkbook& outWorkbook)
+void WorkbookService::LoadCsvFile(const CString& strFilePath, CWorkbook& outWorkbook)
 {
     outWorkbook.m_strFilePath = strFilePath;
     outWorkbook.m_arrSheets.emplace_back();
 
-    CCsvReader reader;
+    CSVReader reader;
     reader.ReadFile(strFilePath, outWorkbook.m_arrSheets.back());
 }

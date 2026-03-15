@@ -4,7 +4,7 @@
 #include "Workbook.h"
 
 // 실패 시 SageException을 던진다
-class CWorkbookService
+class WorkbookService
 {
 public:
     void LoadFromFile(const CString& strFilePath, CWorkbook& outWorkbook);
