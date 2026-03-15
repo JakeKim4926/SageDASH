@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-16] feature/phase3-mapping-panel
+- **목적**: Phase 3 Mapping Panel 구현 — Source/Target 컬럼 매핑 UI + Navigator Pipeline 활성화
+- **변경 내용**: MappingPanel 전체 구현(ComboBox/Edit/Checkbox/Add/Delete/AutoMap/Clear/CListCtrl), SAGEDashView에서 Mapping 모드 전환 시 Source 컬럼 주입, NavigatorPane Pipeline 항목 활성화/클릭 → 뷰 전환, SAGEDashDoc 로드/클리어 시 Navigator 상태 연동, IDS_ 10304~10313 String Table 추가
+- **PR 링크**: (gh CLI 미설치로 직접 머지)
+- **결과**: merged into develop
+
 ## [2026-03-15] feature/phase3-view-switching
 - **목적**: Center View 모드 전환 구조 구축 — Grid / Mapping / Validation 세 가지 뷰 모드 간 전환 인프라
 - **변경 내용**: CenterViewMode enum 추가, MappingPanel/ValidationPanel placeholder CWnd 생성, CSAGEDashView에 SwitchViewMode 구현, MainFrame에 WM_SWITCH_CENTER_VIEW 핸들러 추가, IDS_VIEW_MAPPING_TITLE/IDS_VIEW_VALIDATION_TITLE 문자열 추가
