@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-16] develop → main (Phase 3 완료)
+- **목적**: Phase 3 완료 버전 main 반영 — 자동화 핵심 기능(매핑/검증/출력/프로젝트)
+- **변경 내용**: Phase 3 전체 — Center View 모드 전환, MappingPanel, ValidationPanel, ValidationService, CsvOutputWriter, ExcelOutputWriter, ExportService, IExecutionStep/ExecutionContext, AutomationProject, ProjectSerializer, ProjectService, 빌드 오류 수정(forward declaration, include 경로)
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/8
+- **결과**: merged into main
+
 ## [2026-03-16] feature/phase3-output
 - **목적**: 결과 출력 — CSV/XLSX 저장 + 출력 로그 기록
 - **변경 내용**: CsvOutputWriter(UTF-8 BOM, RFC 4180 이스케이프), ExcelOutputWriter(COM automation), FileOutputTarget, ExportService(확장자 기반 writer 선택), SAGEDashDoc OnFileExport 핸들러(SaveFileDialog→ExportService→로그), File 메뉴 내보내기 항목 추가
