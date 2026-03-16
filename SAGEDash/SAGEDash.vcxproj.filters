@@ -239,6 +239,9 @@
     <ClInclude Include="..\src\ui\webview\WebViewHost.h">
       <Filter>헤더 파일\ui\webview</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\ui\webview\WebBridgeMessage.h">
+      <Filter>헤더 파일\ui\webview</Filter>
+    </ClInclude>
   </ItemGroup>
 
   <ItemGroup>
@@ -311,6 +314,9 @@
       <Filter>소스 파일\ui\view</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ui\webview\WebViewHost.cpp">
+      <Filter>소스 파일\ui\webview</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ui\webview\WebBridgeMessage.cpp">
       <Filter>소스 파일\ui\webview</Filter>
     </ClCompile>
   </ItemGroup>
