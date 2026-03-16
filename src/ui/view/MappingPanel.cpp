@@ -17,6 +17,7 @@
 constexpr int MAP_HEADER_H      = 28;
 constexpr int MAP_CONTROLS_H    = 24;
 constexpr int MAP_BUTTONS_H     = 24;
+constexpr int MAP_STATUS_H      = 20;
 constexpr int MAP_PADDING       = 8;
 constexpr int MAP_ROW_GAP       = 4;
 constexpr int MAP_COMBO_W       = 180;
@@ -38,6 +39,7 @@ BEGIN_MESSAGE_MAP(MappingPanel, CWnd)
     ON_BN_CLICKED(IDC_MAP_BTN_AUTOMAP, &MappingPanel::OnBnClickedAutoMap)
     ON_BN_CLICKED(IDC_MAP_BTN_CLEAR,   &MappingPanel::OnBnClickedClear)
     ON_NOTIFY(LVN_ITEMCHANGED, IDC_MAP_LIST_RULES, &MappingPanel::OnLvnItemChangedRules)
+    ON_NOTIFY(NM_CUSTOMDRAW,  IDC_MAP_LIST_RULES, &MappingPanel::OnCustomDrawRules)
 END_MESSAGE_MAP()
 
 MappingPanel::MappingPanel()
@@ -221,8 +223,8 @@ void MappingPanel::UpdateLayout(int cx, int cy)
     m_btnClear.SetWindowPos(nullptr, nX, nBtnY,
         MAP_BTN_CLEAR_W, MAP_BUTTONS_H, SWP_NOZORDER | SWP_NOACTIVATE);
 
-    // List: fills remaining space below buttons row
-    int nListY = nBtnY + MAP_BUTTONS_H + MAP_PADDING;
+    // List: fills remaining space below status area
+    int nListY = nBtnY + MAP_BUTTONS_H + MAP_ROW_GAP + MAP_STATUS_H + MAP_ROW_GAP;
     int nListH = cy - nListY;
     if (nListH < 0)
         nListH = 0;
@@ -264,6 +266,35 @@ void MappingPanel::OnPaint()
     CRect rcText = rcHeader;
     rcText.left += MAP_PADDING;
     dc.DrawText(strTitle, &rcText, DT_LEFT | DT_VCENTER | DT_SINGLELINE);
+
+    // Status area
+    int nStatusY = MAP_HEADER_H + MAP_PADDING
+                 + MAP_CONTROLS_H + MAP_ROW_GAP
+                 + MAP_BUTTONS_H  + MAP_ROW_GAP;
+    CRect rcStatus(0, nStatusY, rcClient.right, nStatusY + MAP_STATUS_H);
+
+    int nUnmapped = GetUnmappedCount();
+    COLORREF clrBg, clrText;
+    if (m_arrSourceColumns.empty()) {
+        clrBg   = COLOR_WHITE;
+        clrText = COLOR_TEXT_DIM;
+    } else if (nUnmapped == 0) {
+        clrBg   = COLOR_SUCCESS_BG;
+        clrText = COLOR_SUCCESS;
+    } else {
+        clrBg   = COLOR_WARNING_BG;
+        clrText = COLOR_WARNING;
+    }
+    dc.FillSolidRect(&rcStatus, clrBg);
+
+    CString strStatus = BuildStatusString();
+    if (!strStatus.IsEmpty()) {
+        CRect rcStatusText = rcStatus;
+        rcStatusText.left += MAP_PADDING;
+        dc.SetTextColor(clrText);
+        dc.DrawText(strStatus, &rcStatusText, DT_LEFT | DT_VCENTER | DT_SINGLELINE);
+    }
+
     dc.SelectObject(pOldFont);
 }
 
@@ -280,6 +311,7 @@ void MappingPanel::SetSourceColumns(const std::vector<CString>& arrColumns)
     }
 
     UpdateButtonStates();
+    UpdateStatus();
 }
 
 void MappingPanel::ClearAll()
@@ -300,6 +332,7 @@ void MappingPanel::ClearAll()
         m_chkRequired.SetCheck(BST_UNCHECKED);
 
     UpdateButtonStates();
+    UpdateStatus();
 }
 
 void MappingPanel::RebuildList()
@@ -327,6 +360,7 @@ void MappingPanel::RebuildList()
     }
 
     UpdateButtonStates();
+    UpdateStatus();
 }
 
 void MappingPanel::UpdateButtonStates()
@@ -422,4 +456,75 @@ void MappingPanel::OnLvnItemChangedRules(NMHDR* /*pNMHDR*/, LRESULT* pResult)
 {
     *pResult = 0;
     UpdateButtonStates();
+}
+
+void MappingPanel::OnCustomDrawRules(NMHDR* pNMHDR, LRESULT* pResult)
+{
+    NMLVCUSTOMDRAW* pNMCD = reinterpret_cast<NMLVCUSTOMDRAW*>(pNMHDR);
+    *pResult = CDRF_DODEFAULT;
+
+    switch (pNMCD->nmcd.dwDrawStage) {
+    case CDDS_PREPAINT:
+        *pResult = CDRF_NOTIFYITEMDRAW;
+        break;
+    case CDDS_ITEMPREPAINT: {
+        int nIdx = (int)pNMCD->nmcd.dwItemSpec;
+        if (nIdx >= 0 && nIdx < (int)m_arrRules.size() && m_arrRules[nIdx].IsRequired()) {
+            pNMCD->clrTextBk = COLOR_ACCENT_LIGHT;
+        }
+        *pResult = CDRF_NEWFONT;
+        break;
+    }
+    }
+}
+
+int MappingPanel::GetUnmappedCount() const
+{
+    int nCount = 0;
+    for (const CString& col : m_arrSourceColumns) {
+        bool bFound = false;
+        for (const MappingRule& rule : m_arrRules) {
+            if (rule.GetSourceColumn() == col) {
+                bFound = true;
+                break;
+            }
+        }
+        if (!bFound)
+            nCount++;
+    }
+    return nCount;
+}
+
+CString MappingPanel::BuildStatusString() const
+{
+    if (m_arrSourceColumns.empty())
+        return _T("");
+
+    int nTotal    = (int)m_arrSourceColumns.size();
+    int nUnmapped = GetUnmappedCount();
+    int nMapped   = nTotal - nUnmapped;
+
+    CString strResult;
+    if (nUnmapped == 0) {
+        CString strFmt;
+        strFmt.LoadString(IDS_VIEW_MAPPING_STATUS_ALL_OK);
+        strResult.Format(strFmt, nTotal);
+    } else {
+        CString strFmt;
+        strFmt.LoadString(IDS_VIEW_MAPPING_STATUS_FMT);
+        strResult.Format(strFmt, nMapped, nTotal, nUnmapped);
+    }
+    return strResult;
+}
+
+void MappingPanel::UpdateStatus()
+{
+    if (GetSafeHwnd() == nullptr)
+        return;
+
+    int nStatusY = MAP_HEADER_H + MAP_PADDING
+                 + MAP_CONTROLS_H + MAP_ROW_GAP
+                 + MAP_BUTTONS_H  + MAP_ROW_GAP;
+    CRect rcStatus(0, nStatusY, 32767, nStatusY + MAP_STATUS_H);
+    InvalidateRect(&rcStatus, TRUE);
 }

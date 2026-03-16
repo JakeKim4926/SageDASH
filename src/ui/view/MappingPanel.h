@@ -37,9 +37,13 @@ private:
     void UpdateLayout(int cx, int cy);
     void RebuildList();
     void UpdateButtonStates();
+    void UpdateStatus();
     void AddRule();
     void DeleteSelectedRule();
     void AutoMap();
+
+    int     GetUnmappedCount() const;
+    CString BuildStatusString() const;
 
     afx_msg int  OnCreate(LPCREATESTRUCT lpCreateStruct);
     afx_msg void OnSize(UINT nType, int cx, int cy);
@@ -50,5 +54,6 @@ private:
     afx_msg void OnBnClickedAutoMap();
     afx_msg void OnBnClickedClear();
     afx_msg void OnLvnItemChangedRules(NMHDR* pNMHDR, LRESULT* pResult);
+    afx_msg void OnCustomDrawRules(NMHDR* pNMHDR, LRESULT* pResult);
     DECLARE_MESSAGE_MAP()
 };
