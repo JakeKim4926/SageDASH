@@ -6,6 +6,7 @@
 #include "EnumDefine.h"
 #include "MappingPanel.h"
 #include "ValidationPanel.h"
+#include "WebViewHost.h"
 
 class DataSheet;
 class CSAGEDashDoc;
@@ -42,6 +43,7 @@ private:
 	CListCtrl        m_lstGrid;
 	MappingPanel     m_wndMapping;
 	ValidationPanel  m_wndValidation;
+	WebViewHost      m_wndWebView;
 	CenterViewMode   m_eViewMode;
 
 	void PopulateGrid(const DataSheet& sheet);
