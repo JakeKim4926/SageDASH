@@ -233,6 +233,11 @@
     <ClInclude Include="..\src\application\ExportService.h" />
     <ClInclude Include="..\src\infrastructure\csv\CsvOutputWriter.h" />
     <ClInclude Include="..\src\infrastructure\excel\ExcelOutputWriter.h" />
+    <ClInclude Include="..\src\domain\IExecutionStep.h" />
+    <ClInclude Include="..\src\domain\ExecutionContext.h" />
+    <ClInclude Include="..\src\domain\AutomationProject.h" />
+    <ClInclude Include="..\src\infrastructure\persistence\ProjectSerializer.h" />
+    <ClInclude Include="..\src\application\ProjectService.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\ui\frame\ChildFrm.cpp" />
@@ -260,6 +265,8 @@
     <ClCompile Include="..\src\application\ExportService.cpp" />
     <ClCompile Include="..\src\infrastructure\csv\CsvOutputWriter.cpp" />
     <ClCompile Include="..\src\infrastructure\excel\ExcelOutputWriter.cpp" />
+    <ClCompile Include="..\src\infrastructure\persistence\ProjectSerializer.cpp" />
+    <ClCompile Include="..\src\application\ProjectService.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SAGEDash.rc" />

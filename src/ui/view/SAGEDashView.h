@@ -27,6 +27,9 @@ public:
 	void           SwitchViewMode(CenterViewMode eMode);
 	CenterViewMode GetViewMode() const { return m_eViewMode; }
 
+	MappingPanel&    GetMappingPanel()    { return m_wndMapping; }
+	ValidationPanel& GetValidationPanel() { return m_wndValidation; }
+
 public:
 	virtual ~CSAGEDashView();
 #ifdef _DEBUG

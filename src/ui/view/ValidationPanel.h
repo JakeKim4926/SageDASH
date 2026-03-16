@@ -20,6 +20,8 @@ public:
 
     void SetSourceColumns(const std::vector<CString>& arrColumns);
     void SetDataSheet(const DataSheet* pSheet);
+    const std::vector<ValidationRule>& GetValidationRules() const { return m_arrRules; }
+    void LoadRules(const std::vector<ValidationRule>& arrRules);
     void ClearAll();
 
 private:

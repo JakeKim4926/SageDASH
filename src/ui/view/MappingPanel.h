@@ -18,6 +18,7 @@ public:
 
     void SetSourceColumns(const std::vector<CString>& arrColumns);
     const std::vector<MappingRule>& GetMappingRules() const { return m_arrRules; }
+    void LoadRules(const std::vector<MappingRule>& arrRules);
     void ClearAll();
 
 private:
