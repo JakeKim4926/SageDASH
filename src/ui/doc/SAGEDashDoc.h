@@ -6,6 +6,8 @@
 #include "TabularData.h"
 #include "AutomationProject.h"
 
+class CSAGEDashView;
+
 class CSAGEDashDoc : public CDocument
 {
 protected:
