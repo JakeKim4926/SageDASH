@@ -12,6 +12,79 @@ SAGEDash는 C++/MFC 기반의 **문서 중심 멀티 작업형 업무 자동화 
 - **IDE/빌드**: Visual Studio 2026, x64 Debug/Release
 - **프로젝트 구조**: MDI (Multiple Document Interface)
 
+## 현재 구조 (Phase 3 완료)
+
+```
+SAGEDash/
+├─ docs/
+│  └─ decisions/
+│     ├─ DECISIONS.md
+│     ├─ ISSUE_i18n_satellite_dll.md
+│     └─ PR_LOG.md
+├─ SAGEDash/                        # VS 프로젝트 파일, 리소스
+│  ├─ res/                          # 아이콘, 비트맵
+│  ├─ Resource.h
+│  ├─ SAGEDash.rc
+│  ├─ SAGEDash.vcxproj
+│  ├─ pch.h / pch.cpp
+│  └─ framework.h
+├─ src/
+│  ├─ app/
+│  │  ├─ SAGEDash.h / .cpp          # CSAGEDashApp
+│  │  └─ SageMgr.h / .cpp          # 앱 싱글톤 (sageMgr 매크로)
+│  ├─ ui/
+│  │  ├─ frame/
+│  │  │  ├─ MainFrm.h / .cpp        # CMainFrame (MDI 메인 프레임)
+│  │  │  └─ ChildFrm.h / .cpp       # CChildFrame (MDI 차일드 프레임)
+│  │  ├─ doc/
+│  │  │  └─ SAGEDashDoc.h / .cpp    # CSAGEDashDoc (작업 세션 모델)
+│  │  ├─ view/
+│  │  │  ├─ SAGEDashView.h / .cpp   # CSAGEDashView (Center View, 모드 전환)
+│  │  │  ├─ MappingPanel.h / .cpp   # 매핑 패널 (Source→Target 컬럼 매핑)
+│  │  │  └─ ValidationPanel.h / .cpp# 검증 패널 (규칙 등록 + 결과 표시)
+│  │  └─ pane/
+│  │     ├─ NavigatorPane.h / .cpp  # 네비게이터 (INPUT/PIPELINE/ACTIONS)
+│  │     ├─ PropertiesPane.h / .cpp # 속성 패널 (FILE/DATA/SHEETS 요약)
+│  │     └─ OutputWnd.h / .cpp      # 출력/로그 패널
+│  ├─ application/
+│  │  ├─ IInputReader.h             # 입력 리더 인터페이스
+│  │  ├─ IInputSource.h             # 입력 소스 인터페이스
+│  │  ├─ IOutputWriter.h            # 출력 라이터 인터페이스
+│  │  ├─ IOutputTarget.h            # 출력 타겟 인터페이스
+│  │  ├─ FileOutputTarget.h         # 파일 출력 타겟 구현
+│  │  ├─ WorkbookService.h / .cpp   # 파일 열기 서비스 (CSV/XLSX)
+│  │  ├─ ExportService.h / .cpp     # 내보내기 서비스 (확장자 기반 writer 선택)
+│  │  ├─ ValidationService.h / .cpp # 검증 서비스 (규칙 적용 → 결과 반환)
+│  │  └─ ProjectService.h / .cpp    # 프로젝트 저장/불러오기 서비스
+│  ├─ domain/
+│  │  ├─ TabularData.h              # 핵심 데이터 모델 (DataSheet, TabularData)
+│  │  ├─ MappingRule.h              # 컬럼 매핑 규칙
+│  │  ├─ ValidationRule.h           # 검증 규칙
+│  │  ├─ ValidationResult.h         # 검증 결과 (ValidationIssue 포함)
+│  │  ├─ AutomationProject.h        # 자동화 프로젝트 (규칙 집합 모델)
+│  │  ├─ ExecutionContext.h         # 파이프라인 실행 컨텍스트
+│  │  └─ IExecutionStep.h           # 실행 단계 인터페이스
+│  ├─ infrastructure/
+│  │  ├─ csv/
+│  │  │  ├─ CsvInputReader.h / .cpp # CSV 읽기
+│  │  │  └─ CsvOutputWriter.h / .cpp# CSV 쓰기 (UTF-8 BOM, RFC 4180)
+│  │  ├─ excel/
+│  │  │  ├─ ExcelInputReader.h / .cpp  # XLSX 읽기 (COM automation)
+│  │  │  └─ ExcelOutputWriter.h / .cpp # XLSX 쓰기 (COM automation)
+│  │  ├─ logging/
+│  │  │  └─ SageLogger.h / .cpp     # 파일 로거
+│  │  └─ persistence/
+│  │     └─ ProjectSerializer.h / .cpp # .sagep 프로젝트 파일 저장/파싱 (INI 형식)
+│  └─ common/
+│     ├─ Define.h                   # 색상 토큰, 공통 상수
+│     ├─ EnumDefine.h               # 프로젝트 전역 enum
+│     └─ error/
+│        └─ SageException.h         # 예외 클래스
+├─ .gitignore
+├─ CLAUDE.md
+└─ SAGEDash.slnx
+```
+
 ## 권장 목표 구조
 
 현재는 VS 마법사가 생성한 초기 상태이며, 아래 구조로 발전시킨다.
@@ -57,7 +130,7 @@ SAGEDash/
 - **`nullptr` 반환 금지** → 실패 시 예외(`SageException` 계열)를 던지거나, 출력 매개변수(`strError` 등)로 오류를 전달하고 호출자가 판단하도록 한다
 
 ### 네이밍 규칙
-- **클래스명**: `C` 접두사 유지 (예: `CSAGEDashDoc`)
+- **클래스명**: 영어 대문자로 시작하는 카멜케이스, 맨 앞에 `C` 금지 (예: `NavigatorPane`, `ValidationService`). MFC 마법사 생성 클래스(`CSAGEDashDoc` 등)는 예외
 - **멤버 변수**: `m_` 접두사 + 헝가리안 표기법
 - **함수 매개변수/지역변수**: 카멜 표기법 (camelCase)
 - **상수**: 대문자 + `_` 구분 (예: `MAX_RETRY_COUNT`)
