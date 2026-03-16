@@ -7,8 +7,10 @@
 #include "SAGEDashDoc.h"
 #include "MainFrm.h"
 #include "WorkbookService.h"
+#include "ExportService.h"
 #include "SageException.h"
 #include "SageMgr.h"
+#include "Resource.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -17,6 +19,8 @@
 IMPLEMENT_DYNCREATE(CSAGEDashDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CSAGEDashDoc, CDocument)
+    ON_COMMAND(ID_FILE_EXPORT,           &CSAGEDashDoc::OnFileExport)
+    ON_UPDATE_COMMAND_UI(ID_FILE_EXPORT, &CSAGEDashDoc::OnUpdateFileExport)
 END_MESSAGE_MAP()
 
 CSAGEDashDoc::CSAGEDashDoc() noexcept
@@ -96,6 +100,51 @@ void CSAGEDashDoc::Serialize(CArchive& ar)
 
 void CSAGEDashDoc::ReportSaveLoadException(LPCTSTR /*lpszPathName*/, CException* /*e*/, BOOL /*bSaving*/, UINT /*nIDPDefault*/)
 {
+}
+
+void CSAGEDashDoc::OnFileExport()
+{
+    if (!m_isDataLoaded)
+        return;
+
+    CString strFilter;
+    strFilter.LoadString(IDS_EXPORT_FILE_FILTER);
+
+    CFileDialog dlg(FALSE, _T("csv"), nullptr,
+        OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY,
+        strFilter, AfxGetMainWnd());
+
+    if (dlg.DoModal() != IDOK)
+        return;
+
+    CString strPath = dlg.GetPathName();
+
+    ExportService svc;
+    CString strErr = svc.Export(m_data, strPath);
+
+    CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+
+    if (strErr.IsEmpty()) {
+        CString strLog, strFmt;
+        strFmt.LoadString(IDS_LOG_EXPORT_OK);
+        strLog.Format(strFmt, (LPCTSTR)strPath);
+        sageMgr.Log(strLog);
+        if (pFrame != nullptr)
+            pFrame->LogMessage(strLog);
+    } else {
+        CString strLog, strFmt;
+        strFmt.LoadString(IDS_LOG_EXPORT_FAIL);
+        strLog.Format(strFmt, (LPCTSTR)strErr);
+        sageMgr.Log(strLog);
+        if (pFrame != nullptr)
+            pFrame->LogMessage(strLog);
+        AfxMessageBox(strErr, MB_OK | MB_ICONWARNING);
+    }
+}
+
+void CSAGEDashDoc::OnUpdateFileExport(CCmdUI* pCmdUI)
+{
+    pCmdUI->Enable(m_isDataLoaded);
 }
 
 #ifdef _DEBUG

@@ -149,6 +149,14 @@
 
 #define ID_Menu                         32771
 #define ID_Menu32772                    32772
+#define ID_FILE_EXPORT                  32773
+
+// Log (10501~10599)
+#define IDS_LOG_EXPORT_OK               10501
+#define IDS_LOG_EXPORT_FAIL             10502
+
+// Export 파일 다이얼로그 필터 (10701~)
+#define IDS_EXPORT_FILE_FILTER          10701
 
 // Next default values for new objects
 // 

@@ -229,6 +229,10 @@
     <ClInclude Include="..\src\application\IOutputTarget.h" />
     <ClInclude Include="..\src\application\WorkbookService.h" />
     <ClInclude Include="..\src\application\ValidationService.h" />
+    <ClInclude Include="..\src\application\FileOutputTarget.h" />
+    <ClInclude Include="..\src\application\ExportService.h" />
+    <ClInclude Include="..\src\infrastructure\csv\CsvOutputWriter.h" />
+    <ClInclude Include="..\src\infrastructure\excel\ExcelOutputWriter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\ui\frame\ChildFrm.cpp" />
@@ -253,6 +257,9 @@
     <ClCompile Include="..\src\common\SageMgr.cpp" />
     <ClCompile Include="..\src\application\WorkbookService.cpp" />
     <ClCompile Include="..\src\application\ValidationService.cpp" />
+    <ClCompile Include="..\src\application\ExportService.cpp" />
+    <ClCompile Include="..\src\infrastructure\csv\CsvOutputWriter.cpp" />
+    <ClCompile Include="..\src\infrastructure\excel\ExcelOutputWriter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SAGEDash.rc" />
