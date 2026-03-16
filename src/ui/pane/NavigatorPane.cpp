@@ -11,22 +11,22 @@ static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif
 
-CNavigatorPane::CNavigatorPane() noexcept
+NavigatorPane::NavigatorPane() noexcept
 {
 }
 
-CNavigatorPane::~CNavigatorPane()
+NavigatorPane::~NavigatorPane()
 {
 }
 
-BEGIN_MESSAGE_MAP(CNavigatorPane, CDockablePane)
+BEGIN_MESSAGE_MAP(NavigatorPane, CDockablePane)
     ON_WM_CREATE()
     ON_WM_SIZE()
     ON_NOTIFY_REFLECT(NM_CUSTOMDRAW, OnCustomDraw)
     ON_NOTIFY_REFLECT(TVN_SELCHANGED, OnSelChanged)
 END_MESSAGE_MAP()
 
-int CNavigatorPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
+int NavigatorPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
     if (CDockablePane::OnCreate(lpCreateStruct) == -1)
         return -1;
@@ -76,7 +76,7 @@ int CNavigatorPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
     return 0;
 }
 
-HTREEITEM CNavigatorPane::InsertNavItem(const CString& strLabel, HTREEITEM hParent, NavItemType type)
+HTREEITEM NavigatorPane::InsertNavItem(const CString& strLabel, HTREEITEM hParent, NavItemType type)
 {
     TVINSERTSTRUCT tvis        = {};
     tvis.hParent               = hParent;
@@ -87,7 +87,7 @@ HTREEITEM CNavigatorPane::InsertNavItem(const CString& strLabel, HTREEITEM hPare
     return m_wndTree.InsertItem(&tvis);
 }
 
-void CNavigatorPane::OnSize(UINT nType, int cx, int cy)
+void NavigatorPane::OnSize(UINT nType, int cx, int cy)
 {
     CDockablePane::OnSize(nType, cx, cy);
 
@@ -95,7 +95,7 @@ void CNavigatorPane::OnSize(UINT nType, int cx, int cy)
         m_wndTree.SetWindowPos(nullptr, 0, 0, cx, cy, SWP_NOZORDER | SWP_NOACTIVATE);
 }
 
-void CNavigatorPane::ActivatePipelineItems(BOOL bActive)
+void NavigatorPane::ActivatePipelineItems(BOOL bActive)
 {
     if (m_wndTree.GetSafeHwnd() == nullptr)
         return;
@@ -107,7 +107,7 @@ void CNavigatorPane::ActivatePipelineItems(BOOL bActive)
     m_wndTree.Invalidate();
 }
 
-void CNavigatorPane::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
+void NavigatorPane::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
     NMTREEVIEW* pNMTV = reinterpret_cast<NMTREEVIEW*>(pNMHDR);
     *pResult = 0;
@@ -134,7 +134,7 @@ void CNavigatorPane::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
     }
 }
 
-void CNavigatorPane::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
+void NavigatorPane::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
 {
     NMTVCUSTOMDRAW* pNMCD = reinterpret_cast<NMTVCUSTOMDRAW*>(pNMHDR);
     *pResult = CDRF_DODEFAULT;

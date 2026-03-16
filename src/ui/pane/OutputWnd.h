@@ -1,11 +1,11 @@
 
 #pragma once
 
-class COutputWnd : public CDockablePane
+class OutputWnd : public CDockablePane
 {
 public:
-    COutputWnd() noexcept;
-    virtual ~COutputWnd();
+    OutputWnd() noexcept;
+    virtual ~OutputWnd();
 
     void UpdateFonts();
     void AppendLog(const CString& strMessage);

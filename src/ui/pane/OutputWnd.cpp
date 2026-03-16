@@ -9,20 +9,20 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-COutputWnd::COutputWnd() noexcept
+OutputWnd::OutputWnd() noexcept
 {
 }
 
-COutputWnd::~COutputWnd()
+OutputWnd::~OutputWnd()
 {
 }
 
-BEGIN_MESSAGE_MAP(COutputWnd, CDockablePane)
+BEGIN_MESSAGE_MAP(OutputWnd, CDockablePane)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 END_MESSAGE_MAP()
 
-int COutputWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
+int OutputWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CDockablePane::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -42,7 +42,7 @@ int COutputWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-void COutputWnd::OnSize(UINT nType, int cx, int cy)
+void OutputWnd::OnSize(UINT nType, int cx, int cy)
 {
 	CDockablePane::OnSize(nType, cx, cy);
 
@@ -50,7 +50,7 @@ void COutputWnd::OnSize(UINT nType, int cx, int cy)
 		m_wndLog.SetWindowPos(nullptr, 0, 0, cx, cy, SWP_NOZORDER | SWP_NOACTIVATE);
 }
 
-void COutputWnd::AppendLog(const CString& strMessage)
+void OutputWnd::AppendLog(const CString& strMessage)
 {
 	SYSTEMTIME st;
 	GetLocalTime(&st);
@@ -68,7 +68,7 @@ void COutputWnd::AppendLog(const CString& strMessage)
 		m_wndLog.SetTopIndex(nCount - 1);
 }
 
-void COutputWnd::UpdateFonts()
+void OutputWnd::UpdateFonts()
 {
 	if (m_wndLog.GetSafeHwnd() != nullptr)
 		m_wndLog.SetFont(&afxGlobalData.fontRegular);

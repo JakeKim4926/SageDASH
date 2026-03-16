@@ -37,6 +37,12 @@
 #define WM_SWITCH_CENTER_VIEW (WM_USER + 1)  // wParam = CenterViewMode
 
 // ============================================================
+// 공통 컨트롤
+// ============================================================
+constexpr int COMBO_DROPDOWN_H  = 200;  // ComboBox SetWindowPos 시 드롭다운 높이
+constexpr int CHECKBOX_HEIGHT   = 16;   // 체크박스 기본 높이
+
+// ============================================================
 // 검색 바
 // ============================================================
 constexpr int SEARCH_BAR_HEIGHT = 24;

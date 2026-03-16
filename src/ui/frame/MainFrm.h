@@ -17,8 +17,8 @@ public:
 
 public:
 	void LogMessage(const CString& strMessage);
-	CNavigatorPane&  GetNavigatorPane()  { return m_wndNavigator; }
-	CPropertiesPane& GetPropertiesPane() { return m_wndProperties; }
+	NavigatorPane&  GetNavigatorPane()  { return m_wndNavigator; }
+	PropertiesPane& GetPropertiesPane() { return m_wndProperties; }
 
 public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
@@ -32,9 +32,9 @@ protected:
 	CMFCMenuBar       m_wndMenuBar;
 	CMFCToolBar       m_wndToolBar;
 	CMFCStatusBar     m_wndStatusBar;
-	CNavigatorPane    m_wndNavigator;
-	CPropertiesPane   m_wndProperties;
-	COutputWnd        m_wndOutput;
+	NavigatorPane    m_wndNavigator;
+	PropertiesPane   m_wndProperties;
+	OutputWnd        m_wndOutput;
 
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);

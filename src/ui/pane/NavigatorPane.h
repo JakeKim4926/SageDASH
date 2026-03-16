@@ -3,11 +3,11 @@
 
 #include "EnumDefine.h"
 
-class CNavigatorPane : public CDockablePane
+class NavigatorPane : public CDockablePane
 {
 public:
-    CNavigatorPane() noexcept;
-    virtual ~CNavigatorPane();
+    NavigatorPane() noexcept;
+    virtual ~NavigatorPane();
 
     void ActivatePipelineItems(BOOL bActive);
 

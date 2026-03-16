@@ -5,11 +5,11 @@
 #include "EnumDefine.h"
 #include "Resource.h"
 
-class CPropertiesPane : public CDockablePane
+class PropertiesPane : public CDockablePane
 {
 public:
-    CPropertiesPane() noexcept;
-    virtual ~CPropertiesPane();
+    PropertiesPane() noexcept;
+    virtual ~PropertiesPane();
 
     void SetFileInfo(const CString& strFilePath, const TabularData& data);
     void ClearInfo();
