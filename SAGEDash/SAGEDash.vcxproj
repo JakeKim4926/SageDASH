@@ -243,6 +243,7 @@
     <ClInclude Include="..\src\infrastructure\persistence\ProjectSerializer.h" />
     <ClInclude Include="..\src\application\ProjectService.h" />
     <ClInclude Include="..\src\ui\webview\WebViewHost.h" />
+    <ClInclude Include="..\src\ui\webview\WebBridgeMessage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\ui\frame\ChildFrm.cpp" />
@@ -273,6 +274,7 @@
     <ClCompile Include="..\src\infrastructure\persistence\ProjectSerializer.cpp" />
     <ClCompile Include="..\src\application\ProjectService.cpp" />
     <ClCompile Include="..\src\ui\webview\WebViewHost.cpp" />
+    <ClCompile Include="..\src\ui\webview\WebBridgeMessage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SAGEDash.rc" />

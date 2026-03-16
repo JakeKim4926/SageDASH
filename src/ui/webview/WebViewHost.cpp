@@ -5,6 +5,7 @@
 #include <wrl.h>
 
 #include "SageMgr.h"
+#include "WebBridgeMessage.h"
 
 BEGIN_MESSAGE_MAP(WebViewHost, CWnd)
     ON_WM_SIZE()
@@ -94,7 +95,7 @@ void WebViewHost::PostWebMessage(const CString& strJson)
     if (!m_bInitialized || m_pWebView == nullptr) {
         return;
     }
-    m_pWebView->PostWebMessageAsJson(strJson);
+    m_pWebView->PostWebMessageAsJson(strJson.GetString());
 }
 
 // ---------------------------------------------------------------
@@ -174,6 +175,8 @@ void WebViewHost::OnInitCompleted(ICoreWebView2Controller* pController)
     m_bInitializing = FALSE;
     m_bInitialized  = TRUE;
     sageMgr.Log(_T("[WebViewHost] WebView2 초기화 완료"));
+
+    PostWebMessage(WebBridgeMessage::BuildNativeReady());
 }
 
 // ---------------------------------------------------------------
