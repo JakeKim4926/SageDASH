@@ -33,5 +33,7 @@ private:
 	BOOL        m_isDataLoaded;
 
 protected:
+	afx_msg void OnFileExport();
+	afx_msg void OnUpdateFileExport(CCmdUI* pCmdUI);
 	DECLARE_MESSAGE_MAP()
 };

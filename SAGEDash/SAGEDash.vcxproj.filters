@@ -128,6 +128,18 @@
     <ClInclude Include="..\src\application\ValidationService.h">
       <Filter>헤더 파일\application</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\application\FileOutputTarget.h">
+      <Filter>헤더 파일\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\application\ExportService.h">
+      <Filter>헤더 파일\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\infrastructure\csv\CsvOutputWriter.h">
+      <Filter>헤더 파일\infrastructure\csv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\infrastructure\excel\ExcelOutputWriter.h">
+      <Filter>헤더 파일\infrastructure\excel</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\application\IInputReader.h">
       <Filter>헤더 파일\application</Filter>
     </ClInclude>
@@ -213,6 +225,15 @@
     </ClCompile>
     <ClCompile Include="..\src\application\ValidationService.cpp">
       <Filter>소스 파일\application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\application\ExportService.cpp">
+      <Filter>소스 파일\application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\infrastructure\csv\CsvOutputWriter.cpp">
+      <Filter>소스 파일\infrastructure\csv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\infrastructure\excel\ExcelOutputWriter.cpp">
+      <Filter>소스 파일\infrastructure\excel</Filter>
     </ClCompile>
     <ClCompile Include="..\src\infrastructure\csv\CsvInputReader.cpp">
       <Filter>소스 파일\infrastructure\csv</Filter>
