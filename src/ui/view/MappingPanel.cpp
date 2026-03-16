@@ -28,6 +28,10 @@ constexpr int MAP_BTN_DELETE_W  = 52;
 constexpr int MAP_BTN_AUTOMAP_W = 80;
 constexpr int MAP_BTN_CLEAR_W   = 52;
 constexpr int MAP_BTN_GAP       = 4;
+constexpr int MAP_COL_NUM_W     = 40;
+constexpr int MAP_COL_SRC_W     = 180;
+constexpr int MAP_COL_TGT_W     = 180;
+constexpr int MAP_COL_REQ_W     = 50;
 
 BEGIN_MESSAGE_MAP(MappingPanel, CWnd)
     ON_WM_CREATE()
@@ -150,24 +154,24 @@ void MappingPanel::CreateControls()
     strCol.LoadString(IDS_VIEW_MAPPING_COL_NUM);
     lvc.mask    = LVCF_TEXT | LVCF_WIDTH | LVCF_FMT;
     lvc.fmt     = LVCFMT_RIGHT;
-    lvc.cx      = 40;
+    lvc.cx      = MAP_COL_NUM_W;
     lvc.pszText = (LPTSTR)(LPCTSTR)strCol;
     m_lstRules.InsertColumn(0, &lvc);
 
     strCol.LoadString(IDS_VIEW_MAPPING_COL_SOURCE);
     lvc.fmt     = LVCFMT_LEFT;
-    lvc.cx      = 180;
+    lvc.cx      = MAP_COL_SRC_W;
     lvc.pszText = (LPTSTR)(LPCTSTR)strCol;
     m_lstRules.InsertColumn(1, &lvc);
 
     strCol.LoadString(IDS_VIEW_MAPPING_COL_TARGET);
-    lvc.cx      = 180;
+    lvc.cx      = MAP_COL_TGT_W;
     lvc.pszText = (LPTSTR)(LPCTSTR)strCol;
     m_lstRules.InsertColumn(2, &lvc);
 
     strCol.LoadString(IDS_VIEW_MAPPING_COL_REQUIRED);
     lvc.fmt     = LVCFMT_CENTER;
-    lvc.cx      = 50;
+    lvc.cx      = MAP_COL_REQ_W;
     lvc.pszText = (LPTSTR)(LPCTSTR)strCol;
     m_lstRules.InsertColumn(3, &lvc);
 
@@ -190,9 +194,9 @@ void MappingPanel::UpdateLayout(int cx, int cy)
     int nCtrlY = MAP_HEADER_H + MAP_PADDING;
     int nX     = MAP_PADDING;
 
-    // ComboBox: height 200 allows dropdown to show
+    // ComboBox: height COMBO_DROPDOWN_H allows dropdown to show
     m_cmbSource.SetWindowPos(nullptr, nX, nCtrlY,
-        MAP_COMBO_W, 200, SWP_NOZORDER | SWP_NOACTIVATE);
+        MAP_COMBO_W, COMBO_DROPDOWN_H, SWP_NOZORDER | SWP_NOACTIVATE);
     nX += MAP_COMBO_W + MAP_PADDING;
 
     m_edtTarget.SetWindowPos(nullptr, nX, nCtrlY,
@@ -200,9 +204,9 @@ void MappingPanel::UpdateLayout(int cx, int cy)
     nX += MAP_EDIT_W + MAP_PADDING;
 
     // Checkbox: vertically centered within the controls row
-    int nChkY = nCtrlY + (MAP_CONTROLS_H - 16) / 2;
+    int nChkY = nCtrlY + (MAP_CONTROLS_H - CHECKBOX_HEIGHT) / 2;
     m_chkRequired.SetWindowPos(nullptr, nX, nChkY,
-        MAP_CHK_W, 16, SWP_NOZORDER | SWP_NOACTIVATE);
+        MAP_CHK_W, CHECKBOX_HEIGHT, SWP_NOZORDER | SWP_NOACTIVATE);
     nX += MAP_CHK_W + MAP_BTN_GAP;
 
     m_btnAdd.SetWindowPos(nullptr, nX, nCtrlY,

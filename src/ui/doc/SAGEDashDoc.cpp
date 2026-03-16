@@ -107,18 +107,21 @@ void CSAGEDashDoc::ReportSaveLoadException(LPCTSTR /*lpszPathName*/, CException*
 {
 }
 
-CSAGEDashView* CSAGEDashDoc::GetActiveView() const
+BOOL CSAGEDashDoc::GetActiveView(CSAGEDashView*& outView) const
 {
     POSITION pos = GetFirstViewPosition();
-    if (pos == nullptr)
-        return nullptr;
-    return DYNAMIC_DOWNCAST(CSAGEDashView, GetNextView(pos));
+    if (pos == nullptr) {
+        outView = nullptr;
+        return FALSE;
+    }
+    outView = DYNAMIC_DOWNCAST(CSAGEDashView, GetNextView(pos));
+    return outView != nullptr;
 }
 
 void CSAGEDashDoc::OnFileSaveProject()
 {
-    CSAGEDashView* pView = GetActiveView();
-    if (pView == nullptr)
+    CSAGEDashView* pView = nullptr;
+    if (!GetActiveView(pView))
         return;
 
     // 패널에서 현재 규칙 수집
@@ -192,7 +195,8 @@ void CSAGEDashDoc::OnFileOpenProject()
     m_project = proj;
 
     // 패널에 규칙 주입
-    CSAGEDashView* pView = GetActiveView();
+    CSAGEDashView* pView = nullptr;
+    GetActiveView(pView);
     if (pView != nullptr) {
         if (!proj.m_arrMappingRules.empty())
             pView->GetMappingPanel().LoadRules(proj.m_arrMappingRules);
