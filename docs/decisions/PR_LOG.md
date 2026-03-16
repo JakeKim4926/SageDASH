@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-17] feature/webview2-setup
+- **목적**: Phase 4-1 — WebView2 NuGet 패키지 빌드 환경 세팅
+- **변경 내용**: packages.config 추가, vcxproj ExtensionSettings/ExtensionTargets에 WebView2 props/targets import, EnsureNuGetPackagesBuildImports 타겟으로 복원 누락 시 빌드 오류 처리, DECISION_webview2_setup.md 작성
+- **PR 링크**: (pending)
+- **결과**: pending
+
 ## [2026-03-16] refactor/naming-rules-fix
 - **목적**: coding-rules 위반 전수 수정 — 클래스명 C 접두사 제거, 매직 넘버 상수화, 포인터 반환 제거
 - **변경 내용**: CNavigatorPane/CPropertiesPane/COutputWnd → C 접두사 제거, GetActiveView() BOOL+출력 파라미터로 변경, MappingPanel/ValidationPanel/PropertiesPane 레이아웃 매직 넘버 → constexpr 상수화, Define.h 공통 상수 추가, coding-rules skill description 업데이트
