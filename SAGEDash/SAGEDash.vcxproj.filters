@@ -66,6 +66,9 @@
     <Filter Include="헤더 파일\ui\view">
       <UniqueIdentifier>{AA000021-0000-0000-0000-000000000021}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\ui\webview">
+      <UniqueIdentifier>{AA000022-0000-0000-0000-000000000022}</UniqueIdentifier>
+    </Filter>
 
     <!-- 소스 파일 하위 경로 -->
 
@@ -107,6 +110,9 @@
     </Filter>
     <Filter Include="소스 파일\ui\view">
       <UniqueIdentifier>{AA000040-0000-0000-0000-000000000040}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ui\webview">
+      <UniqueIdentifier>{AA000041-0000-0000-0000-000000000041}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 
@@ -230,6 +236,9 @@
     <ClInclude Include="..\src\ui\view\ValidationPanel.h">
       <Filter>헤더 파일\ui\view</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\ui\webview\WebViewHost.h">
+      <Filter>헤더 파일\ui\webview</Filter>
+    </ClInclude>
   </ItemGroup>
 
   <ItemGroup>
@@ -301,6 +310,9 @@
     <ClCompile Include="..\src\ui\view\ValidationPanel.cpp">
       <Filter>소스 파일\ui\view</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ui\webview\WebViewHost.cpp">
+      <Filter>소스 파일\ui\webview</Filter>
+    </ClCompile>
   </ItemGroup>
 
   <ItemGroup>
@@ -341,5 +353,6 @@
     <None Include="res\SAGEDash.rc2">
       <Filter>리소스 파일</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

@@ -17,6 +17,7 @@
 #define IDC_SEARCH_EDIT      100
 #define IDC_MAPPING_PANEL    110
 #define IDC_VALIDATION_PANEL 111
+#define IDC_WEBVIEW_HOST     120
 
 IMPLEMENT_DYNCREATE(CSAGEDashView, CView)
 
@@ -68,6 +69,12 @@ int CSAGEDashView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 	}
 
+	if (!m_wndWebView.Create(this, rectDummy, IDC_WEBVIEW_HOST)) {
+		TRACE0("WebView 호스트를 만들지 못했습니다.\n");
+		return -1;
+	}
+	m_wndWebView.ShowWindow(SW_HIDE);
+
 	return 0;
 }
 
@@ -86,6 +93,7 @@ void CSAGEDashView::UpdateLayout(int cx, int cy)
 	BOOL bGrid       = (m_eViewMode == VIEW_MODE_GRID);
 	BOOL bMapping    = (m_eViewMode == VIEW_MODE_MAPPING);
 	BOOL bValidation = (m_eViewMode == VIEW_MODE_VALIDATION);
+	BOOL bDashboard  = (m_eViewMode == VIEW_MODE_DASHBOARD);
 
 	// Grid 모드: 검색바 + 그리드
 	if (m_edtSearch.GetSafeHwnd() != nullptr) {
@@ -103,6 +111,11 @@ void CSAGEDashView::UpdateLayout(int cx, int cy)
 	// Validation 모드: 검증 패널 전체 영역
 	if (m_wndValidation.GetSafeHwnd() != nullptr) {
 		m_wndValidation.ShowWindow(bValidation ? SW_SHOW : SW_HIDE);
+	}
+
+	// Dashboard 모드: WebView 전체 영역
+	if (m_wndWebView.GetSafeHwnd() != nullptr) {
+		m_wndWebView.ShowWindow(bDashboard ? SW_SHOW : SW_HIDE);
 	}
 
 	// 각 모드별 위치/크기 설정
@@ -128,6 +141,8 @@ void CSAGEDashView::UpdateLayout(int cx, int cy)
 	} else if (bValidation && m_wndValidation.GetSafeHwnd() != nullptr) {
 		m_wndValidation.SetWindowPos(nullptr, 0, 0,
 			cx, cy, SWP_NOZORDER | SWP_NOACTIVATE);
+	} else if (bDashboard && m_wndWebView.GetSafeHwnd() != nullptr) {
+		m_wndWebView.Resize(CRect(0, 0, cx, cy));
 	}
 }
 
