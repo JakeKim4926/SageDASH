@@ -138,12 +138,17 @@ void CSAGEDashView::SwitchViewMode(CenterViewMode eMode)
 
 	m_eViewMode = eMode;
 
-	if (eMode == VIEW_MODE_MAPPING) {
+	if (eMode == VIEW_MODE_MAPPING || eMode == VIEW_MODE_VALIDATION) {
 		CSAGEDashDoc* pDoc = GetDocument();
 		if (pDoc != nullptr && pDoc->HasData()) {
 			const DataSheet& sheet = pDoc->GetData().GetSheet(0);
-			if (sheet.GetRowCount() > 0) {
+			if (eMode == VIEW_MODE_MAPPING && sheet.GetRowCount() > 0) {
 				m_wndMapping.SetSourceColumns(sheet.m_arrRows[0]);
+			}
+			if (eMode == VIEW_MODE_VALIDATION) {
+				if (sheet.GetRowCount() > 0)
+					m_wndValidation.SetSourceColumns(sheet.m_arrRows[0]);
+				m_wndValidation.SetDataSheet(&sheet);
 			}
 		}
 	}
@@ -166,6 +171,7 @@ void CSAGEDashView::OnUpdate(CView* /*pSender*/, LPARAM /*lHint*/, CObject* /*pH
 
 	ClearGrid();
 	m_wndMapping.ClearAll();
+	m_wndValidation.ClearAll();
 
 	if (m_edtSearch.GetSafeHwnd() != nullptr)
 		m_edtSearch.SetWindowText(_T(""));

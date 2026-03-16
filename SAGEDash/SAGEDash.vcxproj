@@ -228,6 +228,7 @@
     <ClInclude Include="..\src\application\IOutputWriter.h" />
     <ClInclude Include="..\src\application\IOutputTarget.h" />
     <ClInclude Include="..\src\application\WorkbookService.h" />
+    <ClInclude Include="..\src\application\ValidationService.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\ui\frame\ChildFrm.cpp" />
@@ -251,6 +252,7 @@
     <ClCompile Include="..\src\infrastructure\logging\SageLogger.cpp" />
     <ClCompile Include="..\src\common\SageMgr.cpp" />
     <ClCompile Include="..\src\application\WorkbookService.cpp" />
+    <ClCompile Include="..\src\application\ValidationService.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SAGEDash.rc" />
