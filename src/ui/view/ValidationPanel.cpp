@@ -359,6 +359,18 @@ void ValidationPanel::SetDataSheet(const DataSheet* pSheet)
     m_pDataSheet = pSheet;
 }
 
+void ValidationPanel::LoadRules(const std::vector<ValidationRule>& arrRules)
+{
+    m_arrRules = arrRules;
+    m_lastResult.Clear();
+    m_bHasResult = FALSE;
+    RebuildRulesList();
+    if (m_lstResults.GetSafeHwnd() != nullptr)
+        m_lstResults.DeleteAllItems();
+    Invalidate();
+    UpdateButtonStates();
+}
+
 void ValidationPanel::ClearAll()
 {
     m_arrSourceColumns.clear();

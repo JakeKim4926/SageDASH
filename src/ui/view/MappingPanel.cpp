@@ -314,6 +314,14 @@ void MappingPanel::SetSourceColumns(const std::vector<CString>& arrColumns)
     UpdateStatus();
 }
 
+void MappingPanel::LoadRules(const std::vector<MappingRule>& arrRules)
+{
+    m_arrRules = arrRules;
+    RebuildList();
+    UpdateButtonStates();
+    UpdateStatus();
+}
+
 void MappingPanel::ClearAll()
 {
     m_arrRules.clear();
