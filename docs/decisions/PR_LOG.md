@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-16] feature/phase3-validation-panel
+- **목적**: Validation Panel 구현 — 검증 규칙(필수값/포맷) 등록 + 데이터 검증 실행 + 오류/경고 결과 표시
+- **변경 내용**: ValidationService 신규 추가(Application 계층), ValidationPanel 전체 구현(컬럼/타입/심각도/패턴 입력, 추가/삭제/전체삭제, 검증 실행, 결과 리스트 오류·경고 색상), SAGEDashView Validation 모드 전환 시 SetSourceColumns+SetDataSheet 주입, IDS_VIEW_VAL_* 10316~10334 추가
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/5
+- **결과**: merged into develop
+
 ## [2026-03-16] feature/phase3-mapping-required
 - **목적**: 매핑 패널 필수 항목 누락 표시 — 어떤 컬럼이 매핑 안 됐는지 시각적으로 표시
 - **변경 내용**: MappingPanel에 status 영역 추가(매핑: X/N | 미매핑: Y개, 색상 변화), 필수 규칙 행 COLOR_ACCENT_LIGHT 하이라이트(NM_CUSTOMDRAW), IDS_VIEW_MAPPING_STATUS_FMT/ALL_OK 추가
