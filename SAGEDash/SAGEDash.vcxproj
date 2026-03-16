@@ -25,6 +25,9 @@
     <RootNamespace>SAGEDash</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
+  <PropertyGroup>
+    <ErrorText>이 프로젝트는 NuGet 패키지 복원이 필요합니다. Visual Studio에서 빌드 전에 NuGet 패키지를 복원하세요. 누락된 파일: {0}</ErrorText>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -58,6 +61,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(SolutionDir)packages\Microsoft.Web.WebView2.1.0.2849.39\build\native\Microsoft.Web.WebView2.props" Condition="Exists('$(SolutionDir)packages\Microsoft.Web.WebView2.1.0.2849.39\build\native\Microsoft.Web.WebView2.props')" />
   </ImportGroup>
   <ImportGroup Label="Shared">
   </ImportGroup>
@@ -303,5 +307,12 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(SolutionDir)packages\Microsoft.Web.WebView2.1.0.2849.39\build\native\Microsoft.Web.WebView2.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.Web.WebView2.1.0.2849.39\build\native\Microsoft.Web.WebView2.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackagesBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>이 프로젝트는 NuGet 패키지 복원이 필요합니다. Visual Studio에서 빌드 전에 NuGet 패키지를 복원하세요. 누락된 파일: {0}</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Web.WebView2.1.0.2849.39\build\native\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Web.WebView2.1.0.2849.39\build\native\Microsoft.Web.WebView2.targets'))" />
+  </Target>
 </Project>

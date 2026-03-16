@@ -341,5 +341,6 @@
     <None Include="res\SAGEDash.rc2">
       <Filter>리소스 파일</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
