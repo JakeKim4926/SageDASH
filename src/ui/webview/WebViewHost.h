@@ -1,8 +1,9 @@
 #pragma once
 
 // COM 인터페이스 전방 선언 (WebView2.h 는 .cpp 에서만 포함)
-interface ICoreWebView2Controller;
-interface ICoreWebView2;
+// interface 매크로는 COM 헤더 의존적이므로 struct 로 전방 선언
+struct ICoreWebView2Controller;
+struct ICoreWebView2;
 
 // ---------------------------------------------------------------
 // WebViewHost
