@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-16] refactor/naming-rules-fix
+- **목적**: coding-rules 위반 전수 수정 — 클래스명 C 접두사 제거, 매직 넘버 상수화, 포인터 반환 제거
+- **변경 내용**: CNavigatorPane/CPropertiesPane/COutputWnd → C 접두사 제거, GetActiveView() BOOL+출력 파라미터로 변경, MappingPanel/ValidationPanel/PropertiesPane 레이아웃 매직 넘버 → constexpr 상수화, Define.h 공통 상수 추가, coding-rules skill description 업데이트
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/9
+- **결과**: merged into develop
+
 ## [2026-03-16] develop → main (Phase 3 완료)
 - **목적**: Phase 3 완료 버전 main 반영 — 자동화 핵심 기능(매핑/검증/출력/프로젝트)
 - **변경 내용**: Phase 3 전체 — Center View 모드 전환, MappingPanel, ValidationPanel, ValidationService, CsvOutputWriter, ExcelOutputWriter, ExportService, IExecutionStep/ExecutionContext, AutomationProject, ProjectSerializer, ProjectService, 빌드 오류 수정(forward declaration, include 경로)
