@@ -100,6 +100,41 @@
 
 // View (10301~10399)
 #define IDS_VIEW_GRID_ROW_NUM           10301
+#define IDS_VIEW_MAPPING_TITLE          10302
+#define IDS_VIEW_VALIDATION_TITLE       10303
+#define IDS_VIEW_MAPPING_COL_NUM        10304
+#define IDS_VIEW_MAPPING_COL_SOURCE     10305
+#define IDS_VIEW_MAPPING_COL_TARGET     10306
+#define IDS_VIEW_MAPPING_COL_REQUIRED   10307
+#define IDS_VIEW_MAPPING_BTN_ADD        10308
+#define IDS_VIEW_MAPPING_BTN_DELETE     10309
+#define IDS_VIEW_MAPPING_BTN_AUTOMAP    10310
+#define IDS_VIEW_MAPPING_BTN_CLEAR      10311
+#define IDS_VIEW_MAPPING_REQUIRED_MARK  10312
+#define IDS_VIEW_MAPPING_TARGET_HINT    10313
+#define IDS_VIEW_MAPPING_STATUS_FMT     10314
+#define IDS_VIEW_MAPPING_STATUS_ALL_OK  10315
+
+// Validation Panel (10316~10339)
+#define IDS_VIEW_VAL_TITLE              10316
+#define IDS_VIEW_VAL_COL_NUM            10317
+#define IDS_VIEW_VAL_COL_COLUMN         10318
+#define IDS_VIEW_VAL_COL_TYPE           10319
+#define IDS_VIEW_VAL_COL_SEVERITY       10320
+#define IDS_VIEW_VAL_COL_PATTERN        10321
+#define IDS_VIEW_VAL_BTN_ADD            10322
+#define IDS_VIEW_VAL_BTN_DELETE         10323
+#define IDS_VIEW_VAL_BTN_CLEAR_RULES    10324
+#define IDS_VIEW_VAL_BTN_RUN            10325
+#define IDS_VIEW_VAL_TYPE_REQUIRED      10326
+#define IDS_VIEW_VAL_TYPE_FORMAT        10327
+#define IDS_VIEW_VAL_SEV_ERROR          10328
+#define IDS_VIEW_VAL_SEV_WARNING        10329
+#define IDS_VIEW_VAL_RES_COL_ROW        10330
+#define IDS_VIEW_VAL_RES_COL_MSG        10331
+#define IDS_VIEW_VAL_STATUS_FMT         10332
+#define IDS_VIEW_VAL_STATUS_OK          10333
+#define IDS_VIEW_VAL_SECTION_RESULTS    10334
 
 // Properties (10401~10499)
 #define IDS_PROP_SECTION_FILE           10401
@@ -114,6 +149,20 @@
 
 #define ID_Menu                         32771
 #define ID_Menu32772                    32772
+#define ID_FILE_EXPORT                  32773
+#define ID_FILE_SAVE_PROJECT            32774
+#define ID_FILE_OPEN_PROJECT            32775
+
+// Log (10501~10599)
+#define IDS_LOG_EXPORT_OK               10501
+#define IDS_LOG_EXPORT_FAIL             10502
+#define IDS_LOG_PROJECT_SAVED           10503
+#define IDS_LOG_PROJECT_LOADED          10504
+#define IDS_LOG_PROJECT_FAIL            10505
+
+// 파일 다이얼로그 필터 (10701~)
+#define IDS_EXPORT_FILE_FILTER          10701
+#define IDS_PROJ_FILE_FILTER            10702
 
 // Next default values for new objects
 // 

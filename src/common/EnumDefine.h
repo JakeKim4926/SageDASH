@@ -19,3 +19,42 @@ enum PropRowType
     PROP_ROW_SECTION = 0,
     PROP_ROW_DATA    = 1,
 };
+
+// ============================================================
+// Center View 모드
+// ============================================================
+enum CenterViewMode
+{
+    VIEW_MODE_GRID       = 0,   // 데이터 미리보기 그리드
+    VIEW_MODE_MAPPING    = 1,   // 컬럼 매핑
+    VIEW_MODE_VALIDATION = 2,   // 데이터 검증
+};
+
+// ============================================================
+// 자동화 실행 단계
+// ============================================================
+enum ExecutionStepType
+{
+    STEP_INPUT      = 0,
+    STEP_MAPPING    = 1,
+    STEP_VALIDATION = 2,
+    STEP_OUTPUT     = 3,
+};
+
+// ============================================================
+// 검증 규칙 타입
+// ============================================================
+enum ValidationType
+{
+    VALIDATION_REQUIRED = 0,  // 필수값 검증
+    VALIDATION_FORMAT   = 1,  // 포맷(정규식) 검증
+};
+
+// ============================================================
+// 검증 결과 심각도
+// ============================================================
+enum ValidationSeverity
+{
+    VALIDATION_SEVERITY_ERROR   = 0,
+    VALIDATION_SEVERITY_WARNING = 1,
+};

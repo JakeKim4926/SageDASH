@@ -6,6 +6,7 @@
 #include "NavigatorPane.h"
 #include "PropertiesPane.h"
 #include "SageMgr.h"
+#include "Define.h"
 
 class CMainFrame : public CMDIFrameWndEx
 {
@@ -16,6 +17,7 @@ public:
 
 public:
 	void LogMessage(const CString& strMessage);
+	CNavigatorPane&  GetNavigatorPane()  { return m_wndNavigator; }
 	CPropertiesPane& GetPropertiesPane() { return m_wndProperties; }
 
 public:
@@ -49,6 +51,7 @@ protected:
 	afx_msg void OnUpdateViewPropertiesWnd(CCmdUI* pCmdUI);
 	afx_msg void OnViewOutputWnd();
 	afx_msg void OnUpdateViewOutputWnd(CCmdUI* pCmdUI);
+	afx_msg LRESULT OnSwitchCenterView(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()
 
 	BOOL CreateDockingWindows();

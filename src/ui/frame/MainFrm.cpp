@@ -5,6 +5,7 @@
 #include "framework.h"
 #include "SAGEDash.h"
 #include "MainFrm.h"
+#include "SAGEDashView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -27,6 +28,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_PROPERTIESWND, &CMainFrame::OnUpdateViewPropertiesWnd)
 	ON_COMMAND(ID_VIEW_OUTPUTWND,               &CMainFrame::OnViewOutputWnd)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_OUTPUTWND,     &CMainFrame::OnUpdateViewOutputWnd)
+	ON_MESSAGE(WM_SWITCH_CENTER_VIEW,           &CMainFrame::OnSwitchCenterView)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -335,4 +337,18 @@ void CMainFrame::OnViewOutputWnd()
 void CMainFrame::OnUpdateViewOutputWnd(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(m_wndOutput.IsWindowVisible());
+}
+
+LRESULT CMainFrame::OnSwitchCenterView(WPARAM wParam, LPARAM /*lParam*/)
+{
+	CMDIChildWndEx* pChild = DYNAMIC_DOWNCAST(CMDIChildWndEx, MDIGetActive());
+	if (pChild == nullptr)
+		return 0;
+
+	CSAGEDashView* pView = DYNAMIC_DOWNCAST(CSAGEDashView, pChild->GetActiveView());
+	if (pView == nullptr)
+		return 0;
+
+	pView->SwitchViewMode((CenterViewMode)wParam);
+	return 0;
 }

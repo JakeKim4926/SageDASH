@@ -39,6 +39,12 @@
     <Filter Include="헤더 파일\infrastructure\excel">
       <UniqueIdentifier>{AA000055-0000-0000-0000-000000000055}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\infrastructure\persistence">
+      <UniqueIdentifier>{AA000057-0000-0000-0000-000000000057}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\infrastructure\persistence">
+      <UniqueIdentifier>{AA000058-0000-0000-0000-000000000058}</UniqueIdentifier>
+    </Filter>
     <Filter Include="헤더 파일\infrastructure\logging">
       <UniqueIdentifier>{AA000052-0000-0000-0000-000000000052}</UniqueIdentifier>
     </Filter>
@@ -125,6 +131,36 @@
     <ClInclude Include="..\src\application\WorkbookService.h">
       <Filter>헤더 파일\application</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\application\ValidationService.h">
+      <Filter>헤더 파일\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\application\FileOutputTarget.h">
+      <Filter>헤더 파일\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\application\ExportService.h">
+      <Filter>헤더 파일\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\infrastructure\csv\CsvOutputWriter.h">
+      <Filter>헤더 파일\infrastructure\csv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\infrastructure\excel\ExcelOutputWriter.h">
+      <Filter>헤더 파일\infrastructure\excel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\domain\IExecutionStep.h">
+      <Filter>헤더 파일\domain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\domain\ExecutionContext.h">
+      <Filter>헤더 파일\domain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\domain\AutomationProject.h">
+      <Filter>헤더 파일\domain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\infrastructure\persistence\ProjectSerializer.h">
+      <Filter>헤더 파일\infrastructure\persistence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\application\ProjectService.h">
+      <Filter>헤더 파일\application</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\application\IInputReader.h">
       <Filter>헤더 파일\application</Filter>
     </ClInclude>
@@ -138,6 +174,15 @@
       <Filter>헤더 파일\application</Filter>
     </ClInclude>
     <ClInclude Include="..\src\domain\TabularData.h">
+      <Filter>헤더 파일\domain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\domain\MappingRule.h">
+      <Filter>헤더 파일\domain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\domain\ValidationRule.h">
+      <Filter>헤더 파일\domain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\domain\ValidationResult.h">
       <Filter>헤더 파일\domain</Filter>
     </ClInclude>
     <ClInclude Include="..\src\common\error\SageException.h">
@@ -179,6 +224,12 @@
     <ClInclude Include="..\src\ui\view\SAGEDashView.h">
       <Filter>헤더 파일\ui\view</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\ui\view\MappingPanel.h">
+      <Filter>헤더 파일\ui\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\view\ValidationPanel.h">
+      <Filter>헤더 파일\ui\view</Filter>
+    </ClInclude>
   </ItemGroup>
 
   <ItemGroup>
@@ -191,6 +242,24 @@
       <Filter>소스 파일\app</Filter>
     </ClCompile>
     <ClCompile Include="..\src\application\WorkbookService.cpp">
+      <Filter>소스 파일\application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\application\ValidationService.cpp">
+      <Filter>소스 파일\application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\application\ExportService.cpp">
+      <Filter>소스 파일\application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\infrastructure\csv\CsvOutputWriter.cpp">
+      <Filter>소스 파일\infrastructure\csv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\infrastructure\excel\ExcelOutputWriter.cpp">
+      <Filter>소스 파일\infrastructure\excel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\infrastructure\persistence\ProjectSerializer.cpp">
+      <Filter>소스 파일\infrastructure\persistence</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\application\ProjectService.cpp">
       <Filter>소스 파일\application</Filter>
     </ClCompile>
     <ClCompile Include="..\src\infrastructure\csv\CsvInputReader.cpp">
@@ -224,6 +293,12 @@
       <Filter>소스 파일\ui\pane</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ui\view\SAGEDashView.cpp">
+      <Filter>소스 파일\ui\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ui\view\MappingPanel.cpp">
+      <Filter>소스 파일\ui\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ui\view\ValidationPanel.cpp">
       <Filter>소스 파일\ui\view</Filter>
     </ClCompile>
   </ItemGroup>

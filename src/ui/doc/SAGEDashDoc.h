@@ -4,6 +4,7 @@
 #pragma once
 
 #include "TabularData.h"
+#include "AutomationProject.h"
 
 class CSAGEDashDoc : public CDocument
 {
@@ -29,9 +30,17 @@ public:
 #endif
 
 private:
-	TabularData m_data;
-	BOOL        m_isDataLoaded;
+	TabularData       m_data;
+	BOOL              m_isDataLoaded;
+	AutomationProject m_project;
+
+	CSAGEDashView* GetActiveView() const;
 
 protected:
+	afx_msg void OnFileExport();
+	afx_msg void OnUpdateFileExport(CCmdUI* pCmdUI);
+	afx_msg void OnFileSaveProject();
+	afx_msg void OnUpdateFileSaveProject(CCmdUI* pCmdUI);
+	afx_msg void OnFileOpenProject();
 	DECLARE_MESSAGE_MAP()
 };

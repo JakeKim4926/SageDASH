@@ -3,7 +3,12 @@
 
 #pragma once
 
+#include "EnumDefine.h"
+#include "MappingPanel.h"
+#include "ValidationPanel.h"
+
 class DataSheet;
+class CSAGEDashDoc;
 
 class CSAGEDashView : public CView
 {
@@ -19,6 +24,12 @@ public:
 	virtual void OnInitialUpdate();
 	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
 
+	void           SwitchViewMode(CenterViewMode eMode);
+	CenterViewMode GetViewMode() const { return m_eViewMode; }
+
+	MappingPanel&    GetMappingPanel()    { return m_wndMapping; }
+	ValidationPanel& GetValidationPanel() { return m_wndValidation; }
+
 public:
 	virtual ~CSAGEDashView();
 #ifdef _DEBUG
@@ -27,12 +38,16 @@ public:
 #endif
 
 private:
-	CEdit     m_edtSearch;
-	CListCtrl m_lstGrid;
+	CEdit            m_edtSearch;
+	CListCtrl        m_lstGrid;
+	MappingPanel     m_wndMapping;
+	ValidationPanel  m_wndValidation;
+	CenterViewMode   m_eViewMode;
 
 	void PopulateGrid(const DataSheet& sheet);
 	void FilterGrid(const CString& strKeyword);
 	void ClearGrid();
+	void UpdateLayout(int cx, int cy);
 
 protected:
 	afx_msg int  OnCreate(LPCREATESTRUCT lpCreateStruct);
