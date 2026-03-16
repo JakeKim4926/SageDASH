@@ -73,3 +73,9 @@
 - **변경 내용**: PR #1, #2 포함 — Navigator/Properties Pane, 오류 처리, 색상 토큰, CSV 인코딩 결정
 - **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/3
 - **결과**: merged
+
+## [2026-03-16] feature/phase3-project
+- **목적**: Phase 3-B 실행 구조 일반화 — 프로젝트/템플릿 저장/불러오기
+- **변경 내용**: IExecutionStep/ExecutionContext(파이프라인 추상화), AutomationProject(규칙 집합 모델), ProjectSerializer(.sagep INI 형식), ProjectService(저장/로드), MappingPanel/ValidationPanel LoadRules() 추가, SAGEDashDoc 프로젝트 저장(&P)/열기(&L) 메뉴 핸들러
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/7
+- **결과**: merged into develop
