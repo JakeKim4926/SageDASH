@@ -4,27 +4,31 @@
 #include "PropertiesPane.h"
 #include "Define.h"
 
+constexpr int PROP_COL_LABEL_W   = 80;  // 라벨 컬럼 초기 너비
+constexpr int PROP_COL_VALUE_W   = 200; // 값 컬럼 초기 너비
+constexpr int PROP_SCROLLBAR_ADJ = 2;   // 스크롤바 너비 조정값
+
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif
 
-CPropertiesPane::CPropertiesPane() noexcept
+PropertiesPane::PropertiesPane() noexcept
 {
 }
 
-CPropertiesPane::~CPropertiesPane()
+PropertiesPane::~PropertiesPane()
 {
 }
 
-BEGIN_MESSAGE_MAP(CPropertiesPane, CDockablePane)
+BEGIN_MESSAGE_MAP(PropertiesPane, CDockablePane)
     ON_WM_CREATE()
     ON_WM_SIZE()
     ON_NOTIFY_REFLECT(NM_CUSTOMDRAW, OnCustomDraw)
 END_MESSAGE_MAP()
 
-int CPropertiesPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
+int PropertiesPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
     if (CDockablePane::OnCreate(lpCreateStruct) == -1)
         return -1;
@@ -45,16 +49,16 @@ int CPropertiesPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
     LVCOLUMN lvc;
     lvc.mask = LVCF_WIDTH | LVCF_FMT;
     lvc.fmt  = LVCFMT_LEFT;
-    lvc.cx   = 80;
+    lvc.cx   = PROP_COL_LABEL_W;
     m_wndList.InsertColumn(0, &lvc);
 
-    lvc.cx = 200;
+    lvc.cx = PROP_COL_VALUE_W;
     m_wndList.InsertColumn(1, &lvc);
 
     return 0;
 }
 
-void CPropertiesPane::OnSize(UINT nType, int cx, int cy)
+void PropertiesPane::OnSize(UINT nType, int cx, int cy)
 {
     CDockablePane::OnSize(nType, cx, cy);
 
@@ -64,12 +68,12 @@ void CPropertiesPane::OnSize(UINT nType, int cx, int cy)
     m_wndList.SetWindowPos(nullptr, 0, 0, cx, cy, SWP_NOZORDER | SWP_NOACTIVATE);
 
     int nCol0   = m_wndList.GetColumnWidth(0);
-    int nRemain = cx - nCol0 - ::GetSystemMetrics(SM_CXVSCROLL) - 2;
+    int nRemain = cx - nCol0 - ::GetSystemMetrics(SM_CXVSCROLL) - PROP_SCROLLBAR_ADJ;
     if (nRemain > 0)
         m_wndList.SetColumnWidth(1, nRemain);
 }
 
-void CPropertiesPane::SetFileInfo(const CString& strFilePath, const TabularData& data)
+void PropertiesPane::SetFileInfo(const CString& strFilePath, const TabularData& data)
 {
     m_strFilePath = strFilePath;
     m_arrSheetNames.clear();
@@ -101,7 +105,7 @@ void CPropertiesPane::SetFileInfo(const CString& strFilePath, const TabularData&
     RebuildList();
 }
 
-void CPropertiesPane::ClearInfo()
+void PropertiesPane::ClearInfo()
 {
     m_strFilePath.Empty();
     m_strFormat.Empty();
@@ -111,7 +115,7 @@ void CPropertiesPane::ClearInfo()
     RebuildList();
 }
 
-void CPropertiesPane::AddSectionRow(LPCTSTR pszLabel)
+void PropertiesPane::AddSectionRow(LPCTSTR pszLabel)
 {
     LVITEM lvi   = {};
     lvi.mask     = LVIF_TEXT | LVIF_PARAM;
@@ -122,7 +126,7 @@ void CPropertiesPane::AddSectionRow(LPCTSTR pszLabel)
     m_wndList.InsertItem(&lvi);
 }
 
-void CPropertiesPane::AddDataRow(LPCTSTR pszLabel, LPCTSTR pszValue)
+void PropertiesPane::AddDataRow(LPCTSTR pszLabel, LPCTSTR pszValue)
 {
     LVITEM lvi   = {};
     lvi.mask     = LVIF_TEXT | LVIF_PARAM;
@@ -134,7 +138,7 @@ void CPropertiesPane::AddDataRow(LPCTSTR pszLabel, LPCTSTR pszValue)
     m_wndList.SetItemText(nIdx, 1, pszValue);
 }
 
-void CPropertiesPane::RebuildList()
+void PropertiesPane::RebuildList()
 {
     if (m_wndList.GetSafeHwnd() == nullptr)
         return;
@@ -188,7 +192,7 @@ void CPropertiesPane::RebuildList()
     }
 }
 
-void CPropertiesPane::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
+void PropertiesPane::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
 {
     NMLVCUSTOMDRAW* pNMCD = reinterpret_cast<NMLVCUSTOMDRAW*>(pNMHDR);
     *pResult = CDRF_DODEFAULT;

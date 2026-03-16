@@ -6,6 +6,8 @@
 #include "TabularData.h"
 #include "AutomationProject.h"
 
+class CSAGEDashView;
+
 class CSAGEDashDoc : public CDocument
 {
 protected:
@@ -34,7 +36,7 @@ private:
 	BOOL              m_isDataLoaded;
 	AutomationProject m_project;
 
-	CSAGEDashView* GetActiveView() const;
+	BOOL GetActiveView(CSAGEDashView*& outView) const;
 
 protected:
 	afx_msg void OnFileExport();

@@ -1,5 +1,17 @@
 # PR 작업 로그
 
+## [2026-03-16] refactor/naming-rules-fix
+- **목적**: coding-rules 위반 전수 수정 — 클래스명 C 접두사 제거, 매직 넘버 상수화, 포인터 반환 제거
+- **변경 내용**: CNavigatorPane/CPropertiesPane/COutputWnd → C 접두사 제거, GetActiveView() BOOL+출력 파라미터로 변경, MappingPanel/ValidationPanel/PropertiesPane 레이아웃 매직 넘버 → constexpr 상수화, Define.h 공통 상수 추가, coding-rules skill description 업데이트
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/9
+- **결과**: merged into develop
+
+## [2026-03-16] develop → main (Phase 3 완료)
+- **목적**: Phase 3 완료 버전 main 반영 — 자동화 핵심 기능(매핑/검증/출력/프로젝트)
+- **변경 내용**: Phase 3 전체 — Center View 모드 전환, MappingPanel, ValidationPanel, ValidationService, CsvOutputWriter, ExcelOutputWriter, ExportService, IExecutionStep/ExecutionContext, AutomationProject, ProjectSerializer, ProjectService, 빌드 오류 수정(forward declaration, include 경로)
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/8
+- **결과**: merged into main
+
 ## [2026-03-16] feature/phase3-output
 - **목적**: 결과 출력 — CSV/XLSX 저장 + 출력 로그 기록
 - **변경 내용**: CsvOutputWriter(UTF-8 BOM, RFC 4180 이스케이프), ExcelOutputWriter(COM automation), FileOutputTarget, ExportService(확장자 기반 writer 선택), SAGEDashDoc OnFileExport 핸들러(SaveFileDialog→ExportService→로그), File 메뉴 내보내기 항목 추가
@@ -73,3 +85,9 @@
 - **변경 내용**: PR #1, #2 포함 — Navigator/Properties Pane, 오류 처리, 색상 토큰, CSV 인코딩 결정
 - **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/3
 - **결과**: merged
+
+## [2026-03-16] feature/phase3-project
+- **목적**: Phase 3-B 실행 구조 일반화 — 프로젝트/템플릿 저장/불러오기
+- **변경 내용**: IExecutionStep/ExecutionContext(파이프라인 추상화), AutomationProject(규칙 집합 모델), ProjectSerializer(.sagep INI 형식), ProjectService(저장/로드), MappingPanel/ValidationPanel LoadRules() 추가, SAGEDashDoc 프로젝트 저장(&P)/열기(&L) 메뉴 핸들러
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/7
+- **결과**: merged into develop
