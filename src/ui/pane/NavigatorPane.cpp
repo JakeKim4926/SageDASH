@@ -4,6 +4,7 @@
 #include "NavigatorPane.h"
 #include "Define.h"
 #include "Resource.h"
+#include "SageMgr.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -102,6 +103,8 @@ void NavigatorPane::ActivatePipelineItems(BOOL bActive)
     if (m_wndTree.GetSafeHwnd() == nullptr)
         return;
 
+    sageMgr.Log(bActive ? _T("[NAV] ActivatePipelineItems → ACTIVE") : _T("[NAV] ActivatePipelineItems → DISABLED"));
+
     NavItemType type = bActive ? NAV_ITEM_ACTIVE : NAV_ITEM_DISABLED;
     m_wndTree.SetItemData(m_hPreview,    (DWORD_PTR)type);
     m_wndTree.SetItemData(m_hMapping,    (DWORD_PTR)type);
@@ -121,6 +124,9 @@ void NavigatorPane::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
 
     // ACTIVE 상태인 항목만 반응한다
     NavItemType type = (NavItemType)m_wndTree.GetItemData(hSel);
+    CString strLog;
+    strLog.Format(_T("[NAV] OnSelChanged — ItemData=%d (0=SECTION,1=ACTIVE,2=DISABLED)"), (int)type);
+    sageMgr.Log(strLog);
     if (type != NAV_ITEM_ACTIVE)
         return;
 

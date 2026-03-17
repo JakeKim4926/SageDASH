@@ -6,6 +6,7 @@
 #include "SAGEDash.h"
 #include "MainFrm.h"
 #include "SAGEDashView.h"
+#include "SageMgr.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -341,14 +342,21 @@ void CMainFrame::OnUpdateViewOutputWnd(CCmdUI* pCmdUI)
 
 LRESULT CMainFrame::OnSwitchCenterView(WPARAM wParam, LPARAM /*lParam*/)
 {
+	sageMgr.Log(_T("[MAIN] OnSwitchCenterView 수신"));
+
 	CMDIChildWndEx* pChild = DYNAMIC_DOWNCAST(CMDIChildWndEx, MDIGetActive());
-	if (pChild == nullptr)
+	if (pChild == nullptr) {
+		sageMgr.Log(_T("[MAIN] MDIGetActive() == nullptr → 중단"));
 		return 0;
+	}
 
 	CSAGEDashView* pView = DYNAMIC_DOWNCAST(CSAGEDashView, pChild->GetActiveView());
-	if (pView == nullptr)
+	if (pView == nullptr) {
+		sageMgr.Log(_T("[MAIN] GetActiveView() cast 실패 → 중단"));
 		return 0;
+	}
 
+	sageMgr.Log(_T("[MAIN] SwitchViewMode 호출"));
 	pView->SwitchViewMode((CenterViewMode)wParam);
 	return 0;
 }
