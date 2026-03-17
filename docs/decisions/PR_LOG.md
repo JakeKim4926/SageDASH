@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-17] fix/csv-delimiter-autodetect
+- **목적**: 탭 구분자 CSV 파일 열면 한 열로 뭉치는 문제 수정
+- **변경 내용**: `CsvInputReader`에 첫 줄 기준 구분자 자동 감지(탭/쉼표/세미콜론) 추가, `Define.h`에 CSV 구분자 상수 추가
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/22
+- **결과**: merged into develop
+
 ## [2026-03-17] fix/suppress-startup-empty-doc
 - **목적**: 앱 시작 시 MFC 기본 동작으로 인해 빈 문서(SAGEDash1)가 자동 생성되는 문제 수정
 - **변경 내용**: `SAGEDash.cpp` — `ParseCommandLine` 후 `FileNew` 명령을 `FileNothing`으로 변경
