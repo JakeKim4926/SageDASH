@@ -24,6 +24,21 @@ CString WebBridgeMessage::Build(const CString& strType, const CString& strPayloa
     return strMsg;
 }
 
+CString WebBridgeMessage::ParseType(const CString& strJson)
+{
+    const CString strKey = _T("\"type\":\"");
+    int nStart = strJson.Find(strKey);
+    if (nStart < 0) {
+        return _T("");
+    }
+    nStart += strKey.GetLength();
+    int nEnd = strJson.Find(_T("\""), nStart);
+    if (nEnd < 0) {
+        return _T("");
+    }
+    return strJson.Mid(nStart, nEnd - nStart);
+}
+
 CString WebBridgeMessage::EscapeString(const CString& strValue)
 {
     CString strResult = strValue;

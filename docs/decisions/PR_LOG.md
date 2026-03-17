@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-17] feature/webview2-bridge-protocol-doc
+- **목적**: Phase 4-6 — JSON 메시지 규약 최종 확정 및 문서화
+- **변경 내용**: WebBridgeMessage::ParseType() 추가, DECISION_webview2_bridge_protocol.md 완성 (Web→C++ 섹션, JS 연동 템플릿, C++ dispatch 패턴)
+- **PR 링크**: (pending)
+- **결과**: pending
+
 ## [2026-03-17] feature/webview2-bridge-cpp-to-web
 - **목적**: Phase 4-4 — C++ → Web 단방향 브릿지 구현
 - **변경 내용**: WebBridgeMessage 빌더 클래스 추가, WebViewHost PostWebMessageAsJson LPCWSTR 캐스트 수정, 초기화 완료 시 native:ready 자동 발송, DECISION_webview2_bridge_protocol.md 작성
