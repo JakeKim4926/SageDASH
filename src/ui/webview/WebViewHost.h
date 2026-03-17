@@ -1,8 +1,11 @@
 #pragma once
 
+#include <eventtoken.h>
+
 // COM 인터페이스 전방 선언 (WebView2.h 는 .cpp 에서만 포함)
-interface ICoreWebView2Controller;
-interface ICoreWebView2;
+// interface 매크로는 COM 헤더 의존적이므로 struct 로 전방 선언
+struct ICoreWebView2Controller;
+struct ICoreWebView2;
 
 // ---------------------------------------------------------------
 // WebViewHost
@@ -35,12 +38,18 @@ public:
     // Phase 4-4 에서 본격 사용 — 초기화 전 호출 시 무시
     void PostWebMessage(const CString& strJson);
 
+    // Phase 4-7: HTML 파일 URL 탐색 — 초기화 전 호출 시 무시
+    void Navigate(const CString& strUrl);
+
 private:
     void StartAsyncInit();
     void OnInitCompleted(ICoreWebView2Controller* pController);
+    void RegisterWebMessageHandler();
+    void OnWebMessageReceived(const CString& strJson);
 
     ICoreWebView2Controller* m_pController;
     ICoreWebView2*           m_pWebView;
+    EventRegistrationToken   m_webMessageToken;
     BOOL                     m_bInitializing;
     BOOL                     m_bInitialized;
     BOOL                     m_bInvalidated;    // Destroy 후 잔여 콜백 무효화 플래그

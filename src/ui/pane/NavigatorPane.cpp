@@ -4,6 +4,7 @@
 #include "NavigatorPane.h"
 #include "Define.h"
 #include "Resource.h"
+#include "SageMgr.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -22,8 +23,8 @@ NavigatorPane::~NavigatorPane()
 BEGIN_MESSAGE_MAP(NavigatorPane, CDockablePane)
     ON_WM_CREATE()
     ON_WM_SIZE()
-    ON_NOTIFY_REFLECT(NM_CUSTOMDRAW, OnCustomDraw)
-    ON_NOTIFY_REFLECT(TVN_SELCHANGED, OnSelChanged)
+    ON_NOTIFY(NM_CUSTOMDRAW, 1, OnCustomDraw)
+    ON_NOTIFY(TVN_SELCHANGED, 1, OnSelChanged)
 END_MESSAGE_MAP()
 
 int NavigatorPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -71,6 +72,8 @@ int NavigatorPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
     InsertNavItem(str, hActions, NAV_ITEM_DISABLED);
     str.LoadString(IDS_NAV_ITEM_SCHEDULE);
     InsertNavItem(str, hActions, NAV_ITEM_DISABLED);
+    str.LoadString(IDS_NAV_ITEM_DASHBOARD);
+    m_hDashboard = InsertNavItem(str, hActions, NAV_ITEM_DISABLED);
     m_wndTree.Expand(hActions, TVE_EXPAND);
 
     return 0;
@@ -100,10 +103,13 @@ void NavigatorPane::ActivatePipelineItems(BOOL bActive)
     if (m_wndTree.GetSafeHwnd() == nullptr)
         return;
 
+    sageMgr.Log(bActive ? _T("[NAV] ActivatePipelineItems → ACTIVE") : _T("[NAV] ActivatePipelineItems → DISABLED"));
+
     NavItemType type = bActive ? NAV_ITEM_ACTIVE : NAV_ITEM_DISABLED;
     m_wndTree.SetItemData(m_hPreview,    (DWORD_PTR)type);
     m_wndTree.SetItemData(m_hMapping,    (DWORD_PTR)type);
     m_wndTree.SetItemData(m_hValidation, (DWORD_PTR)type);
+    m_wndTree.SetItemData(m_hDashboard,  (DWORD_PTR)type);
     m_wndTree.Invalidate();
 }
 
@@ -118,6 +124,9 @@ void NavigatorPane::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
 
     // ACTIVE 상태인 항목만 반응한다
     NavItemType type = (NavItemType)m_wndTree.GetItemData(hSel);
+    CString strLog;
+    strLog.Format(_T("[NAV] OnSelChanged — ItemData=%d (0=SECTION,1=ACTIVE,2=DISABLED)"), (int)type);
+    sageMgr.Log(strLog);
     if (type != NAV_ITEM_ACTIVE)
         return;
 
@@ -131,6 +140,8 @@ void NavigatorPane::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
         pMain->PostMessage(WM_SWITCH_CENTER_VIEW, (WPARAM)VIEW_MODE_MAPPING);
     } else if (hSel == m_hValidation) {
         pMain->PostMessage(WM_SWITCH_CENTER_VIEW, (WPARAM)VIEW_MODE_VALIDATION);
+    } else if (hSel == m_hDashboard) {
+        pMain->PostMessage(WM_SWITCH_CENTER_VIEW, (WPARAM)VIEW_MODE_DASHBOARD);
     }
 }
 

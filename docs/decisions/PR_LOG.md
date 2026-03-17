@@ -1,5 +1,35 @@
 # PR 작업 로그
 
+## [2026-03-17] fix/grid-duplicate-rows-on-load
+- **목적**: 파일 로드 시 빈 행 중복 표시 버그 수정
+- **변경 내용**: OnEnChangeSearch에 컬럼 없을 때 조기 반환 가드 추가
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/18
+- **결과**: merged into develop
+
+## [2026-03-17] refactor/constants-to-define-h
+- **목적**: coding-rules 위반 수정 — .cpp에 분산된 상수를 Define.h 도메인 블록으로 통합
+- **변경 내용**: MappingPanel/ValidationPanel/SAGEDashView/PropertiesPane의 IDC_* + 레이아웃 constexpr 상수 전부 Define.h로 이동, Define.h vcxproj 등록
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/17
+- **결과**: merged into develop
+
+## [2026-03-17] feature/webview2-dashboard
+- **목적**: Phase 4-7 — 대시보드 웹 화면 구현 + Phase 3 데이터 실제 연동
+- **변경 내용**: WebViewHost::Navigate() 추가, NavigatorPane Dashboard 항목 추가, SAGEDashView VIEW_MODE_DASHBOARD 진입 시 file:// URL 탐색, web:request-summary → data:summary 브릿지 응답, web/dashboard.html (KPI 카드 + Summary 테이블), vcxproj CopyWebAssets 빌드 타겟, .gitattributes .rc binary 처리
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/16
+- **결과**: merged into develop
+
+## [2026-03-17] feature/webview2-bridge-protocol-doc
+- **목적**: Phase 4-6 — JSON 메시지 규약 최종 확정 및 문서화
+- **변경 내용**: WebBridgeMessage::ParseType() 추가, DECISION_webview2_bridge_protocol.md 완성 (Web→C++ 섹션, JS 연동 템플릿, C++ dispatch 패턴)
+- **PR 링크**: (pending)
+- **결과**: pending
+
+## [2026-03-17] feature/webview2-bridge-cpp-to-web
+- **목적**: Phase 4-4 — C++ → Web 단방향 브릿지 구현
+- **변경 내용**: WebBridgeMessage 빌더 클래스 추가, WebViewHost PostWebMessageAsJson LPCWSTR 캐스트 수정, 초기화 완료 시 native:ready 자동 발송, DECISION_webview2_bridge_protocol.md 작성
+- **PR 링크**: (pending)
+- **결과**: pending
+
 ## [2026-03-17] feature/webview2-setup
 - **목적**: Phase 4-1 — WebView2 NuGet 패키지 빌드 환경 세팅
 - **변경 내용**: packages.config 추가, vcxproj ExtensionSettings/ExtensionTargets에 WebView2 props/targets import, EnsureNuGetPackagesBuildImports 타겟으로 복원 누락 시 빌드 오류 처리, DECISION_webview2_setup.md 작성

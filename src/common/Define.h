@@ -34,7 +34,8 @@
 // ============================================================
 // 사용자 정의 메시지
 // ============================================================
-#define WM_SWITCH_CENTER_VIEW (WM_USER + 1)  // wParam = CenterViewMode
+#define WM_SWITCH_CENTER_VIEW  (WM_USER + 1)  // wParam = CenterViewMode
+#define WM_WEBBRIDGE_MESSAGE   (WM_USER + 2)  // lParam = new CString*(JSON), 수신측 delete
 
 // ============================================================
 // 공통 컨트롤
@@ -56,3 +57,91 @@ constexpr int GRID_ROW_NUM_COLUMN_WIDTH = 45;
 constexpr int GRID_COLUMN_WIDTH_DEFAULT = 120;
 constexpr int GRID_COLUMN_WIDTH_MIN     = 50;
 constexpr int GRID_COLUMN_WIDTH_MAX     = 300;
+
+// ============================================================
+// SAGEDashView — 컨트롤 ID
+// ============================================================
+#define IDC_SEARCH_EDIT      100
+#define IDC_MAPPING_PANEL    110
+#define IDC_VALIDATION_PANEL 111
+#define IDC_WEBVIEW_HOST     120
+
+// ============================================================
+// MappingPanel — 컨트롤 ID
+// ============================================================
+#define IDC_MAP_COMBO_SOURCE    200
+#define IDC_MAP_EDIT_TARGET     201
+#define IDC_MAP_CHK_REQUIRED    202
+#define IDC_MAP_BTN_ADD         203
+#define IDC_MAP_BTN_DELETE      204
+#define IDC_MAP_BTN_AUTOMAP     205
+#define IDC_MAP_BTN_CLEAR       206
+#define IDC_MAP_LIST_RULES      207
+
+// ============================================================
+// MappingPanel — 레이아웃
+// ============================================================
+constexpr int MAP_HEADER_H      = 28;
+constexpr int MAP_CONTROLS_H    = 24;
+constexpr int MAP_BUTTONS_H     = 24;
+constexpr int MAP_STATUS_H      = 20;
+constexpr int MAP_PADDING       = 8;
+constexpr int MAP_ROW_GAP       = 4;
+constexpr int MAP_COMBO_W       = 180;
+constexpr int MAP_EDIT_W        = 180;
+constexpr int MAP_CHK_W         = 48;
+constexpr int MAP_BTN_ADD_W     = 48;
+constexpr int MAP_BTN_DELETE_W  = 52;
+constexpr int MAP_BTN_AUTOMAP_W = 80;
+constexpr int MAP_BTN_CLEAR_W   = 52;
+constexpr int MAP_BTN_GAP       = 4;
+constexpr int MAP_COL_NUM_W     = 40;
+constexpr int MAP_COL_SRC_W     = 180;
+constexpr int MAP_COL_TGT_W     = 180;
+constexpr int MAP_COL_REQ_W     = 50;
+
+// ============================================================
+// ValidationPanel — 컨트롤 ID
+// ============================================================
+#define IDC_VAL_COMBO_COLUMN    210
+#define IDC_VAL_COMBO_TYPE      211
+#define IDC_VAL_COMBO_SEVERITY  212
+#define IDC_VAL_EDIT_PATTERN    213
+#define IDC_VAL_BTN_ADD         214
+#define IDC_VAL_BTN_DELETE      215
+#define IDC_VAL_BTN_CLEAR_RULES 216
+#define IDC_VAL_LIST_RULES      217
+#define IDC_VAL_BTN_RUN         218
+#define IDC_VAL_LIST_RESULTS    219
+
+// ============================================================
+// ValidationPanel — 레이아웃
+// ============================================================
+constexpr int VAL_HEADER_H       = 28;
+constexpr int VAL_CONTROLS_H     = 24;
+constexpr int VAL_BUTTONS_H      = 24;
+constexpr int VAL_RULES_LIST_H   = 140;
+constexpr int VAL_RUN_H          = 28;
+constexpr int VAL_PADDING        = 8;
+constexpr int VAL_ROW_GAP        = 4;
+constexpr int VAL_COMBO_ITEM_H   = 18;   // ComboBox 항목 높이
+constexpr int VAL_MIN_PATTERN_W  = 40;   // 패턴 필드 최소 너비
+constexpr int VAL_BTN_ADD_W      = 48;   // 추가 버튼 너비
+constexpr int VAL_BTN_DELETE_W   = 52;   // 삭제 버튼 너비
+constexpr int VAL_BTN_CLEAR_W    = 70;   // 전체삭제 버튼 너비
+constexpr int VAL_BTN_RUN_W      = 80;   // 실행 버튼 너비
+constexpr int VAL_COL_NUM_W      = 30;   // 규칙/결과 목록 번호 컬럼 너비
+constexpr int VAL_COL_COLUMN_W   = 120;  // 규칙 목록 컬럼명 컬럼 너비
+constexpr int VAL_COL_TYPE_W     = 72;   // 규칙 목록 타입 컬럼 너비
+constexpr int VAL_COL_SEVERITY_W = 60;   // 심각도 컬럼 너비
+constexpr int VAL_COL_PATTERN_W  = 120;  // 패턴 컬럼 너비
+constexpr int VAL_RES_COL_ROW_W  = 50;   // 결과 목록 행 번호 컬럼 너비
+constexpr int VAL_RES_COL_COL_W  = 110;  // 결과 목록 컬럼명 컬럼 너비
+constexpr int VAL_RES_COL_MSG_W  = 200;  // 결과 목록 메시지 컬럼 너비
+
+// ============================================================
+// PropertiesPane — 레이아웃
+// ============================================================
+constexpr int PROP_COL_LABEL_W   = 80;  // 라벨 컬럼 초기 너비
+constexpr int PROP_COL_VALUE_W   = 200; // 값 컬럼 초기 너비
+constexpr int PROP_SCROLLBAR_ADJ = 2;   // 스크롤바 너비 조정값

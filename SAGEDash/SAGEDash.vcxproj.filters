@@ -197,6 +197,9 @@
     <ClInclude Include="..\src\common\EnumDefine.h">
       <Filter>헤더 파일\common</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\common\Define.h">
+      <Filter>헤더 파일\common</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\common\SageMgr.h">
       <Filter>헤더 파일\common</Filter>
     </ClInclude>
@@ -237,6 +240,9 @@
       <Filter>헤더 파일\ui\view</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ui\webview\WebViewHost.h">
+      <Filter>헤더 파일\ui\webview</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\webview\WebBridgeMessage.h">
       <Filter>헤더 파일\ui\webview</Filter>
     </ClInclude>
   </ItemGroup>
@@ -313,6 +319,9 @@
     <ClCompile Include="..\src\ui\webview\WebViewHost.cpp">
       <Filter>소스 파일\ui\webview</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ui\webview\WebBridgeMessage.cpp">
+      <Filter>소스 파일\ui\webview</Filter>
+    </ClCompile>
   </ItemGroup>
 
   <ItemGroup>
@@ -354,5 +363,6 @@
       <Filter>리소스 파일</Filter>
     </None>
     <None Include="packages.config" />
+    <None Include="..\web\dashboard.html" />
   </ItemGroup>
 </Project>

@@ -9,14 +9,13 @@
 #include "TabularData.h"
 #include "Define.h"
 #include "Resource.h"
+#include "SageMgr.h"
+#include "WebBridgeMessage.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
-#define IDC_SEARCH_EDIT      100
-#define IDC_MAPPING_PANEL    110
-#define IDC_VALIDATION_PANEL 111
 
 IMPLEMENT_DYNCREATE(CSAGEDashView, CView)
 
@@ -24,6 +23,7 @@ BEGIN_MESSAGE_MAP(CSAGEDashView, CView)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_EN_CHANGE(IDC_SEARCH_EDIT, OnEnChangeSearch)
+	ON_MESSAGE(WM_WEBBRIDGE_MESSAGE, OnWebBridgeMessage)
 END_MESSAGE_MAP()
 
 CSAGEDashView::CSAGEDashView() noexcept
@@ -68,6 +68,12 @@ int CSAGEDashView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 	}
 
+	if (!m_wndWebView.Create(this, rectDummy, IDC_WEBVIEW_HOST)) {
+		TRACE0("WebView 호스트를 만들지 못했습니다.\n");
+		return -1;
+	}
+	m_wndWebView.ShowWindow(SW_HIDE);
+
 	return 0;
 }
 
@@ -86,6 +92,7 @@ void CSAGEDashView::UpdateLayout(int cx, int cy)
 	BOOL bGrid       = (m_eViewMode == VIEW_MODE_GRID);
 	BOOL bMapping    = (m_eViewMode == VIEW_MODE_MAPPING);
 	BOOL bValidation = (m_eViewMode == VIEW_MODE_VALIDATION);
+	BOOL bDashboard  = (m_eViewMode == VIEW_MODE_DASHBOARD);
 
 	// Grid 모드: 검색바 + 그리드
 	if (m_edtSearch.GetSafeHwnd() != nullptr) {
@@ -103,6 +110,11 @@ void CSAGEDashView::UpdateLayout(int cx, int cy)
 	// Validation 모드: 검증 패널 전체 영역
 	if (m_wndValidation.GetSafeHwnd() != nullptr) {
 		m_wndValidation.ShowWindow(bValidation ? SW_SHOW : SW_HIDE);
+	}
+
+	// Dashboard 모드: WebView 전체 영역
+	if (m_wndWebView.GetSafeHwnd() != nullptr) {
+		m_wndWebView.ShowWindow(bDashboard ? SW_SHOW : SW_HIDE);
 	}
 
 	// 각 모드별 위치/크기 설정
@@ -128,6 +140,8 @@ void CSAGEDashView::UpdateLayout(int cx, int cy)
 	} else if (bValidation && m_wndValidation.GetSafeHwnd() != nullptr) {
 		m_wndValidation.SetWindowPos(nullptr, 0, 0,
 			cx, cy, SWP_NOZORDER | SWP_NOACTIVATE);
+	} else if (bDashboard && m_wndWebView.GetSafeHwnd() != nullptr) {
+		m_wndWebView.Resize(CRect(0, 0, cx, cy));
 	}
 }
 
@@ -151,6 +165,18 @@ void CSAGEDashView::SwitchViewMode(CenterViewMode eMode)
 				m_wndValidation.SetDataSheet(&sheet);
 			}
 		}
+	}
+
+	if (eMode == VIEW_MODE_DASHBOARD) {
+		TCHAR szPath[MAX_PATH] = {};
+		GetModuleFileName(nullptr, szPath, MAX_PATH);
+		CString strExeDir(szPath);
+		int nSlash = strExeDir.ReverseFind(_T('\\'));
+		if (nSlash >= 0)
+			strExeDir = strExeDir.Left(nSlash + 1);
+		CString strUrl = _T("file:///") + strExeDir + _T("web\\dashboard.html");
+		strUrl.Replace(_T('\\'), _T('/'));
+		m_wndWebView.Navigate(strUrl);
 	}
 
 	CRect rect;
@@ -193,6 +219,11 @@ void CSAGEDashView::OnUpdate(CView* /*pSender*/, LPARAM /*lHint*/, CObject* /*pH
 
 void CSAGEDashView::OnEnChangeSearch()
 {
+	// 컬럼이 없으면 PopulateGrid 이전 상태 — 무시
+	CHeaderCtrl* pHeader = m_lstGrid.GetHeaderCtrl();
+	if (pHeader == nullptr || pHeader->GetItemCount() == 0)
+		return;
+
 	CString strKeyword;
 	m_edtSearch.GetWindowText(strKeyword);
 	FilterGrid(strKeyword);
@@ -340,6 +371,33 @@ void CSAGEDashView::ClearGrid()
 void CSAGEDashView::OnDraw(CDC* /*pDC*/)
 {
 	// 그리기는 각 패널이 담당
+}
+
+LRESULT CSAGEDashView::OnWebBridgeMessage(WPARAM /*wParam*/, LPARAM lParam)
+{
+	CString* pStrJson = reinterpret_cast<CString*>(lParam);
+	if (pStrJson == nullptr) {
+		return 0;
+	}
+
+	CString strType = WebBridgeMessage::ParseType(*pStrJson);
+	sageMgr.Log(_T("[SAGEDashView] Web → Native type: ") + strType);
+
+	if (strType == _T("web:request-summary")) {
+		CSAGEDashDoc* pDoc = GetDocument();
+		if (pDoc != nullptr && pDoc->HasData()) {
+			const TabularData& data = pDoc->GetData();
+			const DataSheet& sheet = data.GetSheet(0);
+			int nRowCount = sheet.GetRowCount() > 0 ? sheet.GetRowCount() - 1 : 0;
+			int nColCount = (sheet.GetRowCount() > 0) ? (int)sheet.m_arrRows[0].size() : 0;
+			CString strFileName = pDoc->GetTitle();
+			CString strMsg = WebBridgeMessage::BuildDataSummary(nRowCount, nColCount, strFileName);
+			m_wndWebView.PostWebMessage(strMsg);
+		}
+	}
+
+	delete pStrJson;
+	return 0;
 }
 
 #ifdef _DEBUG
