@@ -6,44 +6,6 @@
 #include "Define.h"
 #include "Resource.h"
 
-// ============================================================
-// 레이아웃 상수
-// ============================================================
-constexpr int VAL_HEADER_H        = 28;
-constexpr int VAL_CONTROLS_H      = 24;
-constexpr int VAL_BUTTONS_H       = 24;
-constexpr int VAL_RULES_LIST_H    = 140;
-constexpr int VAL_RUN_H           = 28;
-constexpr int VAL_PADDING         = 8;
-constexpr int VAL_ROW_GAP         = 4;
-constexpr int VAL_COMBO_ITEM_H    = 18;   // ComboBox 항목 높이
-constexpr int VAL_MIN_PATTERN_W   = 40;   // 패턴 필드 최소 너비
-constexpr int VAL_BTN_ADD_W       = 48;   // 추가 버튼 너비
-constexpr int VAL_BTN_DELETE_W    = 52;   // 삭제 버튼 너비
-constexpr int VAL_BTN_CLEAR_W     = 70;   // 전체삭제 버튼 너비
-constexpr int VAL_BTN_RUN_W       = 80;   // 실행 버튼 너비
-constexpr int VAL_COL_NUM_W       = 30;   // 규칙/결과 목록 번호 컬럼 너비
-constexpr int VAL_COL_COLUMN_W    = 120;  // 규칙 목록 컬럼명 컬럼 너비
-constexpr int VAL_COL_TYPE_W      = 72;   // 규칙 목록 타입 컬럼 너비
-constexpr int VAL_COL_SEVERITY_W  = 60;   // 심각도 컬럼 너비
-constexpr int VAL_COL_PATTERN_W   = 120;  // 패턴 컬럼 너비
-constexpr int VAL_RES_COL_ROW_W   = 50;   // 결과 목록 행 번호 컬럼 너비
-constexpr int VAL_RES_COL_COL_W   = 110;  // 결과 목록 컬럼명 컬럼 너비
-constexpr int VAL_RES_COL_MSG_W   = 200;  // 결과 목록 메시지 컬럼 너비
-
-// ============================================================
-// 컨트롤 ID
-// ============================================================
-#define IDC_VAL_COMBO_COLUMN    210
-#define IDC_VAL_COMBO_TYPE      211
-#define IDC_VAL_COMBO_SEVERITY  212
-#define IDC_VAL_EDIT_PATTERN    213
-#define IDC_VAL_BTN_ADD         214
-#define IDC_VAL_BTN_DELETE      215
-#define IDC_VAL_BTN_CLEAR_RULES 216
-#define IDC_VAL_LIST_RULES      217
-#define IDC_VAL_BTN_RUN         218
-#define IDC_VAL_LIST_RESULTS    219
 
 BEGIN_MESSAGE_MAP(ValidationPanel, CWnd)
     ON_WM_CREATE()

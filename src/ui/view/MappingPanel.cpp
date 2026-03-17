@@ -5,33 +5,6 @@
 #include "Define.h"
 #include "Resource.h"
 
-#define IDC_MAP_COMBO_SOURCE    200
-#define IDC_MAP_EDIT_TARGET     201
-#define IDC_MAP_CHK_REQUIRED    202
-#define IDC_MAP_BTN_ADD         203
-#define IDC_MAP_BTN_DELETE      204
-#define IDC_MAP_BTN_AUTOMAP     205
-#define IDC_MAP_BTN_CLEAR       206
-#define IDC_MAP_LIST_RULES      207
-
-constexpr int MAP_HEADER_H      = 28;
-constexpr int MAP_CONTROLS_H    = 24;
-constexpr int MAP_BUTTONS_H     = 24;
-constexpr int MAP_STATUS_H      = 20;
-constexpr int MAP_PADDING       = 8;
-constexpr int MAP_ROW_GAP       = 4;
-constexpr int MAP_COMBO_W       = 180;
-constexpr int MAP_EDIT_W        = 180;
-constexpr int MAP_CHK_W         = 48;
-constexpr int MAP_BTN_ADD_W     = 48;
-constexpr int MAP_BTN_DELETE_W  = 52;
-constexpr int MAP_BTN_AUTOMAP_W = 80;
-constexpr int MAP_BTN_CLEAR_W   = 52;
-constexpr int MAP_BTN_GAP       = 4;
-constexpr int MAP_COL_NUM_W     = 40;
-constexpr int MAP_COL_SRC_W     = 180;
-constexpr int MAP_COL_TGT_W     = 180;
-constexpr int MAP_COL_REQ_W     = 50;
 
 BEGIN_MESSAGE_MAP(MappingPanel, CWnd)
     ON_WM_CREATE()

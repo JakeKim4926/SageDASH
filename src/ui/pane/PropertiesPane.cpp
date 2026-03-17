@@ -4,9 +4,6 @@
 #include "PropertiesPane.h"
 #include "Define.h"
 
-constexpr int PROP_COL_LABEL_W   = 80;  // 라벨 컬럼 초기 너비
-constexpr int PROP_COL_VALUE_W   = 200; // 값 컬럼 초기 너비
-constexpr int PROP_SCROLLBAR_ADJ = 2;   // 스크롤바 너비 조정값
 
 #ifdef _DEBUG
 #undef THIS_FILE
