@@ -73,6 +73,10 @@ BOOL CSAGEDashApp::InitInstance()
 	CCommandLineInfo cmdInfo;
 	ParseCommandLine(cmdInfo);
 
+	// 시작 시 빈 문서 자동 생성 억제 — 파일을 직접 열어서 작업하는 구조이므로 불필요
+	if (cmdInfo.m_nShellCommand == CCommandLineInfo::FileNew)
+		cmdInfo.m_nShellCommand = CCommandLineInfo::FileNothing;
+
 	if (!ProcessShellCommand(cmdInfo))
 		return FALSE;
 
