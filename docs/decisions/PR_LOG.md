@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-17] fix/suppress-startup-empty-doc
+- **목적**: 앱 시작 시 MFC 기본 동작으로 인해 빈 문서(SAGEDash1)가 자동 생성되는 문제 수정
+- **변경 내용**: `SAGEDash.cpp` — `ParseCommandLine` 후 `FileNew` 명령을 `FileNothing`으로 변경
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/21
+- **결과**: merged into develop
+
 ## [2026-03-17] fix/grid-duplicate-rows-on-load
 - **목적**: 파일 로드 시 빈 행 중복 표시 버그 수정
 - **변경 내용**: OnEnChangeSearch에 컬럼 없을 때 조기 반환 가드 추가

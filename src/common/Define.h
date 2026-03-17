@@ -50,6 +50,13 @@ constexpr int SEARCH_BAR_HEIGHT = 24;
 constexpr int SEARCH_BAR_MARGIN = 4;
 
 // ============================================================
+// CSV 파싱
+// ============================================================
+constexpr TCHAR CSV_DELIM_COMMA     = _T(',');
+constexpr TCHAR CSV_DELIM_TAB       = _T('\t');
+constexpr TCHAR CSV_DELIM_SEMICOLON = _T(';');
+
+// ============================================================
 // 그리드 미리보기
 // ============================================================
 constexpr int MAX_PREVIEW_ROWS          = 500;
