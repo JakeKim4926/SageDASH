@@ -102,6 +102,14 @@ void WebViewHost::PostWebMessage(const CString& strJson)
     m_pWebView->PostWebMessageAsJson(strJson.GetString());
 }
 
+void WebViewHost::Navigate(const CString& strUrl)
+{
+    if (!m_bInitialized || m_pWebView == nullptr) {
+        return;
+    }
+    m_pWebView->Navigate(strUrl.GetString());
+}
+
 // ---------------------------------------------------------------
 // 비동기 초기화
 // ---------------------------------------------------------------

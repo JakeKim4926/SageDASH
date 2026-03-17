@@ -97,6 +97,7 @@
 #define IDS_NAV_SECTION_ACTIONS         10208
 #define IDS_NAV_ITEM_EXPORT             10209
 #define IDS_NAV_ITEM_SCHEDULE           10210
+#define IDS_NAV_ITEM_DASHBOARD          10211
 
 // View (10301~10399)
 #define IDS_VIEW_GRID_ROW_NUM           10301
