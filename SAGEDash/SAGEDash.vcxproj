@@ -223,6 +223,7 @@
     <ClInclude Include="..\src\domain\ValidationResult.h" />
     <ClInclude Include="..\src\common\error\SageException.h" />
     <ClInclude Include="..\src\common\EnumDefine.h" />
+    <ClInclude Include="..\src\common\Define.h" />
     <ClInclude Include="..\src\common\SageMgr.h" />
     <ClInclude Include="..\src\infrastructure\csv\CsvInputReader.h" />
     <ClInclude Include="..\src\infrastructure\excel\ExcelInputReader.h" />
