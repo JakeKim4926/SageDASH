@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-17] refactor/constants-to-define-h
+- **목적**: coding-rules 위반 수정 — .cpp에 분산된 상수를 Define.h 도메인 블록으로 통합
+- **변경 내용**: MappingPanel/ValidationPanel/SAGEDashView/PropertiesPane의 IDC_* + 레이아웃 constexpr 상수 전부 Define.h로 이동, Define.h vcxproj 등록
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/17
+- **결과**: merged into develop
+
 ## [2026-03-17] feature/webview2-dashboard
 - **목적**: Phase 4-7 — 대시보드 웹 화면 구현 + Phase 3 데이터 실제 연동
 - **변경 내용**: WebViewHost::Navigate() 추가, NavigatorPane Dashboard 항목 추가, SAGEDashView VIEW_MODE_DASHBOARD 진입 시 file:// URL 탐색, web:request-summary → data:summary 브릿지 응답, web/dashboard.html (KPI 카드 + Summary 테이블), vcxproj CopyWebAssets 빌드 타겟, .gitattributes .rc binary 처리
