@@ -34,7 +34,8 @@
 // ============================================================
 // 사용자 정의 메시지
 // ============================================================
-#define WM_SWITCH_CENTER_VIEW (WM_USER + 1)  // wParam = CenterViewMode
+#define WM_SWITCH_CENTER_VIEW  (WM_USER + 1)  // wParam = CenterViewMode
+#define WM_WEBBRIDGE_MESSAGE   (WM_USER + 2)  // lParam = new CString*(JSON), 수신측 delete
 
 // ============================================================
 // 공통 컨트롤

@@ -9,6 +9,7 @@
 #include "TabularData.h"
 #include "Define.h"
 #include "Resource.h"
+#include "SageMgr.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -25,6 +26,7 @@ BEGIN_MESSAGE_MAP(CSAGEDashView, CView)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_EN_CHANGE(IDC_SEARCH_EDIT, OnEnChangeSearch)
+	ON_MESSAGE(WM_WEBBRIDGE_MESSAGE, OnWebBridgeMessage)
 END_MESSAGE_MAP()
 
 CSAGEDashView::CSAGEDashView() noexcept
@@ -355,6 +357,17 @@ void CSAGEDashView::ClearGrid()
 void CSAGEDashView::OnDraw(CDC* /*pDC*/)
 {
 	// 그리기는 각 패널이 담당
+}
+
+LRESULT CSAGEDashView::OnWebBridgeMessage(WPARAM /*wParam*/, LPARAM lParam)
+{
+	CString* pStrJson = reinterpret_cast<CString*>(lParam);
+	if (pStrJson != nullptr) {
+		sageMgr.Log(_T("[SAGEDashView] Web → Native: ") + *pStrJson);
+		// Phase 4-7 에서 type 파싱 후 실제 처리 추가
+		delete pStrJson;
+	}
+	return 0;
 }
 
 #ifdef _DEBUG
