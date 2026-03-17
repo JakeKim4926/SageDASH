@@ -219,6 +219,11 @@ void CSAGEDashView::OnUpdate(CView* /*pSender*/, LPARAM /*lHint*/, CObject* /*pH
 
 void CSAGEDashView::OnEnChangeSearch()
 {
+	// 컬럼이 없으면 PopulateGrid 이전 상태 — 무시
+	CHeaderCtrl* pHeader = m_lstGrid.GetHeaderCtrl();
+	if (pHeader == nullptr || pHeader->GetItemCount() == 0)
+		return;
+
 	CString strKeyword;
 	m_edtSearch.GetWindowText(strKeyword);
 	FilterGrid(strKeyword);
