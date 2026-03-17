@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-17] fix/grid-duplicate-rows-on-load
+- **목적**: 파일 로드 시 빈 행 중복 표시 버그 수정
+- **변경 내용**: OnEnChangeSearch에 컬럼 없을 때 조기 반환 가드 추가
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/18
+- **결과**: merged into develop
+
 ## [2026-03-17] refactor/constants-to-define-h
 - **목적**: coding-rules 위반 수정 — .cpp에 분산된 상수를 Define.h 도메인 블록으로 통합
 - **변경 내용**: MappingPanel/ValidationPanel/SAGEDashView/PropertiesPane의 IDC_* + 레이아웃 constexpr 상수 전부 Define.h로 이동, Define.h vcxproj 등록
