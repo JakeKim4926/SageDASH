@@ -6,6 +6,7 @@
 
 #include "SageMgr.h"
 #include "WebBridgeMessage.h"
+#include "Define.h"
 
 BEGIN_MESSAGE_MAP(WebViewHost, CWnd)
     ON_WM_SIZE()
@@ -19,6 +20,7 @@ END_MESSAGE_MAP()
 WebViewHost::WebViewHost()
     : m_pController(nullptr)
     , m_pWebView(nullptr)
+    , m_webMessageToken({})
     , m_bInitializing(FALSE)
     , m_bInitialized(FALSE)
     , m_bInvalidated(FALSE)
@@ -67,9 +69,11 @@ void WebViewHost::Destroy()
     }
 
     if (m_pWebView != nullptr) {
+        m_pWebView->remove_WebMessageReceived(m_webMessageToken);
         m_pWebView->Release();
         m_pWebView = nullptr;
     }
+    m_webMessageToken = {};
 }
 
 void WebViewHost::Resize(const CRect& rect)
@@ -176,6 +180,7 @@ void WebViewHost::OnInitCompleted(ICoreWebView2Controller* pController)
     m_bInitialized  = TRUE;
     sageMgr.Log(_T("[WebViewHost] WebView2 초기화 완료"));
 
+    RegisterWebMessageHandler();
     PostWebMessage(WebBridgeMessage::BuildNativeReady());
 }
 
@@ -199,4 +204,52 @@ void WebViewHost::OnDestroy()
 {
     Destroy();
     CWnd::OnDestroy();
+}
+
+// ---------------------------------------------------------------
+// Web → C++ 브릿지
+// ---------------------------------------------------------------
+
+void WebViewHost::RegisterWebMessageHandler()
+{
+    if (m_pWebView == nullptr) {
+        return;
+    }
+
+    HRESULT hr = m_pWebView->add_WebMessageReceived(
+        Microsoft::WRL::Callback<ICoreWebView2WebMessageReceivedEventHandler>(
+            [this](ICoreWebView2* /*sender*/,
+                   ICoreWebView2WebMessageReceivedEventArgs* pArgs) -> HRESULT {
+                if (m_bInvalidated) {
+                    return S_OK;
+                }
+
+                LPWSTR pszMessage = nullptr;
+                HRESULT hrMsg = pArgs->TryGetWebMessageAsString(&pszMessage);
+                if (SUCCEEDED(hrMsg) && pszMessage != nullptr) {
+                    OnWebMessageReceived(CString(pszMessage));
+                    CoTaskMemFree(pszMessage);
+                }
+                return S_OK;
+            }).Get(),
+        &m_webMessageToken);
+
+    if (FAILED(hr)) {
+        sageMgr.Log(_T("[WebViewHost] WebMessageReceived 핸들러 등록 실패"));
+    }
+}
+
+void WebViewHost::OnWebMessageReceived(const CString& strJson)
+{
+    sageMgr.Log(_T("[WebViewHost] Web → Native: ") + strJson);
+
+    CWnd* pParent = GetParent();
+    if (pParent == nullptr || pParent->GetSafeHwnd() == nullptr) {
+        return;
+    }
+
+    CString* pStrJson = new CString(strJson);
+    if (!pParent->PostMessage(WM_WEBBRIDGE_MESSAGE, 0, (LPARAM)pStrJson)) {
+        delete pStrJson;
+    }
 }
