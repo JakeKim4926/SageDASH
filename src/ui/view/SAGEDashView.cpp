@@ -16,10 +16,6 @@
 #define new DEBUG_NEW
 #endif
 
-#define IDC_SEARCH_EDIT      100
-#define IDC_MAPPING_PANEL    110
-#define IDC_VALIDATION_PANEL 111
-#define IDC_WEBVIEW_HOST     120
 
 IMPLEMENT_DYNCREATE(CSAGEDashView, CView)
 
