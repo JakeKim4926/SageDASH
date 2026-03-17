@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-17] feature/webview2-dashboard
+- **목적**: Phase 4-7 — 대시보드 웹 화면 구현 + Phase 3 데이터 실제 연동
+- **변경 내용**: WebViewHost::Navigate() 추가, NavigatorPane Dashboard 항목 추가, SAGEDashView VIEW_MODE_DASHBOARD 진입 시 file:// URL 탐색, web:request-summary → data:summary 브릿지 응답, web/dashboard.html (KPI 카드 + Summary 테이블), vcxproj CopyWebAssets 빌드 타겟, .gitattributes .rc binary 처리
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/16
+- **결과**: merged into develop
+
 ## [2026-03-17] feature/webview2-bridge-protocol-doc
 - **목적**: Phase 4-6 — JSON 메시지 규약 최종 확정 및 문서화
 - **변경 내용**: WebBridgeMessage::ParseType() 추가, DECISION_webview2_bridge_protocol.md 완성 (Web→C++ 섹션, JS 연동 템플릿, C++ dispatch 패턴)
