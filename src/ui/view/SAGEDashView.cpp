@@ -10,6 +10,7 @@
 #include "Define.h"
 #include "Resource.h"
 #include "SageMgr.h"
+#include "WebBridgeMessage.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -168,6 +169,18 @@ void CSAGEDashView::SwitchViewMode(CenterViewMode eMode)
 				m_wndValidation.SetDataSheet(&sheet);
 			}
 		}
+	}
+
+	if (eMode == VIEW_MODE_DASHBOARD) {
+		TCHAR szPath[MAX_PATH] = {};
+		GetModuleFileName(nullptr, szPath, MAX_PATH);
+		CString strExeDir(szPath);
+		int nSlash = strExeDir.ReverseFind(_T('\\'));
+		if (nSlash >= 0)
+			strExeDir = strExeDir.Left(nSlash + 1);
+		CString strUrl = _T("file:///") + strExeDir + _T("web\\dashboard.html");
+		strUrl.Replace(_T('\\'), _T('/'));
+		m_wndWebView.Navigate(strUrl);
 	}
 
 	CRect rect;
@@ -362,11 +375,27 @@ void CSAGEDashView::OnDraw(CDC* /*pDC*/)
 LRESULT CSAGEDashView::OnWebBridgeMessage(WPARAM /*wParam*/, LPARAM lParam)
 {
 	CString* pStrJson = reinterpret_cast<CString*>(lParam);
-	if (pStrJson != nullptr) {
-		sageMgr.Log(_T("[SAGEDashView] Web → Native: ") + *pStrJson);
-		// Phase 4-7 에서 type 파싱 후 실제 처리 추가
-		delete pStrJson;
+	if (pStrJson == nullptr) {
+		return 0;
 	}
+
+	CString strType = WebBridgeMessage::ParseType(*pStrJson);
+	sageMgr.Log(_T("[SAGEDashView] Web → Native type: ") + strType);
+
+	if (strType == _T("web:request-summary")) {
+		CSAGEDashDoc* pDoc = GetDocument();
+		if (pDoc != nullptr && pDoc->HasData()) {
+			const TabularData& data = pDoc->GetData();
+			const DataSheet& sheet = data.GetSheet(0);
+			int nRowCount = sheet.GetRowCount() > 0 ? sheet.GetRowCount() - 1 : 0;
+			int nColCount = (sheet.GetRowCount() > 0) ? (int)sheet.m_arrRows[0].size() : 0;
+			CString strFileName = pDoc->GetTitle();
+			CString strMsg = WebBridgeMessage::BuildDataSummary(nRowCount, nColCount, strFileName);
+			m_wndWebView.PostWebMessage(strMsg);
+		}
+	}
+
+	delete pStrJson;
 	return 0;
 }
 

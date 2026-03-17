@@ -1,0 +1,3 @@
+# UTF-16 인코딩 파일 — CRLF 자동 변환 방지
+*.rc binary
+*.rc2 binary

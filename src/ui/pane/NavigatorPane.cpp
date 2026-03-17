@@ -71,6 +71,8 @@ int NavigatorPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
     InsertNavItem(str, hActions, NAV_ITEM_DISABLED);
     str.LoadString(IDS_NAV_ITEM_SCHEDULE);
     InsertNavItem(str, hActions, NAV_ITEM_DISABLED);
+    str.LoadString(IDS_NAV_ITEM_DASHBOARD);
+    m_hDashboard = InsertNavItem(str, hActions, NAV_ITEM_DISABLED);
     m_wndTree.Expand(hActions, TVE_EXPAND);
 
     return 0;
@@ -104,6 +106,7 @@ void NavigatorPane::ActivatePipelineItems(BOOL bActive)
     m_wndTree.SetItemData(m_hPreview,    (DWORD_PTR)type);
     m_wndTree.SetItemData(m_hMapping,    (DWORD_PTR)type);
     m_wndTree.SetItemData(m_hValidation, (DWORD_PTR)type);
+    m_wndTree.SetItemData(m_hDashboard,  (DWORD_PTR)type);
     m_wndTree.Invalidate();
 }
 
@@ -131,6 +134,8 @@ void NavigatorPane::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
         pMain->PostMessage(WM_SWITCH_CENTER_VIEW, (WPARAM)VIEW_MODE_MAPPING);
     } else if (hSel == m_hValidation) {
         pMain->PostMessage(WM_SWITCH_CENTER_VIEW, (WPARAM)VIEW_MODE_VALIDATION);
+    } else if (hSel == m_hDashboard) {
+        pMain->PostMessage(WM_SWITCH_CENTER_VIEW, (WPARAM)VIEW_MODE_DASHBOARD);
     }
 }
 

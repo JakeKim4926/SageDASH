@@ -38,6 +38,9 @@ public:
     // Phase 4-4 에서 본격 사용 — 초기화 전 호출 시 무시
     void PostWebMessage(const CString& strJson);
 
+    // Phase 4-7: HTML 파일 URL 탐색 — 초기화 전 호출 시 무시
+    void Navigate(const CString& strUrl);
+
 private:
     void StartAsyncInit();
     void OnInitCompleted(ICoreWebView2Controller* pController);

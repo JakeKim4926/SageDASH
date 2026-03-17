@@ -308,11 +308,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\SAGEDash.rc2" />
+    <None Include="..\web\dashboard.html" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)packages\Microsoft.Web.WebView2.1.0.2849.39\build\native\Microsoft.Web.WebView2.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.Web.WebView2.1.0.2849.39\build\native\Microsoft.Web.WebView2.targets')" />
   </ImportGroup>
+  <Target Name="CopyWebAssets" AfterTargets="Build">
+    <ItemGroup>
+      <WebFiles Include="$(SolutionDir)web\**\*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(WebFiles)" DestinationFiles="@(WebFiles->'$(OutDir)web\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  </Target>
   <Target Name="EnsureNuGetPackagesBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>이 프로젝트는 NuGet 패키지 복원이 필요합니다. Visual Studio에서 빌드 전에 NuGet 패키지를 복원하세요. 누락된 파일: {0}</ErrorText>

@@ -24,6 +24,7 @@ private:
     HTREEITEM m_hPreview    = nullptr;
     HTREEITEM m_hMapping    = nullptr;
     HTREEITEM m_hValidation = nullptr;
+    HTREEITEM m_hDashboard  = nullptr;
 
     HTREEITEM InsertNavItem(const CString& strLabel, HTREEITEM hParent, NavItemType type);
 };

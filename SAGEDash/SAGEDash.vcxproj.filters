@@ -360,5 +360,6 @@
       <Filter>리소스 파일</Filter>
     </None>
     <None Include="packages.config" />
+    <None Include="..\web\dashboard.html" />
   </ItemGroup>
 </Project>
