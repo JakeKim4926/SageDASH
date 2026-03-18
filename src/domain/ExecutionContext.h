@@ -27,9 +27,17 @@ public:
     // 출력 설정
     CString                       m_strOutputPath;
 
+    // MappingStep이 생성한 변환 결과 시트 (비어있으면 원본 사용)
+    DataSheet                     m_transformedSheet;
+
     // 실행 결과
     ValidationResult              m_validationResult;
     CString                       m_strLog;
 
     BOOL IsValid() const { return m_pSourceSheet != nullptr; }
+
+    // 유효한 출력 대상 시트 반환 — 매핑 결과가 있으면 그것, 없으면 원본
+    const DataSheet& GetEffectiveSheet() const {
+        return m_transformedSheet.GetRowCount() > 0 ? m_transformedSheet : *m_pSourceSheet;
+    }
 };

@@ -243,6 +243,11 @@
     <ClInclude Include="..\src\domain\AutomationProject.h" />
     <ClInclude Include="..\src\infrastructure\persistence\ProjectSerializer.h" />
     <ClInclude Include="..\src\application\ProjectService.h" />
+    <ClInclude Include="..\src\application\PipelineRunner.h" />
+    <ClInclude Include="..\src\application\pipeline\InputStep.h" />
+    <ClInclude Include="..\src\application\pipeline\MappingStep.h" />
+    <ClInclude Include="..\src\application\pipeline\ValidationStep.h" />
+    <ClInclude Include="..\src\application\pipeline\OutputStep.h" />
     <ClInclude Include="..\src\ui\webview\WebViewHost.h" />
     <ClInclude Include="..\src\ui\webview\WebBridgeMessage.h" />
   </ItemGroup>
@@ -274,6 +279,11 @@
     <ClCompile Include="..\src\infrastructure\excel\ExcelOutputWriter.cpp" />
     <ClCompile Include="..\src\infrastructure\persistence\ProjectSerializer.cpp" />
     <ClCompile Include="..\src\application\ProjectService.cpp" />
+    <ClCompile Include="..\src\application\PipelineRunner.cpp" />
+    <ClCompile Include="..\src\application\pipeline\InputStep.cpp" />
+    <ClCompile Include="..\src\application\pipeline\MappingStep.cpp" />
+    <ClCompile Include="..\src\application\pipeline\ValidationStep.cpp" />
+    <ClCompile Include="..\src\application\pipeline\OutputStep.cpp" />
     <ClCompile Include="..\src\ui\webview\WebViewHost.cpp" />
     <ClCompile Include="..\src\ui\webview\WebBridgeMessage.cpp" />
   </ItemGroup>
