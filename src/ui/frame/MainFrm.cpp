@@ -358,5 +358,6 @@ LRESULT CMainFrame::OnSwitchCenterView(WPARAM wParam, LPARAM /*lParam*/)
 
 	sageMgr.Log(_T("[MAIN] SwitchViewMode 호출"));
 	pView->SwitchViewMode((CenterViewMode)wParam);
+	m_wndNavigator.SetActiveMode((CenterViewMode)wParam);
 	return 0;
 }

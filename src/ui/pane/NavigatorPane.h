@@ -10,6 +10,8 @@ public:
     virtual ~NavigatorPane();
 
     void ActivatePipelineItems(BOOL bActive);
+    void UpdateFileItem(const CString& strFileName);
+    void SetActiveMode(CenterViewMode eMode);
 
 protected:
     CTreeCtrl m_wndTree;
@@ -21,6 +23,7 @@ protected:
     DECLARE_MESSAGE_MAP()
 
 private:
+    HTREEITEM m_hFile       = nullptr;
     HTREEITEM m_hPreview    = nullptr;
     HTREEITEM m_hMapping    = nullptr;
     HTREEITEM m_hValidation = nullptr;

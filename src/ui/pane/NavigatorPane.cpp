@@ -49,7 +49,7 @@ int NavigatorPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
     str.LoadString(IDS_NAV_SECTION_INPUT);
     HTREEITEM hInput = InsertNavItem(str, TVI_ROOT, NAV_ITEM_SECTION);
     str.LoadString(IDS_NAV_ITEM_FILE);
-    InsertNavItem(str, hInput, NAV_ITEM_ACTIVE);
+    m_hFile = InsertNavItem(str, hInput, NAV_ITEM_ACTIVE);
     m_wndTree.Expand(hInput, TVE_EXPAND);
 
     // PIPELINE 섹션
@@ -113,6 +113,52 @@ void NavigatorPane::ActivatePipelineItems(BOOL bActive)
     m_wndTree.Invalidate();
 }
 
+void NavigatorPane::SetActiveMode(CenterViewMode eMode)
+{
+    if (m_wndTree.GetSafeHwnd() == nullptr)
+        return;
+
+    // 파이프라인 항목을 모두 ACTIVE로 초기화한 뒤, 현재 모드 항목만 CURRENT로 표시
+    m_wndTree.SetItemData(m_hPreview,    (DWORD_PTR)NAV_ITEM_ACTIVE);
+    m_wndTree.SetItemData(m_hMapping,    (DWORD_PTR)NAV_ITEM_ACTIVE);
+    m_wndTree.SetItemData(m_hValidation, (DWORD_PTR)NAV_ITEM_ACTIVE);
+    m_wndTree.SetItemData(m_hDashboard,  (DWORD_PTR)NAV_ITEM_ACTIVE);
+
+    switch (eMode) {
+    case VIEW_MODE_GRID:
+        m_wndTree.SetItemData(m_hPreview, (DWORD_PTR)NAV_ITEM_CURRENT);
+        break;
+    case VIEW_MODE_MAPPING:
+        m_wndTree.SetItemData(m_hMapping, (DWORD_PTR)NAV_ITEM_CURRENT);
+        break;
+    case VIEW_MODE_VALIDATION:
+        m_wndTree.SetItemData(m_hValidation, (DWORD_PTR)NAV_ITEM_CURRENT);
+        break;
+    case VIEW_MODE_DASHBOARD:
+        m_wndTree.SetItemData(m_hDashboard, (DWORD_PTR)NAV_ITEM_CURRENT);
+        break;
+    }
+
+    m_wndTree.Invalidate();
+}
+
+void NavigatorPane::UpdateFileItem(const CString& strFileName)
+{
+    if (m_wndTree.GetSafeHwnd() == nullptr || m_hFile == nullptr)
+        return;
+
+    CString strLabel;
+    if (strFileName.IsEmpty()) {
+        strLabel.LoadString(IDS_NAV_ITEM_FILE);
+    } else {
+        // 전체 경로에서 파일명만 추출
+        int nSlash = strFileName.ReverseFind(_T('\\'));
+        strLabel = (nSlash >= 0) ? strFileName.Mid(nSlash + 1) : strFileName;
+    }
+
+    m_wndTree.SetItemText(m_hFile, strLabel);
+}
+
 void NavigatorPane::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
     NMTREEVIEW* pNMTV = reinterpret_cast<NMTREEVIEW*>(pNMHDR);
@@ -134,7 +180,9 @@ void NavigatorPane::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
     if (pMain == nullptr)
         return;
 
-    if (hSel == m_hPreview) {
+    if (hSel == m_hFile) {
+        pMain->PostMessage(WM_SWITCH_CENTER_VIEW, (WPARAM)VIEW_MODE_GRID);
+    } else if (hSel == m_hPreview) {
         pMain->PostMessage(WM_SWITCH_CENTER_VIEW, (WPARAM)VIEW_MODE_GRID);
     } else if (hSel == m_hMapping) {
         pMain->PostMessage(WM_SWITCH_CENTER_VIEW, (WPARAM)VIEW_MODE_MAPPING);
@@ -165,6 +213,10 @@ void NavigatorPane::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
         case NAV_ITEM_ACTIVE:
             pNMCD->clrText   = COLOR_ACCENT_DARK;
             pNMCD->clrTextBk = COLOR_ACCENT_LIGHT;
+            break;
+        case NAV_ITEM_CURRENT:
+            pNMCD->clrText   = COLOR_WHITE;
+            pNMCD->clrTextBk = COLOR_ACCENT;
             break;
         case NAV_ITEM_DISABLED:
             pNMCD->clrText   = COLOR_TEXT_MUTED;

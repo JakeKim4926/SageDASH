@@ -76,7 +76,9 @@ BOOL CSAGEDashDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	if (pFrame != nullptr) {
 		pFrame->LogMessage(strLog);
 		pFrame->GetPropertiesPane().SetFileInfo(lpszPathName, m_data);
+		pFrame->GetNavigatorPane().UpdateFileItem(lpszPathName);
 		pFrame->GetNavigatorPane().ActivatePipelineItems(TRUE);
+		pFrame->GetNavigatorPane().SetActiveMode(VIEW_MODE_GRID);
 	}
 
 	SetModifiedFlag(FALSE);
@@ -91,6 +93,7 @@ void CSAGEDashDoc::DeleteContents()
 
 	CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
 	if (pFrame != nullptr) {
+		pFrame->GetNavigatorPane().UpdateFileItem(_T(""));
 		pFrame->GetNavigatorPane().ActivatePipelineItems(FALSE);
 		pFrame->GetPropertiesPane().ClearInfo();
 	}
