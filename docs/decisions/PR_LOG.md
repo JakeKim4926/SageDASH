@@ -4,7 +4,7 @@
 - **목적**: Navigator File 항목 클릭 무반응 버그 수정 + 현재 뷰 모드 시각적 표시
 - **변경 내용**: `m_hFile` 핸들 저장, `UpdateFileItem()`/`SetActiveMode()` 추가, `NAV_ITEM_CURRENT` 타입 신규 도입, 뷰 전환 시 Navigator 하이라이트 갱신
 - **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/23
-- **결과**: pending
+- **결과**: merged into develop
 
 ## [2026-03-17] fix/csv-delimiter-autodetect
 - **목적**: 탭 구분자 CSV 파일 열면 한 열로 뭉치는 문제 수정
