@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-18] feature/xml-input
+- **목적**: Phase 5 Step 3 — XML 파일 입력 리더 추가
+- **변경 내용**: `XmlInputReader` 신규 추가(속성/자식엘리먼트/혼합 방식, 주석·CDATA·DOCTYPE 건너뛰기, 엔티티 디코딩), `WorkbookService` .xml 분기, 파일 열기 필터 *.xml 추가, vcxproj 등록
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/26
+- **결과**: merged into develop
+
 ## [2026-03-18] feature/json-input
 - **목적**: Phase 5 Step 2 — JSON 파일 입력 리더 추가
 - **변경 내용**: `JsonInputReader` 신규 추가(객체 배열/배열의 배열 지원, UTF-8 BOM 처리), `WorkbookService` .json 분기, 파일 열기 필터 *.json 추가, vcxproj 등록
