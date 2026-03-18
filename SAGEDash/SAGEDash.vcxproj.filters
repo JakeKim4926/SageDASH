@@ -54,6 +54,9 @@
     <Filter Include="헤더 파일\infrastructure\filesystem">
       <UniqueIdentifier>{AA000060-0000-0000-0000-000000000060}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\infrastructure\db">
+      <UniqueIdentifier>{AA000061-0000-0000-0000-000000000061}</UniqueIdentifier>
+    </Filter>
     <Filter Include="헤더 파일\infrastructure\persistence">
       <UniqueIdentifier>{AA000057-0000-0000-0000-000000000057}</UniqueIdentifier>
     </Filter>
@@ -113,6 +116,9 @@
     </Filter>
     <Filter Include="소스 파일\infrastructure\filesystem">
       <UniqueIdentifier>{BB000060-0000-0000-0000-000000000060}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\infrastructure\db">
+      <UniqueIdentifier>{BB000061-0000-0000-0000-000000000061}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\infrastructure\logging">
       <UniqueIdentifier>{AA000053-0000-0000-0000-000000000053}</UniqueIdentifier>
@@ -257,6 +263,9 @@
     <ClInclude Include="..\src\infrastructure\filesystem\FolderScanInputReader.h">
       <Filter>헤더 파일\infrastructure\filesystem</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\infrastructure\db\DbInputReader.h">
+      <Filter>헤더 파일\infrastructure\db</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\infrastructure\logging\SageLogger.h">
       <Filter>헤더 파일\infrastructure\logging</Filter>
     </ClInclude>
@@ -354,6 +363,9 @@
     </ClCompile>
     <ClCompile Include="..\src\infrastructure\filesystem\FolderScanInputReader.cpp">
       <Filter>소스 파일\infrastructure\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\infrastructure\db\DbInputReader.cpp">
+      <Filter>소스 파일\infrastructure\db</Filter>
     </ClCompile>
     <ClCompile Include="..\src\infrastructure\logging\SageLogger.cpp">
       <Filter>소스 파일\infrastructure\logging</Filter>
