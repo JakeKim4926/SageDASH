@@ -105,7 +105,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\src\app;$(ProjectDir)..\src\ui\frame;$(ProjectDir)..\src\ui\doc;$(ProjectDir)..\src\ui\view;$(ProjectDir)..\src\ui\pane;$(ProjectDir)..\src\ui\webview;$(ProjectDir)..\src\domain;$(ProjectDir)..\src\application;$(ProjectDir)..\src\infrastructure\csv;$(ProjectDir)..\src\infrastructure\excel;$(ProjectDir)..\src\infrastructure\json;$(ProjectDir)..\src\infrastructure\logging;$(ProjectDir)..\src\common;$(ProjectDir)..\src\common\error;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\src\app;$(ProjectDir)..\src\ui\frame;$(ProjectDir)..\src\ui\doc;$(ProjectDir)..\src\ui\view;$(ProjectDir)..\src\ui\pane;$(ProjectDir)..\src\ui\webview;$(ProjectDir)..\src\domain;$(ProjectDir)..\src\application;$(ProjectDir)..\src\infrastructure\csv;$(ProjectDir)..\src\infrastructure\excel;$(ProjectDir)..\src\infrastructure\json;$(ProjectDir)..\src\infrastructure\xml;$(ProjectDir)..\src\infrastructure\logging;$(ProjectDir)..\src\common;$(ProjectDir)..\src\common\error;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -129,7 +129,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\src\app;$(ProjectDir)..\src\ui\frame;$(ProjectDir)..\src\ui\doc;$(ProjectDir)..\src\ui\view;$(ProjectDir)..\src\ui\pane;$(ProjectDir)..\src\ui\webview;$(ProjectDir)..\src\domain;$(ProjectDir)..\src\application;$(ProjectDir)..\src\infrastructure\csv;$(ProjectDir)..\src\infrastructure\excel;$(ProjectDir)..\src\infrastructure\json;$(ProjectDir)..\src\infrastructure\logging;$(ProjectDir)..\src\common;$(ProjectDir)..\src\common\error;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\src\app;$(ProjectDir)..\src\ui\frame;$(ProjectDir)..\src\ui\doc;$(ProjectDir)..\src\ui\view;$(ProjectDir)..\src\ui\pane;$(ProjectDir)..\src\ui\webview;$(ProjectDir)..\src\domain;$(ProjectDir)..\src\application;$(ProjectDir)..\src\infrastructure\csv;$(ProjectDir)..\src\infrastructure\excel;$(ProjectDir)..\src\infrastructure\json;$(ProjectDir)..\src\infrastructure\xml;$(ProjectDir)..\src\infrastructure\logging;$(ProjectDir)..\src\common;$(ProjectDir)..\src\common\error;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -155,7 +155,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\src\app;$(ProjectDir)..\src\ui\frame;$(ProjectDir)..\src\ui\doc;$(ProjectDir)..\src\ui\view;$(ProjectDir)..\src\ui\pane;$(ProjectDir)..\src\ui\webview;$(ProjectDir)..\src\domain;$(ProjectDir)..\src\application;$(ProjectDir)..\src\infrastructure\csv;$(ProjectDir)..\src\infrastructure\excel;$(ProjectDir)..\src\infrastructure\json;$(ProjectDir)..\src\infrastructure\logging;$(ProjectDir)..\src\common;$(ProjectDir)..\src\common\error;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\src\app;$(ProjectDir)..\src\ui\frame;$(ProjectDir)..\src\ui\doc;$(ProjectDir)..\src\ui\view;$(ProjectDir)..\src\ui\pane;$(ProjectDir)..\src\ui\webview;$(ProjectDir)..\src\domain;$(ProjectDir)..\src\application;$(ProjectDir)..\src\infrastructure\csv;$(ProjectDir)..\src\infrastructure\excel;$(ProjectDir)..\src\infrastructure\json;$(ProjectDir)..\src\infrastructure\xml;$(ProjectDir)..\src\infrastructure\logging;$(ProjectDir)..\src\common;$(ProjectDir)..\src\common\error;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -183,7 +183,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\src\app;$(ProjectDir)..\src\ui\frame;$(ProjectDir)..\src\ui\doc;$(ProjectDir)..\src\ui\view;$(ProjectDir)..\src\ui\pane;$(ProjectDir)..\src\ui\webview;$(ProjectDir)..\src\domain;$(ProjectDir)..\src\application;$(ProjectDir)..\src\infrastructure\csv;$(ProjectDir)..\src\infrastructure\excel;$(ProjectDir)..\src\infrastructure\json;$(ProjectDir)..\src\infrastructure\logging;$(ProjectDir)..\src\common;$(ProjectDir)..\src\common\error;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\src\app;$(ProjectDir)..\src\ui\frame;$(ProjectDir)..\src\ui\doc;$(ProjectDir)..\src\ui\view;$(ProjectDir)..\src\ui\pane;$(ProjectDir)..\src\ui\webview;$(ProjectDir)..\src\domain;$(ProjectDir)..\src\application;$(ProjectDir)..\src\infrastructure\csv;$(ProjectDir)..\src\infrastructure\excel;$(ProjectDir)..\src\infrastructure\json;$(ProjectDir)..\src\infrastructure\xml;$(ProjectDir)..\src\infrastructure\logging;$(ProjectDir)..\src\common;$(ProjectDir)..\src\common\error;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -228,6 +228,7 @@
     <ClInclude Include="..\src\infrastructure\csv\CsvInputReader.h" />
     <ClInclude Include="..\src\infrastructure\excel\ExcelInputReader.h" />
     <ClInclude Include="..\src\infrastructure\json\JsonInputReader.h" />
+    <ClInclude Include="..\src\infrastructure\xml\XmlInputReader.h" />
     <ClInclude Include="..\src\infrastructure\logging\SageLogger.h" />
     <ClInclude Include="..\src\application\IInputReader.h" />
     <ClInclude Include="..\src\application\IInputSource.h" />
@@ -272,6 +273,7 @@
     <ClCompile Include="..\src\infrastructure\csv\CsvInputReader.cpp" />
     <ClCompile Include="..\src\infrastructure\excel\ExcelInputReader.cpp" />
     <ClCompile Include="..\src\infrastructure\json\JsonInputReader.cpp" />
+    <ClCompile Include="..\src\infrastructure\xml\XmlInputReader.cpp" />
     <ClCompile Include="..\src\infrastructure\logging\SageLogger.cpp" />
     <ClCompile Include="..\src\common\SageMgr.cpp" />
     <ClCompile Include="..\src\application\WorkbookService.cpp" />

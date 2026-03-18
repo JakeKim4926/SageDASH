@@ -5,6 +5,7 @@
 #include "CsvInputReader.h"
 #include "ExcelInputReader.h"
 #include "JsonInputReader.h"
+#include "XmlInputReader.h"
 #include "SageException.h"
 
 #ifdef _DEBUG
@@ -34,6 +35,12 @@ void WorkbookService::LoadFromFile(const CString& strFilePath, TabularData& outD
 
     if (strExt == _T("json")) {
         JsonInputReader reader;
+        reader.Read(strFilePath, outData);
+        return;
+    }
+
+    if (strExt == _T("xml")) {
+        XmlInputReader reader;
         reader.Read(strFilePath, outData);
         return;
     }
