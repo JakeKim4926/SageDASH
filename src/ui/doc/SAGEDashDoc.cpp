@@ -10,6 +10,7 @@
 #include "SAGEDashView.h"
 #include "ExportService.h"
 #include "ProjectService.h"
+#include "PipelineRunner.h"
 #include "SageException.h"
 #include "SageMgr.h"
 #include "Resource.h"
@@ -26,6 +27,8 @@ BEGIN_MESSAGE_MAP(CSAGEDashDoc, CDocument)
     ON_COMMAND(ID_FILE_SAVE_PROJECT,          &CSAGEDashDoc::OnFileSaveProject)
     ON_UPDATE_COMMAND_UI(ID_FILE_SAVE_PROJECT,&CSAGEDashDoc::OnUpdateFileSaveProject)
     ON_COMMAND(ID_FILE_OPEN_PROJECT,          &CSAGEDashDoc::OnFileOpenProject)
+    ON_COMMAND(ID_PIPELINE_RUN,               &CSAGEDashDoc::OnPipelineRun)
+    ON_UPDATE_COMMAND_UI(ID_PIPELINE_RUN,     &CSAGEDashDoc::OnUpdatePipelineRun)
 END_MESSAGE_MAP()
 
 CSAGEDashDoc::CSAGEDashDoc() noexcept
@@ -255,6 +258,59 @@ void CSAGEDashDoc::OnFileExport()
 }
 
 void CSAGEDashDoc::OnUpdateFileExport(CCmdUI* pCmdUI)
+{
+    pCmdUI->Enable(m_isDataLoaded);
+}
+
+void CSAGEDashDoc::OnPipelineRun()
+{
+    if (!m_isDataLoaded)
+        return;
+
+    CSAGEDashView* pView = nullptr;
+    if (!GetActiveView(pView) || pView == nullptr)
+        return;
+
+    CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+
+    // 컨텍스트 구성
+    ExecutionContext ctx;
+    ctx.m_pSourceSheet       = &m_data.GetSheet(0);
+    ctx.m_arrMappingRules    = pView->GetMappingPanel().GetMappingRules();
+    ctx.m_arrValidationRules = pView->GetValidationPanel().GetValidationRules();
+    ctx.m_strOutputPath      = m_project.m_strOutputPath;
+
+    // 파이프라인 실행
+    PipelineRunner runner;
+    CString strErr = runner.Run(ctx);
+
+    // 로그 출력
+    if (pFrame != nullptr) {
+        pFrame->LogMessage(_T("──── 파이프라인 실행 ────"));
+        // 줄 단위로 분리해서 출력
+        CString strLog = ctx.m_strLog;
+        int nPos = 0;
+        CString strLine;
+        while (AfxExtractSubString(strLine, strLog, nPos++, _T('\n'))) {
+            strLine.TrimRight(_T('\r'));
+            if (!strLine.IsEmpty())
+                pFrame->LogMessage(strLine);
+        }
+    }
+
+    if (strErr.IsEmpty()) {
+        sageMgr.Log(_T("[파이프라인] 완료"));
+        if (pFrame != nullptr)
+            pFrame->LogMessage(_T("[파이프라인] 완료"));
+    } else {
+        sageMgr.Log(_T("[파이프라인] ") + strErr);
+        if (pFrame != nullptr)
+            pFrame->LogMessage(_T("[파이프라인] ") + strErr);
+        AfxMessageBox(strErr, MB_OK | MB_ICONWARNING);
+    }
+}
+
+void CSAGEDashDoc::OnUpdatePipelineRun(CCmdUI* pCmdUI)
 {
     pCmdUI->Enable(m_isDataLoaded);
 }

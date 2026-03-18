@@ -21,6 +21,12 @@
     <Filter Include="헤더 파일\application">
       <UniqueIdentifier>{AA000012-0000-0000-0000-000000000012}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\application\pipeline">
+      <UniqueIdentifier>{AA000012-0001-0000-0000-000000000012}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\application\pipeline">
+      <UniqueIdentifier>{BB000012-0001-0000-0000-000000000012}</UniqueIdentifier>
+    </Filter>
     <Filter Include="헤더 파일\common">
       <UniqueIdentifier>{AA000050-0000-0000-0000-000000000050}</UniqueIdentifier>
     </Filter>
@@ -167,6 +173,21 @@
     <ClInclude Include="..\src\application\ProjectService.h">
       <Filter>헤더 파일\application</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\application\PipelineRunner.h">
+      <Filter>헤더 파일\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\application\pipeline\InputStep.h">
+      <Filter>헤더 파일\application\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\application\pipeline\MappingStep.h">
+      <Filter>헤더 파일\application\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\application\pipeline\ValidationStep.h">
+      <Filter>헤더 파일\application\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\application\pipeline\OutputStep.h">
+      <Filter>헤더 파일\application\pipeline</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\application\IInputReader.h">
       <Filter>헤더 파일\application</Filter>
     </ClInclude>
@@ -276,6 +297,21 @@
     </ClCompile>
     <ClCompile Include="..\src\application\ProjectService.cpp">
       <Filter>소스 파일\application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\application\PipelineRunner.cpp">
+      <Filter>소스 파일\application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\application\pipeline\InputStep.cpp">
+      <Filter>소스 파일\application\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\application\pipeline\MappingStep.cpp">
+      <Filter>소스 파일\application\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\application\pipeline\ValidationStep.cpp">
+      <Filter>소스 파일\application\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\application\pipeline\OutputStep.cpp">
+      <Filter>소스 파일\application\pipeline</Filter>
     </ClCompile>
     <ClCompile Include="..\src\infrastructure\csv\CsvInputReader.cpp">
       <Filter>소스 파일\infrastructure\csv</Filter>

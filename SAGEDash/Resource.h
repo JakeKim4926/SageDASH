@@ -153,6 +153,7 @@
 #define ID_FILE_EXPORT                  32773
 #define ID_FILE_SAVE_PROJECT            32774
 #define ID_FILE_OPEN_PROJECT            32775
+#define ID_PIPELINE_RUN                 32776
 
 // Log (10501~10599)
 #define IDS_LOG_EXPORT_OK               10501
