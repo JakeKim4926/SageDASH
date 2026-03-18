@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-19] feature/db-input
+- **목적**: Phase 5 Step 5 — DB 조회 입력 초안 추가
+- **변경 내용**: `DbInputReader` 신규 추가 (ODBC 기반, `.dbq` 파일 형식: 1행=연결문자열 2행~=쿼리, SQLDriverConnect → SQLExecDirect → SQLFetch), `WorkbookService` `.dbq` 분기, `odbc32.lib` 링크
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/28
+- **결과**: merged into develop
+
 ## [2026-03-19] feature/folder-scan-input
 - **목적**: Phase 5 Step 4 — 폴더 스캔 입력 추가
 - **변경 내용**: `FolderScanInputReader` 신규 추가 (Win32 FindFirstFile/FindNextFile, 파일명/확장자/크기/날짜/전체경로 컬럼), `WorkbookService.LoadFromFolder`, `SAGEDashDoc.OnFileOpenFolder` (SHBrowseForFolder 다이얼로그), RC 파일 메뉴 항목 및 문자열 추가, vcxproj/filters 등록
