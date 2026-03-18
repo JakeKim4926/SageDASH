@@ -131,7 +131,7 @@ void CSAGEDashApp::OnFileOpen()
 		_T("csv"),
 		nullptr,
 		OFN_HIDEREADONLY | OFN_FILEMUSTEXIST,
-		_T("지원 파일 (*.csv;*.xlsx;*.xls;*.json)|*.csv;*.xlsx;*.xls;*.json|CSV 파일 (*.csv)|*.csv|Excel 파일 (*.xlsx;*.xls)|*.xlsx;*.xls|JSON 파일 (*.json)|*.json|모든 파일 (*.*)|*.*||"),
+		_T("지원 파일 (*.csv;*.xlsx;*.xls;*.json;*.xml)|*.csv;*.xlsx;*.xls;*.json;*.xml|CSV 파일 (*.csv)|*.csv|Excel 파일 (*.xlsx;*.xls)|*.xlsx;*.xls|JSON 파일 (*.json)|*.json|XML 파일 (*.xml)|*.xml|모든 파일 (*.*)|*.*||"),
 		AfxGetMainWnd());
 
 	if (dlg.DoModal() != IDOK)
