@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-18] feature/pipeline-runner
+- **목적**: Phase 5 Step 1 — 파이프라인 실행 엔진 구현
+- **변경 내용**: InputStep/MappingStep/ValidationStep/OutputStep 구현, PipelineRunner 추가, 자동화 메뉴(F5) 추가
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/24
+- **결과**: merged into develop
+
 ## [2026-03-18] fix/navigator-file-item
 - **목적**: Navigator File 항목 클릭 무반응 버그 수정 + 현재 뷰 모드 시각적 표시
 - **변경 내용**: `m_hFile` 핸들 저장, `UpdateFileItem()`/`SetActiveMode()` 추가, `NAV_ITEM_CURRENT` 타입 신규 도입, 뷰 전환 시 Navigator 하이라이트 갱신
