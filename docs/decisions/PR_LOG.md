@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-18] feature/json-input
+- **목적**: Phase 5 Step 2 — JSON 파일 입력 리더 추가
+- **변경 내용**: `JsonInputReader` 신규 추가(객체 배열/배열의 배열 지원, UTF-8 BOM 처리), `WorkbookService` .json 분기, 파일 열기 필터 *.json 추가, vcxproj 등록
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/25
+- **결과**: merged into develop
+
 ## [2026-03-18] feature/pipeline-runner
 - **목적**: Phase 5 Step 1 — 파이프라인 실행 엔진 구현
 - **변경 내용**: InputStep/MappingStep/ValidationStep/OutputStep 구현, PipelineRunner 추가, 자동화 메뉴(F5) 추가
