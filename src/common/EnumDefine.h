@@ -9,6 +9,7 @@ enum NavItemType
     NAV_ITEM_SECTION  = 0,
     NAV_ITEM_ACTIVE   = 1,
     NAV_ITEM_DISABLED = 2,
+    NAV_ITEM_CURRENT  = 3,  // 현재 활성 뷰 모드에 해당하는 항목
 };
 
 // ============================================================
