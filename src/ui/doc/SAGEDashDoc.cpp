@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "framework.h"
+#include <shlobj.h>
 #include "SAGEDash.h"
 #include "SAGEDashDoc.h"
 #include "MainFrm.h"
@@ -27,6 +28,7 @@ BEGIN_MESSAGE_MAP(CSAGEDashDoc, CDocument)
     ON_COMMAND(ID_FILE_SAVE_PROJECT,          &CSAGEDashDoc::OnFileSaveProject)
     ON_UPDATE_COMMAND_UI(ID_FILE_SAVE_PROJECT,&CSAGEDashDoc::OnUpdateFileSaveProject)
     ON_COMMAND(ID_FILE_OPEN_PROJECT,          &CSAGEDashDoc::OnFileOpenProject)
+    ON_COMMAND(ID_FILE_OPEN_FOLDER,           &CSAGEDashDoc::OnFileOpenFolder)
     ON_COMMAND(ID_PIPELINE_RUN,               &CSAGEDashDoc::OnPipelineRun)
     ON_UPDATE_COMMAND_UI(ID_PIPELINE_RUN,     &CSAGEDashDoc::OnUpdatePipelineRun)
 END_MESSAGE_MAP()
@@ -215,6 +217,63 @@ void CSAGEDashDoc::OnFileOpenProject()
     strLog.Format(strFmt, (LPCTSTR)strPath);
     sageMgr.Log(strLog);
     if (pFrame != nullptr) pFrame->LogMessage(strLog);
+}
+
+void CSAGEDashDoc::OnFileOpenFolder()
+{
+    BROWSEINFO bi = {};
+    bi.hwndOwner = AfxGetMainWnd()->GetSafeHwnd();
+    bi.ulFlags   = BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE;
+    bi.lpszTitle = _T("스캔할 폴더를 선택하세요.");
+
+    LPITEMIDLIST pidl = SHBrowseForFolder(&bi);
+    if (pidl == nullptr)
+        return;
+
+    TCHAR szPath[MAX_PATH] = {};
+    if (!SHGetPathFromIDList(pidl, szPath)) {
+        CoTaskMemFree(pidl);
+        return;
+    }
+    CoTaskMemFree(pidl);
+
+    CString strFolderPath = szPath;
+
+    DeleteContents();
+
+    CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+    WorkbookService service;
+
+    try {
+        service.LoadFromFolder(strFolderPath, m_data);
+        m_isDataLoaded = TRUE;
+    } catch (const SageException& e) {
+        CString strLog;
+        strLog.Format(_T("[실패] %s"), (LPCTSTR)e.Format());
+        sageMgr.Log(strLog);
+        if (pFrame != nullptr)
+            pFrame->LogMessage(strLog);
+        AfxMessageBox(e.GetMessage(), MB_OK | MB_ICONWARNING);
+        return;
+    }
+
+    const DataSheet& sheet = m_data.GetSheet(0);
+    int nFileCount = sheet.GetRowCount() - 1;  // 첫 행은 헤더
+
+    CString strLog;
+    strLog.Format(_T("[성공] 폴더 스캔 완료: %s (%d개 파일)"),
+        (LPCTSTR)strFolderPath, nFileCount);
+    sageMgr.Log(strLog);
+    if (pFrame != nullptr) {
+        pFrame->LogMessage(strLog);
+        pFrame->GetPropertiesPane().SetFileInfo(strFolderPath, m_data);
+        pFrame->GetNavigatorPane().UpdateFileItem(strFolderPath);
+        pFrame->GetNavigatorPane().ActivatePipelineItems(TRUE);
+        pFrame->GetNavigatorPane().SetActiveMode(VIEW_MODE_GRID);
+    }
+
+    SetModifiedFlag(FALSE);
+    UpdateAllViews(nullptr);
 }
 
 void CSAGEDashDoc::OnFileExport()

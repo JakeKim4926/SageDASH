@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-19] feature/folder-scan-input
+- **목적**: Phase 5 Step 4 — 폴더 스캔 입력 추가
+- **변경 내용**: `FolderScanInputReader` 신규 추가 (Win32 FindFirstFile/FindNextFile, 파일명/확장자/크기/날짜/전체경로 컬럼), `WorkbookService.LoadFromFolder`, `SAGEDashDoc.OnFileOpenFolder` (SHBrowseForFolder 다이얼로그), RC 파일 메뉴 항목 및 문자열 추가, vcxproj/filters 등록
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/27
+- **결과**: pending
+
 ## [2026-03-18] feature/xml-input
 - **목적**: Phase 5 Step 3 — XML 파일 입력 리더 추가
 - **변경 내용**: `XmlInputReader` 신규 추가(속성/자식엘리먼트/혼합 방식, 주석·CDATA·DOCTYPE 건너뛰기, 엔티티 디코딩), `WorkbookService` .xml 분기, 파일 열기 필터 *.xml 추가, vcxproj 등록

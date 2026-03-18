@@ -44,6 +44,7 @@ protected:
 	afx_msg void OnFileSaveProject();
 	afx_msg void OnUpdateFileSaveProject(CCmdUI* pCmdUI);
 	afx_msg void OnFileOpenProject();
+	afx_msg void OnFileOpenFolder();
 	afx_msg void OnPipelineRun();
 	afx_msg void OnUpdatePipelineRun(CCmdUI* pCmdUI);
 	DECLARE_MESSAGE_MAP()
