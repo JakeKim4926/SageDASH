@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-20] feature/batch-dialog
+- **목적**: Phase 6-A — 배치 실행 다이얼로그 구현 (BatchRunner UI 연결)
+- **변경 내용**: BatchDialog(파일 목록/진행률/결과 로그/요약), SAGEDashDoc OnAutomationBatch, Resource.h/rc 배치 리소스, Automation 메뉴 항목 추가
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/38
+- **결과**: merged into develop
+
 ## [2026-03-20] feature/batch-runner
 - **목적**: Phase 6-A — 배치 실행 엔진 구현 (작업 큐 + 스레드 + 진행률 + 취소 + 집계)
 - **변경 내용**: BatchJob/BatchResult/BatchSummary 도메인 모델, BatchRunner(AfxBeginThread 기반 워커 스레드), WM_BATCH_PROGRESS/JOB_DONE/COMPLETE 메시지 추가
