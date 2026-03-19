@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-19] feature/email-action
+- **목적**: Phase 5 Step 7 (5-B) — 이메일 발송 액션 추가
+- **변경 내용**: `IActionHandler` 인터페이스 신규 정의, `EmailActionHandler` 구현 (Simple MAPI, MAPI32.DLL 동적 로드, MAPISendMailW/MAPISendMail, 임시 CSV 첨부 후 메일 작성창 오픈), 메뉴 항목·로그 문자열 추가
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/30
+- **결과**: merged into develop
+
 ## [2026-03-19] feature/pdf-output
 - **목적**: Phase 5 Step 6 (5-B) — PDF 출력 추가
 - **변경 내용**: `PdfOutputWriter` 신규 추가 (PDF 1.4 raw 직접 생성, 외부 라이브러리 없음, MalgunGothic/Identity-H, UTF-16BE 헥스, A4, 헤더 반복 페이지 분할), `ExportService` `.pdf` 분기, `IDS_EXPORT_FILE_FILTER`에 PDF 항목 추가
