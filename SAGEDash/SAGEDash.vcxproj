@@ -254,6 +254,7 @@
     <ClInclude Include="..\src\domain\IExecutionStep.h" />
     <ClInclude Include="..\src\domain\ExecutionContext.h" />
     <ClInclude Include="..\src\domain\AutomationProject.h" />
+    <ClInclude Include="..\src\domain\ActionDefinition.h" />
     <ClInclude Include="..\src\infrastructure\persistence\ProjectSerializer.h" />
     <ClInclude Include="..\src\application\ProjectService.h" />
     <ClInclude Include="..\src\application\PipelineRunner.h" />

@@ -242,6 +242,9 @@
     <ClInclude Include="..\src\domain\AutomationProject.h">
       <Filter>헤더 파일\domain</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\domain\ActionDefinition.h">
+      <Filter>헤더 파일\domain</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\infrastructure\persistence\ProjectSerializer.h">
       <Filter>헤더 파일\infrastructure\persistence</Filter>
     </ClInclude>

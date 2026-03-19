@@ -8,7 +8,7 @@
 #define new DEBUG_NEW
 #endif
 
-static const int PROJECT_VERSION = 1;
+static const int PROJECT_VERSION = 2;
 
 // \\n → \n, \\\\ → \\ 로 이스케이프하여 단일 줄 저장
 CString ProjectSerializer::EscapeValue(const CString& str)
@@ -93,6 +93,31 @@ void ProjectSerializer::Save(const AutomationProject& project, const CString& st
         file.WriteString(line);
         file.WriteString(prefix + _T("pattern=") + EscapeValue(rule.GetPattern()) + _T("\r\n"));
     }
+    file.WriteString(_T("\r\n"));
+
+    // [actions]
+    file.WriteString(_T("[actions]\r\n"));
+    line.Format(_T("count=%d\r\n"), (int)project.m_arrActions.size());
+    file.WriteString(line);
+    for (int i = 0; i < (int)project.m_arrActions.size(); i++) {
+        const ActionDefinition& action = project.m_arrActions[i];
+        CString prefix;
+        prefix.Format(_T("%d."), i);
+        line.Format(_T("%d.type=%d\r\n"), i, (int)action.GetType());
+        file.WriteString(line);
+        if (action.GetType() == ACTION_API) {
+            file.WriteString(prefix + _T("url=") + EscapeValue(action.GetUrl()) + _T("\r\n"));
+            file.WriteString(prefix + _T("method=") + EscapeValue(action.GetMethod()) + _T("\r\n"));
+        } else if (action.GetType() == ACTION_FTP) {
+            file.WriteString(prefix + _T("host=") + EscapeValue(action.GetHost()) + _T("\r\n"));
+            line.Format(_T("%d.port=%d\r\n"), i, action.GetPort());
+            file.WriteString(line);
+            file.WriteString(prefix + _T("user=") + EscapeValue(action.GetUser()) + _T("\r\n"));
+            file.WriteString(prefix + _T("pass=") + EscapeValue(action.GetPass()) + _T("\r\n"));
+            file.WriteString(prefix + _T("remotedir=") + EscapeValue(action.GetRemoteDir()) + _T("\r\n"));
+            file.WriteString(prefix + _T("filename=") + EscapeValue(action.GetFilename()) + _T("\r\n"));
+        }
+    }
 
     file.Close();
 }
@@ -112,9 +137,11 @@ void ProjectSerializer::Load(const CString& strFilePath, AutomationProject& outP
     CString strSection;
     int nMappingCount    = 0;
     int nValidationCount = 0;
+    int nActionCount     = 0;
 
-    std::vector<MappingRule>    arrMapping;
-    std::vector<ValidationRule> arrValidation;
+    std::vector<MappingRule>      arrMapping;
+    std::vector<ValidationRule>   arrValidation;
+    std::vector<ActionDefinition> arrActions;
 
     while (file.ReadString(strLine)) {
         strLine.TrimRight(_T("\r\n"));
@@ -178,6 +205,37 @@ void ProjectSerializer::Load(const CString& strFilePath, AutomationProject& outP
                     }
                 }
             }
+        } else if (strSection == _T("actions")) {
+            if (key == _T("count")) {
+                nActionCount = _ttoi(value);
+                arrActions.resize(nActionCount);
+            } else {
+                int nDot = key.Find(_T('.'));
+                if (nDot > 0) {
+                    int nIdx    = _ttoi(key.Left(nDot));
+                    CString sub = key.Mid(nDot + 1);
+                    if (nIdx >= 0 && nIdx < nActionCount) {
+                        if (sub == _T("type"))
+                            arrActions[nIdx].SetType((ActionType)_ttoi(value));
+                        else if (sub == _T("url"))
+                            arrActions[nIdx].SetUrl(value);
+                        else if (sub == _T("method"))
+                            arrActions[nIdx].SetMethod(value);
+                        else if (sub == _T("host"))
+                            arrActions[nIdx].SetHost(value);
+                        else if (sub == _T("port"))
+                            arrActions[nIdx].SetPort(_ttoi(value));
+                        else if (sub == _T("user"))
+                            arrActions[nIdx].SetUser(value);
+                        else if (sub == _T("pass"))
+                            arrActions[nIdx].SetPass(value);
+                        else if (sub == _T("remotedir"))
+                            arrActions[nIdx].SetRemoteDir(value);
+                        else if (sub == _T("filename"))
+                            arrActions[nIdx].SetFilename(value);
+                    }
+                }
+            }
         }
     }
 
@@ -185,4 +243,5 @@ void ProjectSerializer::Load(const CString& strFilePath, AutomationProject& outP
 
     outProject.m_arrMappingRules    = arrMapping;
     outProject.m_arrValidationRules = arrValidation;
+    outProject.m_arrActions         = arrActions;
 }

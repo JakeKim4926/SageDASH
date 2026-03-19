@@ -60,3 +60,13 @@ enum ValidationSeverity
     VALIDATION_SEVERITY_ERROR   = 0,
     VALIDATION_SEVERITY_WARNING = 1,
 };
+
+// ============================================================
+// 후속 액션 타입
+// ============================================================
+enum ActionType
+{
+    ACTION_EMAIL = 0,  // Simple MAPI 이메일 발송
+    ACTION_API   = 1,  // HTTP/HTTPS API 전송
+    ACTION_FTP   = 2,  // FTP 파일 업로드
+};
