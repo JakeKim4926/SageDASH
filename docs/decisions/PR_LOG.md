@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-19] feature/pdf-output
+- **목적**: Phase 5 Step 6 (5-B) — PDF 출력 추가
+- **변경 내용**: `PdfOutputWriter` 신규 추가 (PDF 1.4 raw 직접 생성, 외부 라이브러리 없음, MalgunGothic/Identity-H, UTF-16BE 헥스, A4, 헤더 반복 페이지 분할), `ExportService` `.pdf` 분기, `IDS_EXPORT_FILE_FILTER`에 PDF 항목 추가
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/29
+- **결과**: merged into develop
+
 ## [2026-03-19] feature/db-input
 - **목적**: Phase 5 Step 5 — DB 조회 입력 초안 추가
 - **변경 내용**: `DbInputReader` 신규 추가 (ODBC 기반, `.dbq` 파일 형식: 1행=연결문자열 2행~=쿼리, SQLDriverConnect → SQLExecDirect → SQLFetch), `WorkbookService` `.dbq` 분기, `odbc32.lib` 링크
