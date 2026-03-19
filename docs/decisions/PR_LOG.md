@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-20] feature/project-action-serialization
+- **목적**: Phase 5 완료 — AutomationProject에 후속 액션 직렬화 통합 (템플릿 기반 작업 정의 범위 확장)
+- **변경 내용**: ActionType enum 추가, ActionDefinition 도메인 모델 신규, AutomationProject m_arrActions 필드 추가, ProjectSerializer [actions] 섹션 Save/Load, PROJECT_VERSION 1→2
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/36
+- **결과**: pending
+
 ## [2026-03-19] feature/ftp-upload
 - **목적**: Phase 5 Step 9 (5-B) — FTP 업로드 시스템 업로드 액션 초안
 - **변경 내용**: `FtpActionHandler` 구현 (WinInet FTP, InternetConnect/FtpPutFile, 임시 CSV 생성 후 업로드), `FtpUploadDialog` (Host/Port/User/Pass/RemoteDir/Filename), 메뉴·로그 문자열 추가
