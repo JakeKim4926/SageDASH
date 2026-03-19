@@ -153,6 +153,25 @@
 #define ID_FILE_EXPORT                  32773
 #define ID_FILE_SAVE_PROJECT            32774
 #define ID_FILE_OPEN_PROJECT            32775
+#define ID_PIPELINE_RUN                 32776
+#define ID_FILE_OPEN_FOLDER             32777
+#define ID_FILE_EMAIL_ACTION            32778
+#define ID_FILE_API_ACTION              32779
+#define ID_FILE_FTP_ACTION              32780
+
+// Dialog controls — API Send
+#define IDD_API_SEND                    310
+#define IDC_EDIT_API_URL                1001
+#define IDC_COMBO_METHOD                1002
+
+// Dialog controls — FTP Upload
+#define IDD_FTP_UPLOAD                  311
+#define IDC_EDIT_FTP_HOST               1010
+#define IDC_EDIT_FTP_PORT               1011
+#define IDC_EDIT_FTP_USER               1012
+#define IDC_EDIT_FTP_PASS               1013
+#define IDC_EDIT_FTP_REMOTE_DIR         1014
+#define IDC_EDIT_FTP_FILENAME           1015
 
 // Log (10501~10599)
 #define IDS_LOG_EXPORT_OK               10501
@@ -164,6 +183,22 @@
 // 파일 다이얼로그 필터 (10701~)
 #define IDS_EXPORT_FILE_FILTER          10701
 #define IDS_PROJ_FILE_FILTER            10702
+
+// 폴더 스캔 로그 (10801~)
+#define IDS_LOG_FOLDER_SCAN_OK          10801
+#define IDS_LOG_FOLDER_SCAN_FAIL        10802
+
+// 이메일 액션 로그 (10901~)
+#define IDS_LOG_EMAIL_OK                10901
+#define IDS_LOG_EMAIL_FAIL              10902
+
+// API 전송 액션 로그 (11001~)
+#define IDS_LOG_API_OK                  11001
+#define IDS_LOG_API_FAIL                11002
+
+// FTP 업로드 액션 로그 (11101~)
+#define IDS_LOG_FTP_OK                  11101
+#define IDS_LOG_FTP_FAIL                11102
 
 // Next default values for new objects
 // 

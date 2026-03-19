@@ -21,6 +21,12 @@
     <Filter Include="헤더 파일\application">
       <UniqueIdentifier>{AA000012-0000-0000-0000-000000000012}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\application\pipeline">
+      <UniqueIdentifier>{AA000012-0001-0000-0000-000000000012}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\application\pipeline">
+      <UniqueIdentifier>{BB000012-0001-0000-0000-000000000012}</UniqueIdentifier>
+    </Filter>
     <Filter Include="헤더 파일\common">
       <UniqueIdentifier>{AA000050-0000-0000-0000-000000000050}</UniqueIdentifier>
     </Filter>
@@ -38,6 +44,33 @@
     </Filter>
     <Filter Include="헤더 파일\infrastructure\excel">
       <UniqueIdentifier>{AA000055-0000-0000-0000-000000000055}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\infrastructure\json">
+      <UniqueIdentifier>{AA000058-0000-0000-0000-000000000058}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\infrastructure\xml">
+      <UniqueIdentifier>{AA000059-0000-0000-0000-000000000059}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\infrastructure\filesystem">
+      <UniqueIdentifier>{AA000060-0000-0000-0000-000000000060}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\infrastructure\db">
+      <UniqueIdentifier>{AA000061-0000-0000-0000-000000000061}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\infrastructure\pdf">
+      <UniqueIdentifier>{AA000062-0000-0000-0000-000000000062}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\infrastructure\mail">
+      <UniqueIdentifier>{AA000063-0000-0000-0000-000000000063}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\infrastructure\api">
+      <UniqueIdentifier>{AA000064-0000-0000-0000-000000000064}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\infrastructure\ftp">
+      <UniqueIdentifier>{AA000066-0000-0000-0000-000000000066}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\ui\dialog">
+      <UniqueIdentifier>{AA000065-0000-0000-0000-000000000065}</UniqueIdentifier>
     </Filter>
     <Filter Include="헤더 파일\infrastructure\persistence">
       <UniqueIdentifier>{AA000057-0000-0000-0000-000000000057}</UniqueIdentifier>
@@ -89,6 +122,33 @@
     </Filter>
     <Filter Include="소스 파일\infrastructure\excel">
       <UniqueIdentifier>{AA000056-0000-0000-0000-000000000056}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\infrastructure\json">
+      <UniqueIdentifier>{BB000058-0000-0000-0000-000000000058}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\infrastructure\xml">
+      <UniqueIdentifier>{BB000059-0000-0000-0000-000000000059}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\infrastructure\filesystem">
+      <UniqueIdentifier>{BB000060-0000-0000-0000-000000000060}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\infrastructure\db">
+      <UniqueIdentifier>{BB000061-0000-0000-0000-000000000061}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\infrastructure\pdf">
+      <UniqueIdentifier>{BB000062-0000-0000-0000-000000000062}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\infrastructure\mail">
+      <UniqueIdentifier>{BB000063-0000-0000-0000-000000000063}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\infrastructure\api">
+      <UniqueIdentifier>{BB000064-0000-0000-0000-000000000064}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\infrastructure\ftp">
+      <UniqueIdentifier>{BB000066-0000-0000-0000-000000000066}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ui\dialog">
+      <UniqueIdentifier>{BB000065-0000-0000-0000-000000000065}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\infrastructure\logging">
       <UniqueIdentifier>{AA000053-0000-0000-0000-000000000053}</UniqueIdentifier>
@@ -152,6 +212,27 @@
     <ClInclude Include="..\src\infrastructure\excel\ExcelOutputWriter.h">
       <Filter>헤더 파일\infrastructure\excel</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\infrastructure\pdf\PdfOutputWriter.h">
+      <Filter>헤더 파일\infrastructure\pdf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\application\IActionHandler.h">
+      <Filter>헤더 파일\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\infrastructure\mail\EmailActionHandler.h">
+      <Filter>헤더 파일\infrastructure\mail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\infrastructure\api\ApiActionHandler.h">
+      <Filter>헤더 파일\infrastructure\api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\infrastructure\ftp\FtpActionHandler.h">
+      <Filter>헤더 파일\infrastructure\ftp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\dialog\ApiSendDialog.h">
+      <Filter>헤더 파일\ui\dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\dialog\FtpUploadDialog.h">
+      <Filter>헤더 파일\ui\dialog</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\domain\IExecutionStep.h">
       <Filter>헤더 파일\domain</Filter>
     </ClInclude>
@@ -166,6 +247,21 @@
     </ClInclude>
     <ClInclude Include="..\src\application\ProjectService.h">
       <Filter>헤더 파일\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\application\PipelineRunner.h">
+      <Filter>헤더 파일\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\application\pipeline\InputStep.h">
+      <Filter>헤더 파일\application\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\application\pipeline\MappingStep.h">
+      <Filter>헤더 파일\application\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\application\pipeline\ValidationStep.h">
+      <Filter>헤더 파일\application\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\application\pipeline\OutputStep.h">
+      <Filter>헤더 파일\application\pipeline</Filter>
     </ClInclude>
     <ClInclude Include="..\src\application\IInputReader.h">
       <Filter>헤더 파일\application</Filter>
@@ -208,6 +304,18 @@
     </ClInclude>
     <ClInclude Include="..\src\infrastructure\excel\ExcelInputReader.h">
       <Filter>헤더 파일\infrastructure\excel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\infrastructure\json\JsonInputReader.h">
+      <Filter>헤더 파일\infrastructure\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\infrastructure\xml\XmlInputReader.h">
+      <Filter>헤더 파일\infrastructure\xml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\infrastructure\filesystem\FolderScanInputReader.h">
+      <Filter>헤더 파일\infrastructure\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\infrastructure\db\DbInputReader.h">
+      <Filter>헤더 파일\infrastructure\db</Filter>
     </ClInclude>
     <ClInclude Include="..\src\infrastructure\logging\SageLogger.h">
       <Filter>헤더 파일\infrastructure\logging</Filter>
@@ -277,11 +385,56 @@
     <ClCompile Include="..\src\application\ProjectService.cpp">
       <Filter>소스 파일\application</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\application\PipelineRunner.cpp">
+      <Filter>소스 파일\application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\application\pipeline\InputStep.cpp">
+      <Filter>소스 파일\application\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\application\pipeline\MappingStep.cpp">
+      <Filter>소스 파일\application\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\application\pipeline\ValidationStep.cpp">
+      <Filter>소스 파일\application\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\application\pipeline\OutputStep.cpp">
+      <Filter>소스 파일\application\pipeline</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\infrastructure\csv\CsvInputReader.cpp">
       <Filter>소스 파일\infrastructure\csv</Filter>
     </ClCompile>
     <ClCompile Include="..\src\infrastructure\excel\ExcelInputReader.cpp">
       <Filter>소스 파일\infrastructure\excel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\infrastructure\json\JsonInputReader.cpp">
+      <Filter>소스 파일\infrastructure\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\infrastructure\xml\XmlInputReader.cpp">
+      <Filter>소스 파일\infrastructure\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\infrastructure\filesystem\FolderScanInputReader.cpp">
+      <Filter>소스 파일\infrastructure\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\infrastructure\db\DbInputReader.cpp">
+      <Filter>소스 파일\infrastructure\db</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\infrastructure\pdf\PdfOutputWriter.cpp">
+      <Filter>소스 파일\infrastructure\pdf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\infrastructure\mail\EmailActionHandler.cpp">
+      <Filter>소스 파일\infrastructure\mail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\infrastructure\api\ApiActionHandler.cpp">
+      <Filter>소스 파일\infrastructure\api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\infrastructure\ftp\FtpActionHandler.cpp">
+      <Filter>소스 파일\infrastructure\ftp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ui\dialog\ApiSendDialog.cpp">
+      <Filter>소스 파일\ui\dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ui\dialog\FtpUploadDialog.cpp">
+      <Filter>소스 파일\ui\dialog</Filter>
     </ClCompile>
     <ClCompile Include="..\src\infrastructure\logging\SageLogger.cpp">
       <Filter>소스 파일\infrastructure\logging</Filter>

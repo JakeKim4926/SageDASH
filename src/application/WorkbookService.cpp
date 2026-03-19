@@ -4,6 +4,10 @@
 #include "WorkbookService.h"
 #include "CsvInputReader.h"
 #include "ExcelInputReader.h"
+#include "JsonInputReader.h"
+#include "XmlInputReader.h"
+#include "FolderScanInputReader.h"
+#include "DbInputReader.h"
 #include "SageException.h"
 
 #ifdef _DEBUG
@@ -31,7 +35,31 @@ void WorkbookService::LoadFromFile(const CString& strFilePath, TabularData& outD
         return;
     }
 
+    if (strExt == _T("json")) {
+        JsonInputReader reader;
+        reader.Read(strFilePath, outData);
+        return;
+    }
+
+    if (strExt == _T("xml")) {
+        XmlInputReader reader;
+        reader.Read(strFilePath, outData);
+        return;
+    }
+
+    if (strExt == _T("dbq")) {
+        DbInputReader reader;
+        reader.Read(strFilePath, outData);
+        return;
+    }
+
     CString strMsg;
     strMsg.Format(_T("지원하지 않는 파일 형식입니다: .%s"), (LPCTSTR)strExt);
     throw SageException(strMsg, strFilePath);
+}
+
+void WorkbookService::LoadFromFolder(const CString& strFolderPath, TabularData& outData)
+{
+    FolderScanInputReader reader;
+    reader.Read(strFolderPath, outData);
 }

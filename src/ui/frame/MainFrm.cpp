@@ -60,7 +60,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	mdiTabParams.m_style = CMFCTabCtrl::STYLE_3D_ONENOTE;
 	mdiTabParams.m_bActiveTabCloseButton = TRUE;
 	mdiTabParams.m_bTabIcons = FALSE;
-	mdiTabParams.m_bAutoColor = TRUE;
+	mdiTabParams.m_bAutoColor = FALSE;
 	mdiTabParams.m_bDocumentMenu = TRUE;
 	EnableMDITabbedGroups(TRUE, mdiTabParams);
 
@@ -358,5 +358,6 @@ LRESULT CMainFrame::OnSwitchCenterView(WPARAM wParam, LPARAM /*lParam*/)
 
 	sageMgr.Log(_T("[MAIN] SwitchViewMode 호출"));
 	pView->SwitchViewMode((CenterViewMode)wParam);
+	m_wndNavigator.SetActiveMode((CenterViewMode)wParam);
 	return 0;
 }

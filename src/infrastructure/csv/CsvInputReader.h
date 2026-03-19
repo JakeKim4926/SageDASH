@@ -9,5 +9,6 @@ public:
     void Read(const CString& strFilePath, TabularData& outData) override;
 
 private:
-    std::vector<CString> ParseLine(const CString& strLine);
+    TCHAR DetectDelimiter(const CString& strFirstLine);
+    std::vector<CString> ParseLine(const CString& strLine, TCHAR chDelim);
 };

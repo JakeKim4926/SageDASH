@@ -1,5 +1,77 @@
 # PR 작업 로그
 
+## [2026-03-19] feature/ftp-upload
+- **목적**: Phase 5 Step 9 (5-B) — FTP 업로드 시스템 업로드 액션 초안
+- **변경 내용**: `FtpActionHandler` 구현 (WinInet FTP, InternetConnect/FtpPutFile, 임시 CSV 생성 후 업로드), `FtpUploadDialog` (Host/Port/User/Pass/RemoteDir/Filename), 메뉴·로그 문자열 추가
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/32
+- **결과**: merged into develop
+
+## [2026-03-19] feature/api-action
+- **목적**: Phase 5 Step 8 (5-B) — HTTP/HTTPS API 전송 액션 추가
+- **변경 내용**: `ApiActionHandler` 구현 (WinHTTP, URL 파싱, JSON 직렬화, POST/PUT, HTTP 상태 검증), `ApiSendDialog` (URL 입력 + Method 선택), 메뉴 항목·로그 문자열 추가
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/31
+- **결과**: merged into develop
+
+## [2026-03-19] feature/email-action
+- **목적**: Phase 5 Step 7 (5-B) — 이메일 발송 액션 추가
+- **변경 내용**: `IActionHandler` 인터페이스 신규 정의, `EmailActionHandler` 구현 (Simple MAPI, MAPI32.DLL 동적 로드, MAPISendMailW/MAPISendMail, 임시 CSV 첨부 후 메일 작성창 오픈), 메뉴 항목·로그 문자열 추가
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/30
+- **결과**: merged into develop
+
+## [2026-03-19] feature/pdf-output
+- **목적**: Phase 5 Step 6 (5-B) — PDF 출력 추가
+- **변경 내용**: `PdfOutputWriter` 신규 추가 (PDF 1.4 raw 직접 생성, 외부 라이브러리 없음, MalgunGothic/Identity-H, UTF-16BE 헥스, A4, 헤더 반복 페이지 분할), `ExportService` `.pdf` 분기, `IDS_EXPORT_FILE_FILTER`에 PDF 항목 추가
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/29
+- **결과**: merged into develop
+
+## [2026-03-19] feature/db-input
+- **목적**: Phase 5 Step 5 — DB 조회 입력 초안 추가
+- **변경 내용**: `DbInputReader` 신규 추가 (ODBC 기반, `.dbq` 파일 형식: 1행=연결문자열 2행~=쿼리, SQLDriverConnect → SQLExecDirect → SQLFetch), `WorkbookService` `.dbq` 분기, `odbc32.lib` 링크
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/28
+- **결과**: merged into develop
+
+## [2026-03-19] feature/folder-scan-input
+- **목적**: Phase 5 Step 4 — 폴더 스캔 입력 추가
+- **변경 내용**: `FolderScanInputReader` 신규 추가 (Win32 FindFirstFile/FindNextFile, 파일명/확장자/크기/날짜/전체경로 컬럼), `WorkbookService.LoadFromFolder`, `SAGEDashDoc.OnFileOpenFolder` (SHBrowseForFolder 다이얼로그), RC 파일 메뉴 항목 및 문자열 추가, vcxproj/filters 등록
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/27
+- **결과**: pending
+
+## [2026-03-18] feature/xml-input
+- **목적**: Phase 5 Step 3 — XML 파일 입력 리더 추가
+- **변경 내용**: `XmlInputReader` 신규 추가(속성/자식엘리먼트/혼합 방식, 주석·CDATA·DOCTYPE 건너뛰기, 엔티티 디코딩), `WorkbookService` .xml 분기, 파일 열기 필터 *.xml 추가, vcxproj 등록
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/26
+- **결과**: merged into develop
+
+## [2026-03-18] feature/json-input
+- **목적**: Phase 5 Step 2 — JSON 파일 입력 리더 추가
+- **변경 내용**: `JsonInputReader` 신규 추가(객체 배열/배열의 배열 지원, UTF-8 BOM 처리), `WorkbookService` .json 분기, 파일 열기 필터 *.json 추가, vcxproj 등록
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/25
+- **결과**: merged into develop
+
+## [2026-03-18] feature/pipeline-runner
+- **목적**: Phase 5 Step 1 — 파이프라인 실행 엔진 구현
+- **변경 내용**: InputStep/MappingStep/ValidationStep/OutputStep 구현, PipelineRunner 추가, 자동화 메뉴(F5) 추가
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/24
+- **결과**: merged into develop
+
+## [2026-03-18] fix/navigator-file-item
+- **목적**: Navigator File 항목 클릭 무반응 버그 수정 + 현재 뷰 모드 시각적 표시
+- **변경 내용**: `m_hFile` 핸들 저장, `UpdateFileItem()`/`SetActiveMode()` 추가, `NAV_ITEM_CURRENT` 타입 신규 도입, 뷰 전환 시 Navigator 하이라이트 갱신
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/23
+- **결과**: merged into develop
+
+## [2026-03-17] fix/csv-delimiter-autodetect
+- **목적**: 탭 구분자 CSV 파일 열면 한 열로 뭉치는 문제 수정
+- **변경 내용**: `CsvInputReader`에 첫 줄 기준 구분자 자동 감지(탭/쉼표/세미콜론) 추가, `Define.h`에 CSV 구분자 상수 추가
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/22
+- **결과**: merged into develop
+
+## [2026-03-17] fix/suppress-startup-empty-doc
+- **목적**: 앱 시작 시 MFC 기본 동작으로 인해 빈 문서(SAGEDash1)가 자동 생성되는 문제 수정
+- **변경 내용**: `SAGEDash.cpp` — `ParseCommandLine` 후 `FileNew` 명령을 `FileNothing`으로 변경
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/21
+- **결과**: merged into develop
+
 ## [2026-03-17] fix/grid-duplicate-rows-on-load
 - **목적**: 파일 로드 시 빈 행 중복 표시 버그 수정
 - **변경 내용**: OnEnChangeSearch에 컬럼 없을 때 조기 반환 가드 추가

@@ -3,6 +3,7 @@
 #include "framework.h"
 #include "CsvInputReader.h"
 #include "SageException.h"
+#include "Define.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -21,6 +22,8 @@ void CsvInputReader::Read(const CString& strFilePath, TabularData& outData)
 
     CString strLine;
     BOOL isFirstLine = TRUE;
+    TCHAR chDelim = CSV_DELIM_COMMA;
+
     while (file.ReadString(strLine)) {
         if (isFirstLine) {
             if (strLine.GetLength() >= 3 &&
@@ -28,9 +31,11 @@ void CsvInputReader::Read(const CString& strFilePath, TabularData& outData)
                 strLine[1] == _T('\xBB') &&
                 strLine[2] == _T('\xBF'))
                 strLine = strLine.Mid(3);
+
+            chDelim = DetectDelimiter(strLine);
             isFirstLine = FALSE;
         }
-        sheet.m_arrRows.push_back(ParseLine(strLine));
+        sheet.m_arrRows.push_back(ParseLine(strLine, chDelim));
     }
 
     file.Close();
@@ -39,7 +44,28 @@ void CsvInputReader::Read(const CString& strFilePath, TabularData& outData)
         throw SageException(_T("파일이 비어 있습니다."), strFilePath);
 }
 
-std::vector<CString> CsvInputReader::ParseLine(const CString& strLine)
+TCHAR CsvInputReader::DetectDelimiter(const CString& strFirstLine)
+{
+    int nComma     = 0;
+    int nTab       = 0;
+    int nSemicolon = 0;
+    int nLen       = strFirstLine.GetLength();
+
+    for (int i = 0; i < nLen; i++) {
+        TCHAR ch = strFirstLine[i];
+        if (ch == CSV_DELIM_COMMA)     nComma++;
+        else if (ch == CSV_DELIM_TAB)  nTab++;
+        else if (ch == CSV_DELIM_SEMICOLON) nSemicolon++;
+    }
+
+    if (nTab >= nComma && nTab >= nSemicolon)
+        return CSV_DELIM_TAB;
+    if (nSemicolon >= nComma)
+        return CSV_DELIM_SEMICOLON;
+    return CSV_DELIM_COMMA;
+}
+
+std::vector<CString> CsvInputReader::ParseLine(const CString& strLine, TCHAR chDelim)
 {
     std::vector<CString> row;
     CString strCell;
@@ -63,7 +89,7 @@ std::vector<CString> CsvInputReader::ParseLine(const CString& strLine)
         } else {
             if (ch == _T('"')) {
                 isInQuote = TRUE;
-            } else if (ch == _T(',')) {
+            } else if (ch == chDelim) {
                 row.push_back(strCell);
                 strCell.Empty();
             } else {

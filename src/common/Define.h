@@ -50,6 +50,13 @@ constexpr int SEARCH_BAR_HEIGHT = 24;
 constexpr int SEARCH_BAR_MARGIN = 4;
 
 // ============================================================
+// CSV 파싱
+// ============================================================
+constexpr TCHAR CSV_DELIM_COMMA     = _T(',');
+constexpr TCHAR CSV_DELIM_TAB       = _T('\t');
+constexpr TCHAR CSV_DELIM_SEMICOLON = _T(';');
+
+// ============================================================
 // 그리드 미리보기
 // ============================================================
 constexpr int MAX_PREVIEW_ROWS          = 500;
@@ -138,6 +145,16 @@ constexpr int VAL_COL_PATTERN_W  = 120;  // 패턴 컬럼 너비
 constexpr int VAL_RES_COL_ROW_W  = 50;   // 결과 목록 행 번호 컬럼 너비
 constexpr int VAL_RES_COL_COL_W  = 110;  // 결과 목록 컬럼명 컬럼 너비
 constexpr int VAL_RES_COL_MSG_W  = 200;  // 결과 목록 메시지 컬럼 너비
+
+// ============================================================
+// 폴더 스캔
+// ============================================================
+constexpr int FOLDER_SCAN_MAX_FILES = 10000;   // 스캔 최대 파일 수
+
+// ============================================================
+// DB 조회 (.dbq)
+// ============================================================
+constexpr int DB_QUERY_MAX_ROWS = 10000;        // 최대 조회 행 수
 
 // ============================================================
 // PropertiesPane — 레이아웃

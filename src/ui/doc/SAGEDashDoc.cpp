@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "framework.h"
+#include <shlobj.h>
 #include "SAGEDash.h"
 #include "SAGEDashDoc.h"
 #include "MainFrm.h"
@@ -10,6 +11,12 @@
 #include "SAGEDashView.h"
 #include "ExportService.h"
 #include "ProjectService.h"
+#include "PipelineRunner.h"
+#include "EmailActionHandler.h"
+#include "ApiActionHandler.h"
+#include "ApiSendDialog.h"
+#include "FtpActionHandler.h"
+#include "FtpUploadDialog.h"
 #include "SageException.h"
 #include "SageMgr.h"
 #include "Resource.h"
@@ -26,6 +33,15 @@ BEGIN_MESSAGE_MAP(CSAGEDashDoc, CDocument)
     ON_COMMAND(ID_FILE_SAVE_PROJECT,          &CSAGEDashDoc::OnFileSaveProject)
     ON_UPDATE_COMMAND_UI(ID_FILE_SAVE_PROJECT,&CSAGEDashDoc::OnUpdateFileSaveProject)
     ON_COMMAND(ID_FILE_OPEN_PROJECT,          &CSAGEDashDoc::OnFileOpenProject)
+    ON_COMMAND(ID_FILE_OPEN_FOLDER,              &CSAGEDashDoc::OnFileOpenFolder)
+    ON_COMMAND(ID_FILE_EMAIL_ACTION,             &CSAGEDashDoc::OnFileEmailAction)
+    ON_UPDATE_COMMAND_UI(ID_FILE_EMAIL_ACTION,   &CSAGEDashDoc::OnUpdateFileEmailAction)
+    ON_COMMAND(ID_FILE_API_ACTION,               &CSAGEDashDoc::OnFileApiAction)
+    ON_UPDATE_COMMAND_UI(ID_FILE_API_ACTION,     &CSAGEDashDoc::OnUpdateFileApiAction)
+    ON_COMMAND(ID_FILE_FTP_ACTION,               &CSAGEDashDoc::OnFileFtpAction)
+    ON_UPDATE_COMMAND_UI(ID_FILE_FTP_ACTION,     &CSAGEDashDoc::OnUpdateFileFtpAction)
+    ON_COMMAND(ID_PIPELINE_RUN,                  &CSAGEDashDoc::OnPipelineRun)
+    ON_UPDATE_COMMAND_UI(ID_PIPELINE_RUN,     &CSAGEDashDoc::OnUpdatePipelineRun)
 END_MESSAGE_MAP()
 
 CSAGEDashDoc::CSAGEDashDoc() noexcept
@@ -76,7 +92,9 @@ BOOL CSAGEDashDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	if (pFrame != nullptr) {
 		pFrame->LogMessage(strLog);
 		pFrame->GetPropertiesPane().SetFileInfo(lpszPathName, m_data);
+		pFrame->GetNavigatorPane().UpdateFileItem(lpszPathName);
 		pFrame->GetNavigatorPane().ActivatePipelineItems(TRUE);
+		pFrame->GetNavigatorPane().SetActiveMode(VIEW_MODE_GRID);
 	}
 
 	SetModifiedFlag(FALSE);
@@ -91,6 +109,7 @@ void CSAGEDashDoc::DeleteContents()
 
 	CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
 	if (pFrame != nullptr) {
+		pFrame->GetNavigatorPane().UpdateFileItem(_T(""));
 		pFrame->GetNavigatorPane().ActivatePipelineItems(FALSE);
 		pFrame->GetPropertiesPane().ClearInfo();
 	}
@@ -211,6 +230,63 @@ void CSAGEDashDoc::OnFileOpenProject()
     if (pFrame != nullptr) pFrame->LogMessage(strLog);
 }
 
+void CSAGEDashDoc::OnFileOpenFolder()
+{
+    BROWSEINFO bi = {};
+    bi.hwndOwner = AfxGetMainWnd()->GetSafeHwnd();
+    bi.ulFlags   = BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE;
+    bi.lpszTitle = _T("스캔할 폴더를 선택하세요.");
+
+    LPITEMIDLIST pidl = SHBrowseForFolder(&bi);
+    if (pidl == nullptr)
+        return;
+
+    TCHAR szPath[MAX_PATH] = {};
+    if (!SHGetPathFromIDList(pidl, szPath)) {
+        CoTaskMemFree(pidl);
+        return;
+    }
+    CoTaskMemFree(pidl);
+
+    CString strFolderPath = szPath;
+
+    DeleteContents();
+
+    CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+    WorkbookService service;
+
+    try {
+        service.LoadFromFolder(strFolderPath, m_data);
+        m_isDataLoaded = TRUE;
+    } catch (const SageException& e) {
+        CString strLog;
+        strLog.Format(_T("[실패] %s"), (LPCTSTR)e.Format());
+        sageMgr.Log(strLog);
+        if (pFrame != nullptr)
+            pFrame->LogMessage(strLog);
+        AfxMessageBox(e.GetMessage(), MB_OK | MB_ICONWARNING);
+        return;
+    }
+
+    const DataSheet& sheet = m_data.GetSheet(0);
+    int nFileCount = sheet.GetRowCount() - 1;  // 첫 행은 헤더
+
+    CString strLog;
+    strLog.Format(_T("[성공] 폴더 스캔 완료: %s (%d개 파일)"),
+        (LPCTSTR)strFolderPath, nFileCount);
+    sageMgr.Log(strLog);
+    if (pFrame != nullptr) {
+        pFrame->LogMessage(strLog);
+        pFrame->GetPropertiesPane().SetFileInfo(strFolderPath, m_data);
+        pFrame->GetNavigatorPane().UpdateFileItem(strFolderPath);
+        pFrame->GetNavigatorPane().ActivatePipelineItems(TRUE);
+        pFrame->GetNavigatorPane().SetActiveMode(VIEW_MODE_GRID);
+    }
+
+    SetModifiedFlag(FALSE);
+    UpdateAllViews(nullptr);
+}
+
 void CSAGEDashDoc::OnFileExport()
 {
     if (!m_isDataLoaded)
@@ -252,6 +328,183 @@ void CSAGEDashDoc::OnFileExport()
 }
 
 void CSAGEDashDoc::OnUpdateFileExport(CCmdUI* pCmdUI)
+{
+    pCmdUI->Enable(m_isDataLoaded);
+}
+
+void CSAGEDashDoc::OnPipelineRun()
+{
+    if (!m_isDataLoaded)
+        return;
+
+    CSAGEDashView* pView = nullptr;
+    if (!GetActiveView(pView) || pView == nullptr)
+        return;
+
+    CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+
+    // 컨텍스트 구성
+    ExecutionContext ctx;
+    ctx.m_pSourceSheet       = &m_data.GetSheet(0);
+    ctx.m_arrMappingRules    = pView->GetMappingPanel().GetMappingRules();
+    ctx.m_arrValidationRules = pView->GetValidationPanel().GetValidationRules();
+    ctx.m_strOutputPath      = m_project.m_strOutputPath;
+
+    // 파이프라인 실행
+    PipelineRunner runner;
+    CString strErr = runner.Run(ctx);
+
+    // 로그 출력
+    if (pFrame != nullptr) {
+        pFrame->LogMessage(_T("──── 파이프라인 실행 ────"));
+        // 줄 단위로 분리해서 출력
+        CString strLog = ctx.m_strLog;
+        int nPos = 0;
+        CString strLine;
+        while (AfxExtractSubString(strLine, strLog, nPos++, _T('\n'))) {
+            strLine.TrimRight(_T('\r'));
+            if (!strLine.IsEmpty())
+                pFrame->LogMessage(strLine);
+        }
+    }
+
+    if (strErr.IsEmpty()) {
+        sageMgr.Log(_T("[파이프라인] 완료"));
+        if (pFrame != nullptr)
+            pFrame->LogMessage(_T("[파이프라인] 완료"));
+    } else {
+        sageMgr.Log(_T("[파이프라인] ") + strErr);
+        if (pFrame != nullptr)
+            pFrame->LogMessage(_T("[파이프라인] ") + strErr);
+        AfxMessageBox(strErr, MB_OK | MB_ICONWARNING);
+    }
+}
+
+void CSAGEDashDoc::OnUpdatePipelineRun(CCmdUI* pCmdUI)
+{
+    pCmdUI->Enable(m_isDataLoaded);
+}
+
+void CSAGEDashDoc::OnFileEmailAction()
+{
+    if (!m_isDataLoaded)
+        return;
+
+    CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+
+    try {
+        EmailActionHandler handler;
+        handler.Execute(m_data);
+
+        CString strLog, strFmt;
+        strFmt.LoadString(IDS_LOG_EMAIL_OK);
+        strLog.Format(strFmt, (LPCTSTR)m_data.m_strFilePath);
+        sageMgr.Log(strLog);
+        if (pFrame != nullptr)
+            pFrame->LogMessage(strLog);
+    } catch (const SageException& e) {
+        CString strLog, strFmt;
+        strFmt.LoadString(IDS_LOG_EMAIL_FAIL);
+        strLog.Format(strFmt, (LPCTSTR)e.GetMessage());
+        sageMgr.Log(strLog);
+        if (pFrame != nullptr)
+            pFrame->LogMessage(strLog);
+        AfxMessageBox(e.GetMessage(), MB_OK | MB_ICONWARNING);
+    } catch (...) {
+        CString strMsg = _T("알 수 없는 오류가 발생했습니다.");
+        if (pFrame != nullptr)
+            pFrame->LogMessage(strMsg);
+        AfxMessageBox(strMsg, MB_OK | MB_ICONWARNING);
+    }
+}
+
+void CSAGEDashDoc::OnUpdateFileEmailAction(CCmdUI* pCmdUI)
+{
+    pCmdUI->Enable(m_isDataLoaded);
+}
+
+void CSAGEDashDoc::OnFileApiAction()
+{
+    if (!m_isDataLoaded)
+        return;
+
+    ApiSendDialog dlg(AfxGetMainWnd());
+    if (dlg.DoModal() != IDOK)
+        return;
+
+    CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+
+    try {
+        ApiActionHandler handler(dlg.m_strUrl, dlg.m_strMethod);
+        handler.Execute(m_data);
+
+        CString strLog, strFmt;
+        strFmt.LoadString(IDS_LOG_API_OK);
+        strLog.Format(strFmt, (LPCTSTR)dlg.m_strUrl);
+        sageMgr.Log(strLog);
+        if (pFrame != nullptr)
+            pFrame->LogMessage(strLog);
+    } catch (const SageException& e) {
+        CString strLog, strFmt;
+        strFmt.LoadString(IDS_LOG_API_FAIL);
+        strLog.Format(strFmt, (LPCTSTR)e.GetMessage());
+        sageMgr.Log(strLog);
+        if (pFrame != nullptr)
+            pFrame->LogMessage(strLog);
+        AfxMessageBox(e.GetMessage(), MB_OK | MB_ICONWARNING);
+    } catch (...) {
+        CString strMsg = _T("알 수 없는 오류가 발생했습니다.");
+        if (pFrame != nullptr)
+            pFrame->LogMessage(strMsg);
+        AfxMessageBox(strMsg, MB_OK | MB_ICONWARNING);
+    }
+}
+
+void CSAGEDashDoc::OnUpdateFileApiAction(CCmdUI* pCmdUI)
+{
+    pCmdUI->Enable(m_isDataLoaded);
+}
+
+void CSAGEDashDoc::OnFileFtpAction()
+{
+    if (!m_isDataLoaded)
+        return;
+
+    FtpUploadDialog dlg(AfxGetMainWnd());
+    if (dlg.DoModal() != IDOK)
+        return;
+
+    CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+
+    try {
+        FtpActionHandler handler(dlg.m_strHost, dlg.m_nPort,
+                                  dlg.m_strUser, dlg.m_strPass,
+                                  dlg.m_strRemoteDir, dlg.m_strFilename);
+        handler.Execute(m_data);
+
+        CString strLog, strFmt;
+        strFmt.LoadString(IDS_LOG_FTP_OK);
+        strLog.Format(strFmt, (LPCTSTR)dlg.m_strHost);
+        sageMgr.Log(strLog);
+        if (pFrame != nullptr)
+            pFrame->LogMessage(strLog);
+    } catch (const SageException& e) {
+        CString strLog, strFmt;
+        strFmt.LoadString(IDS_LOG_FTP_FAIL);
+        strLog.Format(strFmt, (LPCTSTR)e.GetMessage());
+        sageMgr.Log(strLog);
+        if (pFrame != nullptr)
+            pFrame->LogMessage(strLog);
+        AfxMessageBox(e.GetMessage(), MB_OK | MB_ICONWARNING);
+    } catch (...) {
+        CString strMsg = _T("알 수 없는 오류가 발생했습니다.");
+        if (pFrame != nullptr)
+            pFrame->LogMessage(strMsg);
+        AfxMessageBox(strMsg, MB_OK | MB_ICONWARNING);
+    }
+}
+
+void CSAGEDashDoc::OnUpdateFileFtpAction(CCmdUI* pCmdUI)
 {
     pCmdUI->Enable(m_isDataLoaded);
 }

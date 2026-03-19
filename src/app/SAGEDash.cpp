@@ -73,6 +73,10 @@ BOOL CSAGEDashApp::InitInstance()
 	CCommandLineInfo cmdInfo;
 	ParseCommandLine(cmdInfo);
 
+	// 시작 시 빈 문서 자동 생성 억제 — 파일을 직접 열어서 작업하는 구조이므로 불필요
+	if (cmdInfo.m_nShellCommand == CCommandLineInfo::FileNew)
+		cmdInfo.m_nShellCommand = CCommandLineInfo::FileNothing;
+
 	if (!ProcessShellCommand(cmdInfo))
 		return FALSE;
 
@@ -127,7 +131,7 @@ void CSAGEDashApp::OnFileOpen()
 		_T("csv"),
 		nullptr,
 		OFN_HIDEREADONLY | OFN_FILEMUSTEXIST,
-		_T("지원 파일 (*.csv;*.xlsx;*.xls)|*.csv;*.xlsx;*.xls|CSV 파일 (*.csv)|*.csv|Excel 파일 (*.xlsx;*.xls)|*.xlsx;*.xls|모든 파일 (*.*)|*.*||"),
+		_T("지원 파일 (*.csv;*.xlsx;*.xls;*.json;*.xml)|*.csv;*.xlsx;*.xls;*.json;*.xml|CSV 파일 (*.csv)|*.csv|Excel 파일 (*.xlsx;*.xls)|*.xlsx;*.xls|JSON 파일 (*.json)|*.json|XML 파일 (*.xml)|*.xml|모든 파일 (*.*)|*.*||"),
 		AfxGetMainWnd());
 
 	if (dlg.DoModal() != IDOK)
