@@ -5,6 +5,7 @@
 #include "FileOutputTarget.h"
 #include "CsvOutputWriter.h"
 #include "ExcelOutputWriter.h"
+#include "PdfOutputWriter.h"
 #include "SageException.h"
 
 #ifdef _DEBUG
@@ -24,6 +25,9 @@ CString ExportService::Export(const TabularData& data, const CString& strFilePat
     try {
         if (strExt == _T("xlsx") || strExt == _T("xls")) {
             ExcelOutputWriter writer;
+            writer.Write(data, target);
+        } else if (strExt == _T("pdf")) {
+            PdfOutputWriter writer;
             writer.Write(data, target);
         } else {
             CsvOutputWriter writer;
