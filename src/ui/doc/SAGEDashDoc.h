@@ -49,6 +49,8 @@ protected:
 	afx_msg void OnUpdateFileEmailAction(CCmdUI* pCmdUI);
 	afx_msg void OnFileApiAction();
 	afx_msg void OnUpdateFileApiAction(CCmdUI* pCmdUI);
+	afx_msg void OnFileFtpAction();
+	afx_msg void OnUpdateFileFtpAction(CCmdUI* pCmdUI);
 	afx_msg void OnPipelineRun();
 	afx_msg void OnUpdatePipelineRun(CCmdUI* pCmdUI);
 	DECLARE_MESSAGE_MAP()

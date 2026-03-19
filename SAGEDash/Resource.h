@@ -157,11 +157,21 @@
 #define ID_FILE_OPEN_FOLDER             32777
 #define ID_FILE_EMAIL_ACTION            32778
 #define ID_FILE_API_ACTION              32779
+#define ID_FILE_FTP_ACTION              32780
 
-// Dialog controls
+// Dialog controls — API Send
 #define IDD_API_SEND                    310
 #define IDC_EDIT_API_URL                1001
 #define IDC_COMBO_METHOD                1002
+
+// Dialog controls — FTP Upload
+#define IDD_FTP_UPLOAD                  311
+#define IDC_EDIT_FTP_HOST               1010
+#define IDC_EDIT_FTP_PORT               1011
+#define IDC_EDIT_FTP_USER               1012
+#define IDC_EDIT_FTP_PASS               1013
+#define IDC_EDIT_FTP_REMOTE_DIR         1014
+#define IDC_EDIT_FTP_FILENAME           1015
 
 // Log (10501~10599)
 #define IDS_LOG_EXPORT_OK               10501
@@ -185,6 +195,10 @@
 // API 전송 액션 로그 (11001~)
 #define IDS_LOG_API_OK                  11001
 #define IDS_LOG_API_FAIL                11002
+
+// FTP 업로드 액션 로그 (11101~)
+#define IDS_LOG_FTP_OK                  11101
+#define IDS_LOG_FTP_FAIL                11102
 
 // Next default values for new objects
 // 
