@@ -36,6 +36,9 @@
 // ============================================================
 #define WM_SWITCH_CENTER_VIEW  (WM_USER + 1)  // wParam = CenterViewMode
 #define WM_WEBBRIDGE_MESSAGE   (WM_USER + 2)  // lParam = new CString*(JSON), 수신측 delete
+#define WM_BATCH_PROGRESS      (WM_USER + 3)  // wParam = 완료 건수, lParam = 전체 건수
+#define WM_BATCH_JOB_DONE      (WM_USER + 4)  // wParam = 작업 인덱스, lParam = new BatchResult*(수신측 delete)
+#define WM_BATCH_COMPLETE      (WM_USER + 5)  // lParam = new BatchSummary*(수신측 delete)
 
 // ============================================================
 // 공통 컨트롤
