@@ -58,6 +58,11 @@ BOOL MappingStep::Execute(ExecutionContext& ctx)
     // 데이터 행 변환
     int nDataRows = src.GetRowCount();
     for (int r = 1; r < nDataRows; r++) {
+        // 100행마다 취소 요청 확인
+        if (r % 100 == 0 && ctx.IsCancelled()) {
+            ctx.m_strLog += _T("[매핑] 취소됨\r\n");
+            return FALSE;
+        }
         const std::vector<CString>& srcRow = src.m_arrRows[r];
         std::vector<CString> outRow;
         for (int c = 0; c < (int)arrColIdx.size(); c++) {

@@ -6,6 +6,7 @@
 #include "PipelineRunner.h"
 #include "ExecutionContext.h"
 #include "SageException.h"
+#include "SageMgr.h"
 #include "Define.h"
 
 #ifdef _DEBUG
@@ -78,6 +79,11 @@ void BatchRunner::RunInternal()
 
         const BatchJob& job = m_arrJobs[i];
 
+        CString strJobStart;
+        strJobStart.Format(_T("[Batch] Job %d/%d 시작: %s"),
+                           i + 1, nTotal, (LPCTSTR)job.GetInputPath());
+        sageMgr.Log(strJobStart);
+
         BatchResult* pResult = new BatchResult;
         pResult->SetInputPath(job.GetInputPath());
 
@@ -93,6 +99,7 @@ void BatchRunner::RunInternal()
             }
 
             ExecutionContext ctx;
+            ctx.m_pCancelFlag       = &m_nCancelFlag;
             ctx.m_pSourceSheet      = &data.GetSheet(0);
             ctx.m_arrMappingRules   = job.GetProject().m_arrMappingRules;
             ctx.m_arrValidationRules = job.GetProject().m_arrValidationRules;
@@ -114,6 +121,17 @@ void BatchRunner::RunInternal()
             pResult->SetErrorMessage(_T("알 수 없는 오류가 발생했습니다."));
         }
 
+        CString strJobDone;
+        if (pResult->IsSuccess()) {
+            strJobDone.Format(_T("[Batch] Job %d/%d 완료: %s"),
+                              i + 1, nTotal, (LPCTSTR)job.GetInputPath());
+        } else {
+            strJobDone.Format(_T("[Batch] Job %d/%d 실패: %s — %s"),
+                              i + 1, nTotal, (LPCTSTR)job.GetInputPath(),
+                              (LPCTSTR)pResult->GetErrorMessage());
+        }
+        sageMgr.Log(strJobDone);
+
         pSummary->AddResult(*pResult);
 
         // WM_BATCH_JOB_DONE: 수신측이 pResult를 delete해야 한다
@@ -132,6 +150,16 @@ void BatchRunner::RunInternal()
     }
 
     InterlockedExchange(&m_nRunningFlag, 0);
+
+    CString strSummary;
+    if (pSummary->IsCancelled()) {
+        strSummary.Format(_T("[Batch] 취소됨 — 완료 %d건, 실패 %d건"),
+                          pSummary->GetSuccess(), pSummary->GetFailed());
+    } else {
+        strSummary.Format(_T("[Batch] 전체 완료 — 총 %d건, 성공 %d건, 실패 %d건"),
+                          pSummary->GetTotal(), pSummary->GetSuccess(), pSummary->GetFailed());
+    }
+    sageMgr.Log(strSummary);
 
     // WM_BATCH_COMPLETE: 수신측이 pSummary를 delete해야 한다
     if (::IsWindow(m_hNotify)) {

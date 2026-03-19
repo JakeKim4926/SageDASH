@@ -2,6 +2,7 @@
 #include "pch.h"
 #include "framework.h"
 #include "BatchDialog.h"
+#include "MainFrm.h"
 #include "Resource.h"
 #include "Define.h"
 
@@ -155,6 +156,10 @@ LRESULT BatchDialog::OnBatchJobDone(WPARAM wParam, LPARAM lParam)
     }
     AppendLog(strMsg);
 
+    CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+    if (pFrame)
+        pFrame->LogMessage(strMsg);
+
     delete pResult;
     return 0;
 }
@@ -195,6 +200,10 @@ LRESULT BatchDialog::OnBatchComplete(WPARAM wParam, LPARAM lParam)
         strSummary += _T("  [") + strCancelLabel + _T("]");
     }
     SetDlgItemText(IDC_STATIC_BATCH_SUMMARY, strSummary);
+
+    CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+    if (pFrame)
+        pFrame->LogMessage(strSummary);
 
     delete pSummary;
     return 0;
