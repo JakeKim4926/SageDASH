@@ -15,6 +15,8 @@
 #include "EmailActionHandler.h"
 #include "ApiActionHandler.h"
 #include "ApiSendDialog.h"
+#include "FtpActionHandler.h"
+#include "FtpUploadDialog.h"
 #include "SageException.h"
 #include "SageMgr.h"
 #include "Resource.h"
@@ -36,6 +38,8 @@ BEGIN_MESSAGE_MAP(CSAGEDashDoc, CDocument)
     ON_UPDATE_COMMAND_UI(ID_FILE_EMAIL_ACTION,   &CSAGEDashDoc::OnUpdateFileEmailAction)
     ON_COMMAND(ID_FILE_API_ACTION,               &CSAGEDashDoc::OnFileApiAction)
     ON_UPDATE_COMMAND_UI(ID_FILE_API_ACTION,     &CSAGEDashDoc::OnUpdateFileApiAction)
+    ON_COMMAND(ID_FILE_FTP_ACTION,               &CSAGEDashDoc::OnFileFtpAction)
+    ON_UPDATE_COMMAND_UI(ID_FILE_FTP_ACTION,     &CSAGEDashDoc::OnUpdateFileFtpAction)
     ON_COMMAND(ID_PIPELINE_RUN,                  &CSAGEDashDoc::OnPipelineRun)
     ON_UPDATE_COMMAND_UI(ID_PIPELINE_RUN,     &CSAGEDashDoc::OnUpdatePipelineRun)
 END_MESSAGE_MAP()
@@ -457,6 +461,50 @@ void CSAGEDashDoc::OnFileApiAction()
 }
 
 void CSAGEDashDoc::OnUpdateFileApiAction(CCmdUI* pCmdUI)
+{
+    pCmdUI->Enable(m_isDataLoaded);
+}
+
+void CSAGEDashDoc::OnFileFtpAction()
+{
+    if (!m_isDataLoaded)
+        return;
+
+    FtpUploadDialog dlg(AfxGetMainWnd());
+    if (dlg.DoModal() != IDOK)
+        return;
+
+    CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+
+    try {
+        FtpActionHandler handler(dlg.m_strHost, dlg.m_nPort,
+                                  dlg.m_strUser, dlg.m_strPass,
+                                  dlg.m_strRemoteDir, dlg.m_strFilename);
+        handler.Execute(m_data);
+
+        CString strLog, strFmt;
+        strFmt.LoadString(IDS_LOG_FTP_OK);
+        strLog.Format(strFmt, (LPCTSTR)dlg.m_strHost);
+        sageMgr.Log(strLog);
+        if (pFrame != nullptr)
+            pFrame->LogMessage(strLog);
+    } catch (const SageException& e) {
+        CString strLog, strFmt;
+        strFmt.LoadString(IDS_LOG_FTP_FAIL);
+        strLog.Format(strFmt, (LPCTSTR)e.GetMessage());
+        sageMgr.Log(strLog);
+        if (pFrame != nullptr)
+            pFrame->LogMessage(strLog);
+        AfxMessageBox(e.GetMessage(), MB_OK | MB_ICONWARNING);
+    } catch (...) {
+        CString strMsg = _T("알 수 없는 오류가 발생했습니다.");
+        if (pFrame != nullptr)
+            pFrame->LogMessage(strMsg);
+        AfxMessageBox(strMsg, MB_OK | MB_ICONWARNING);
+    }
+}
+
+void CSAGEDashDoc::OnUpdateFileFtpAction(CCmdUI* pCmdUI)
 {
     pCmdUI->Enable(m_isDataLoaded);
 }

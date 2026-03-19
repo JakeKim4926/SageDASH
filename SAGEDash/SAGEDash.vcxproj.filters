@@ -66,6 +66,9 @@
     <Filter Include="헤더 파일\infrastructure\api">
       <UniqueIdentifier>{AA000064-0000-0000-0000-000000000064}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\infrastructure\ftp">
+      <UniqueIdentifier>{AA000066-0000-0000-0000-000000000066}</UniqueIdentifier>
+    </Filter>
     <Filter Include="헤더 파일\ui\dialog">
       <UniqueIdentifier>{AA000065-0000-0000-0000-000000000065}</UniqueIdentifier>
     </Filter>
@@ -140,6 +143,9 @@
     </Filter>
     <Filter Include="소스 파일\infrastructure\api">
       <UniqueIdentifier>{BB000064-0000-0000-0000-000000000064}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\infrastructure\ftp">
+      <UniqueIdentifier>{BB000066-0000-0000-0000-000000000066}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\ui\dialog">
       <UniqueIdentifier>{BB000065-0000-0000-0000-000000000065}</UniqueIdentifier>
@@ -218,7 +224,13 @@
     <ClInclude Include="..\src\infrastructure\api\ApiActionHandler.h">
       <Filter>헤더 파일\infrastructure\api</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\infrastructure\ftp\FtpActionHandler.h">
+      <Filter>헤더 파일\infrastructure\ftp</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\ui\dialog\ApiSendDialog.h">
+      <Filter>헤더 파일\ui\dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\dialog\FtpUploadDialog.h">
       <Filter>헤더 파일\ui\dialog</Filter>
     </ClInclude>
     <ClInclude Include="..\src\domain\IExecutionStep.h">
@@ -415,7 +427,13 @@
     <ClCompile Include="..\src\infrastructure\api\ApiActionHandler.cpp">
       <Filter>소스 파일\infrastructure\api</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\infrastructure\ftp\FtpActionHandler.cpp">
+      <Filter>소스 파일\infrastructure\ftp</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\ui\dialog\ApiSendDialog.cpp">
+      <Filter>소스 파일\ui\dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ui\dialog\FtpUploadDialog.cpp">
       <Filter>소스 파일\ui\dialog</Filter>
     </ClCompile>
     <ClCompile Include="..\src\infrastructure\logging\SageLogger.cpp">
