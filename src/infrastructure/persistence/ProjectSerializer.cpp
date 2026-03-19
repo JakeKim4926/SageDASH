@@ -8,7 +8,7 @@
 #define new DEBUG_NEW
 #endif
 
-static const int PROJECT_VERSION = 1;
+static const int PROJECT_VERSION = 2;  // v2: [actions] 섹션 추가
 
 // \\n → \n, \\\\ → \\ 로 이스케이프하여 단일 줄 저장
 CString ProjectSerializer::EscapeValue(const CString& str)
@@ -93,6 +93,25 @@ void ProjectSerializer::Save(const AutomationProject& project, const CString& st
         file.WriteString(line);
         file.WriteString(prefix + _T("pattern=") + EscapeValue(rule.GetPattern()) + _T("\r\n"));
     }
+    file.WriteString(_T("\r\n"));
+
+    // [actions]
+    file.WriteString(_T("[actions]\r\n"));
+    line.Format(_T("count=%d\r\n"), (int)project.m_arrActionDefs.size());
+    file.WriteString(line);
+    for (int i = 0; i < (int)project.m_arrActionDefs.size(); i++) {
+        const ActionDefinition& def = project.m_arrActionDefs[i];
+        CString prefix;
+        prefix.Format(_T("%d."), i);
+        line.Format(_T("%d.type=%d\r\n"), i, (int)def.m_type);
+        file.WriteString(line);
+        file.WriteString(prefix + _T("param1=") + EscapeValue(def.m_strParam1) + _T("\r\n"));
+        file.WriteString(prefix + _T("param2=") + EscapeValue(def.m_strParam2) + _T("\r\n"));
+        file.WriteString(prefix + _T("param3=") + EscapeValue(def.m_strParam3) + _T("\r\n"));
+        file.WriteString(prefix + _T("param4=") + EscapeValue(def.m_strParam4) + _T("\r\n"));
+        file.WriteString(prefix + _T("param5=") + EscapeValue(def.m_strParam5) + _T("\r\n"));
+        file.WriteString(prefix + _T("param6=") + EscapeValue(def.m_strParam6) + _T("\r\n"));
+    }
 
     file.Close();
 }
@@ -112,9 +131,11 @@ void ProjectSerializer::Load(const CString& strFilePath, AutomationProject& outP
     CString strSection;
     int nMappingCount    = 0;
     int nValidationCount = 0;
+    int nActionCount     = 0;
 
-    std::vector<MappingRule>    arrMapping;
-    std::vector<ValidationRule> arrValidation;
+    std::vector<MappingRule>      arrMapping;
+    std::vector<ValidationRule>   arrValidation;
+    std::vector<ActionDefinition> arrActions;
 
     while (file.ReadString(strLine)) {
         strLine.TrimRight(_T("\r\n"));
@@ -178,6 +199,26 @@ void ProjectSerializer::Load(const CString& strFilePath, AutomationProject& outP
                     }
                 }
             }
+        } else if (strSection == _T("actions")) {
+            if (key == _T("count")) {
+                nActionCount = _ttoi(value);
+                arrActions.resize(nActionCount);
+            } else {
+                int nDot = key.Find(_T('.'));
+                if (nDot > 0) {
+                    int nIdx    = _ttoi(key.Left(nDot));
+                    CString sub = key.Mid(nDot + 1);
+                    if (nIdx >= 0 && nIdx < nActionCount) {
+                        if (sub == _T("type"))        arrActions[nIdx].m_type = (ActionType)_ttoi(value);
+                        else if (sub == _T("param1")) arrActions[nIdx].m_strParam1 = value;
+                        else if (sub == _T("param2")) arrActions[nIdx].m_strParam2 = value;
+                        else if (sub == _T("param3")) arrActions[nIdx].m_strParam3 = value;
+                        else if (sub == _T("param4")) arrActions[nIdx].m_strParam4 = value;
+                        else if (sub == _T("param5")) arrActions[nIdx].m_strParam5 = value;
+                        else if (sub == _T("param6")) arrActions[nIdx].m_strParam6 = value;
+                    }
+                }
+            }
         }
     }
 
@@ -185,4 +226,5 @@ void ProjectSerializer::Load(const CString& strFilePath, AutomationProject& outP
 
     outProject.m_arrMappingRules    = arrMapping;
     outProject.m_arrValidationRules = arrValidation;
+    outProject.m_arrActionDefs      = arrActions;
 }

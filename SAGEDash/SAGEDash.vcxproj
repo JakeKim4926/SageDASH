@@ -261,6 +261,8 @@
     <ClInclude Include="..\src\application\pipeline\MappingStep.h" />
     <ClInclude Include="..\src\application\pipeline\ValidationStep.h" />
     <ClInclude Include="..\src\application\pipeline\OutputStep.h" />
+    <ClInclude Include="..\src\application\pipeline\ActionStep.h" />
+    <ClInclude Include="..\src\domain\ActionDefinition.h" />
     <ClInclude Include="..\src\ui\webview\WebViewHost.h" />
     <ClInclude Include="..\src\ui\webview\WebBridgeMessage.h" />
   </ItemGroup>
@@ -307,6 +309,7 @@
     <ClCompile Include="..\src\application\pipeline\MappingStep.cpp" />
     <ClCompile Include="..\src\application\pipeline\ValidationStep.cpp" />
     <ClCompile Include="..\src\application\pipeline\OutputStep.cpp" />
+    <ClCompile Include="..\src\application\pipeline\ActionStep.cpp" />
     <ClCompile Include="..\src\ui\webview\WebViewHost.cpp" />
     <ClCompile Include="..\src\ui\webview\WebBridgeMessage.cpp" />
   </ItemGroup>
