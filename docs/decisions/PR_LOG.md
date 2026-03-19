@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-19] feature/ftp-upload
+- **목적**: Phase 5 Step 9 (5-B) — FTP 업로드 시스템 업로드 액션 초안
+- **변경 내용**: `FtpActionHandler` 구현 (WinInet FTP, InternetConnect/FtpPutFile, 임시 CSV 생성 후 업로드), `FtpUploadDialog` (Host/Port/User/Pass/RemoteDir/Filename), 메뉴·로그 문자열 추가
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/32
+- **결과**: merged into develop
+
 ## [2026-03-19] feature/api-action
 - **목적**: Phase 5 Step 8 (5-B) — HTTP/HTTPS API 전송 액션 추가
 - **변경 내용**: `ApiActionHandler` 구현 (WinHTTP, URL 파싱, JSON 직렬화, POST/PUT, HTTP 상태 검증), `ApiSendDialog` (URL 입력 + Method 선택), 메뉴 항목·로그 문자열 추가
