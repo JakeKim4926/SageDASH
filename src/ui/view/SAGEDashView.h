@@ -55,6 +55,7 @@ protected:
 	afx_msg int     OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void    OnSize(UINT nType, int cx, int cy);
 	afx_msg void    OnEnChangeSearch();
+	afx_msg void    OnGridCustomDraw(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg LRESULT OnWebBridgeMessage(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()
 };

@@ -23,6 +23,7 @@ BEGIN_MESSAGE_MAP(CSAGEDashView, CView)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_EN_CHANGE(IDC_SEARCH_EDIT, OnEnChangeSearch)
+	ON_NOTIFY(NM_CUSTOMDRAW, 2, OnGridCustomDraw)
 	ON_MESSAGE(WM_WEBBRIDGE_MESSAGE, OnWebBridgeMessage)
 END_MESSAGE_MAP()
 
@@ -56,7 +57,10 @@ int CSAGEDashView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		TRACE0("그리드 컨트롤을 만들지 못했습니다.\n");
 		return -1;
 	}
-	m_lstGrid.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
+	m_lstGrid.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES | LVS_EX_DOUBLEBUFFER);
+	m_lstGrid.SetBkColor(COLOR_WHITE);
+	m_lstGrid.SetTextBkColor(COLOR_WHITE);
+	m_lstGrid.SetTextColor(COLOR_TEXT);
 
 	if (!m_wndMapping.Create(this, IDC_MAPPING_PANEL)) {
 		TRACE0("매핑 패널을 만들지 못했습니다.\n");
@@ -366,6 +370,56 @@ void CSAGEDashView::ClearGrid()
 	int nColCount = m_lstGrid.GetHeaderCtrl() ? m_lstGrid.GetHeaderCtrl()->GetItemCount() : 0;
 	for (int i = nColCount - 1; i >= 0; i--)
 		m_lstGrid.DeleteColumn(i);
+}
+
+void CSAGEDashView::OnGridCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
+{
+    NMLVCUSTOMDRAW* pNMCD = reinterpret_cast<NMLVCUSTOMDRAW*>(pNMHDR);
+    *pResult = CDRF_DODEFAULT;
+
+    switch (pNMCD->nmcd.dwDrawStage) {
+    case CDDS_PREPAINT:
+        *pResult = CDRF_NOTIFYITEMDRAW;
+        break;
+
+    case CDDS_ITEMPREPAINT: {
+        BOOL bSelected = (pNMCD->nmcd.uItemState & CDIS_SELECTED) != 0;
+        int  nRow      = (int)pNMCD->nmcd.dwItemSpec;
+        BOOL bStripe   = (nRow % 2 == 1);
+
+        if (bSelected) {
+            pNMCD->clrText   = COLOR_TEXT;
+            pNMCD->clrTextBk = COLOR_SELECTION;
+        } else {
+            pNMCD->clrText   = COLOR_TEXT;
+            pNMCD->clrTextBk = bStripe ? COLOR_CREAM : COLOR_WHITE;
+        }
+        *pResult = CDRF_NEWFONT | CDRF_NOTIFYSUBITEMDRAW;
+        break;
+    }
+
+    case CDDS_ITEMPREPAINT | CDDS_SUBITEM: {
+        BOOL bSelected = (pNMCD->nmcd.uItemState & CDIS_SELECTED) != 0;
+        int  nRow      = (int)pNMCD->nmcd.dwItemSpec;
+        BOOL bStripe   = (nRow % 2 == 1);
+
+        if (pNMCD->iSubItem == 0) {
+            // 행 번호 열: ghost text + surface-alt 배경
+            pNMCD->clrText   = COLOR_TEXT_GHOST;
+            pNMCD->clrTextBk = bSelected ? COLOR_SELECTION : COLOR_SURFACE_ALT;
+        } else {
+            if (bSelected) {
+                pNMCD->clrText   = COLOR_TEXT;
+                pNMCD->clrTextBk = COLOR_SELECTION;
+            } else {
+                pNMCD->clrText   = COLOR_TEXT;
+                pNMCD->clrTextBk = bStripe ? COLOR_CREAM : COLOR_WHITE;
+            }
+        }
+        *pResult = CDRF_NEWFONT;
+        break;
+    }
+    }
 }
 
 void CSAGEDashView::OnDraw(CDC* /*pDC*/)

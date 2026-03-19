@@ -22,6 +22,7 @@ PropertiesPane::~PropertiesPane()
 BEGIN_MESSAGE_MAP(PropertiesPane, CDockablePane)
     ON_WM_CREATE()
     ON_WM_SIZE()
+    ON_WM_ERASEBKGND()
     ON_NOTIFY_REFLECT(NM_CUSTOMDRAW, OnCustomDraw)
 END_MESSAGE_MAP()
 
@@ -41,7 +42,9 @@ int PropertiesPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
         return -1;
     }
 
-    m_wndList.SetExtendedStyle(LVS_EX_FULLROWSELECT);
+    m_wndList.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_DOUBLEBUFFER);
+    m_wndList.SetBkColor(COLOR_SURFACE);
+    m_wndList.SetTextBkColor(COLOR_SURFACE);
 
     LVCOLUMN lvc;
     lvc.mask = LVCF_WIDTH | LVCF_FMT;
@@ -187,6 +190,14 @@ void PropertiesPane::RebuildList()
             AddDataRow(strLabel, m_arrSheetNames[i]);
         }
     }
+}
+
+BOOL PropertiesPane::OnEraseBkgnd(CDC* pDC)
+{
+    CRect rect;
+    GetClientRect(&rect);
+    pDC->FillSolidRect(&rect, COLOR_SURFACE);
+    return TRUE;
 }
 
 void PropertiesPane::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)

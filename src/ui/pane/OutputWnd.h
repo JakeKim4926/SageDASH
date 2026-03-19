@@ -11,9 +11,13 @@ public:
     void AppendLog(const CString& strMessage);
 
 protected:
-    CListBox m_wndLog;
+    CRichEditCtrl m_wndRich;
+    CFont         m_fontLog;
 
     afx_msg int  OnCreate(LPCREATESTRUCT lpCreateStruct);
     afx_msg void OnSize(UINT nType, int cx, int cy);
     DECLARE_MESSAGE_MAP()
+
+private:
+    void TrimLogIfNeeded();
 };
