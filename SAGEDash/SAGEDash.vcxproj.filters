@@ -254,6 +254,18 @@
     <ClInclude Include="..\src\application\PipelineRunner.h">
       <Filter>헤더 파일\application</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\application\BatchRunner.h">
+      <Filter>헤더 파일\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\domain\BatchJob.h">
+      <Filter>헤더 파일\domain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\domain\BatchResult.h">
+      <Filter>헤더 파일\domain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\domain\BatchSummary.h">
+      <Filter>헤더 파일\domain</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\application\pipeline\InputStep.h">
       <Filter>헤더 파일\application\pipeline</Filter>
     </ClInclude>
@@ -389,6 +401,9 @@
       <Filter>소스 파일\application</Filter>
     </ClCompile>
     <ClCompile Include="..\src\application\PipelineRunner.cpp">
+      <Filter>소스 파일\application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\application\BatchRunner.cpp">
       <Filter>소스 파일\application</Filter>
     </ClCompile>
     <ClCompile Include="..\src\application\pipeline\InputStep.cpp">

@@ -258,6 +258,10 @@
     <ClInclude Include="..\src\infrastructure\persistence\ProjectSerializer.h" />
     <ClInclude Include="..\src\application\ProjectService.h" />
     <ClInclude Include="..\src\application\PipelineRunner.h" />
+    <ClInclude Include="..\src\application\BatchRunner.h" />
+    <ClInclude Include="..\src\domain\BatchJob.h" />
+    <ClInclude Include="..\src\domain\BatchResult.h" />
+    <ClInclude Include="..\src\domain\BatchSummary.h" />
     <ClInclude Include="..\src\application\pipeline\InputStep.h" />
     <ClInclude Include="..\src\application\pipeline\MappingStep.h" />
     <ClInclude Include="..\src\application\pipeline\ValidationStep.h" />
@@ -304,6 +308,7 @@
     <ClCompile Include="..\src\infrastructure\persistence\ProjectSerializer.cpp" />
     <ClCompile Include="..\src\application\ProjectService.cpp" />
     <ClCompile Include="..\src\application\PipelineRunner.cpp" />
+    <ClCompile Include="..\src\application\BatchRunner.cpp" />
     <ClCompile Include="..\src\application\pipeline\InputStep.cpp" />
     <ClCompile Include="..\src\application\pipeline\MappingStep.cpp" />
     <ClCompile Include="..\src\application\pipeline\ValidationStep.cpp" />
