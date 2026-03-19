@@ -155,6 +155,7 @@
 #define ID_FILE_OPEN_PROJECT            32775
 #define ID_PIPELINE_RUN                 32776
 #define ID_FILE_OPEN_FOLDER             32777
+#define ID_FILE_EMAIL_ACTION            32778
 
 // Log (10501~10599)
 #define IDS_LOG_EXPORT_OK               10501
@@ -170,6 +171,10 @@
 // 폴더 스캔 로그 (10801~)
 #define IDS_LOG_FOLDER_SCAN_OK          10801
 #define IDS_LOG_FOLDER_SCAN_FAIL        10802
+
+// 이메일 액션 로그 (10901~)
+#define IDS_LOG_EMAIL_OK                10901
+#define IDS_LOG_EMAIL_FAIL              10902
 
 // Next default values for new objects
 // 

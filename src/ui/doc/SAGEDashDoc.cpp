@@ -12,6 +12,7 @@
 #include "ExportService.h"
 #include "ProjectService.h"
 #include "PipelineRunner.h"
+#include "EmailActionHandler.h"
 #include "SageException.h"
 #include "SageMgr.h"
 #include "Resource.h"
@@ -28,8 +29,10 @@ BEGIN_MESSAGE_MAP(CSAGEDashDoc, CDocument)
     ON_COMMAND(ID_FILE_SAVE_PROJECT,          &CSAGEDashDoc::OnFileSaveProject)
     ON_UPDATE_COMMAND_UI(ID_FILE_SAVE_PROJECT,&CSAGEDashDoc::OnUpdateFileSaveProject)
     ON_COMMAND(ID_FILE_OPEN_PROJECT,          &CSAGEDashDoc::OnFileOpenProject)
-    ON_COMMAND(ID_FILE_OPEN_FOLDER,           &CSAGEDashDoc::OnFileOpenFolder)
-    ON_COMMAND(ID_PIPELINE_RUN,               &CSAGEDashDoc::OnPipelineRun)
+    ON_COMMAND(ID_FILE_OPEN_FOLDER,              &CSAGEDashDoc::OnFileOpenFolder)
+    ON_COMMAND(ID_FILE_EMAIL_ACTION,             &CSAGEDashDoc::OnFileEmailAction)
+    ON_UPDATE_COMMAND_UI(ID_FILE_EMAIL_ACTION,   &CSAGEDashDoc::OnUpdateFileEmailAction)
+    ON_COMMAND(ID_PIPELINE_RUN,                  &CSAGEDashDoc::OnPipelineRun)
     ON_UPDATE_COMMAND_UI(ID_PIPELINE_RUN,     &CSAGEDashDoc::OnUpdatePipelineRun)
 END_MESSAGE_MAP()
 
@@ -370,6 +373,44 @@ void CSAGEDashDoc::OnPipelineRun()
 }
 
 void CSAGEDashDoc::OnUpdatePipelineRun(CCmdUI* pCmdUI)
+{
+    pCmdUI->Enable(m_isDataLoaded);
+}
+
+void CSAGEDashDoc::OnFileEmailAction()
+{
+    if (!m_isDataLoaded)
+        return;
+
+    CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+
+    try {
+        EmailActionHandler handler;
+        handler.Execute(m_data);
+
+        CString strLog, strFmt;
+        strFmt.LoadString(IDS_LOG_EMAIL_OK);
+        strLog.Format(strFmt, (LPCTSTR)m_data.m_strFilePath);
+        sageMgr.Log(strLog);
+        if (pFrame != nullptr)
+            pFrame->LogMessage(strLog);
+    } catch (const SageException& e) {
+        CString strLog, strFmt;
+        strFmt.LoadString(IDS_LOG_EMAIL_FAIL);
+        strLog.Format(strFmt, (LPCTSTR)e.GetMessage());
+        sageMgr.Log(strLog);
+        if (pFrame != nullptr)
+            pFrame->LogMessage(strLog);
+        AfxMessageBox(e.GetMessage(), MB_OK | MB_ICONWARNING);
+    } catch (...) {
+        CString strMsg = _T("알 수 없는 오류가 발생했습니다.");
+        if (pFrame != nullptr)
+            pFrame->LogMessage(strMsg);
+        AfxMessageBox(strMsg, MB_OK | MB_ICONWARNING);
+    }
+}
+
+void CSAGEDashDoc::OnUpdateFileEmailAction(CCmdUI* pCmdUI)
 {
     pCmdUI->Enable(m_isDataLoaded);
 }
