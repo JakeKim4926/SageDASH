@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-20] feature/batch-runner
+- **목적**: Phase 6-A — 배치 실행 엔진 구현 (작업 큐 + 스레드 + 진행률 + 취소 + 집계)
+- **변경 내용**: BatchJob/BatchResult/BatchSummary 도메인 모델, BatchRunner(AfxBeginThread 기반 워커 스레드), WM_BATCH_PROGRESS/JOB_DONE/COMPLETE 메시지 추가
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/37
+- **결과**: merged into develop
+
 ## [2026-03-20] feature/project-action-serialization
 - **목적**: Phase 5 완료 — AutomationProject에 후속 액션 직렬화 통합 (템플릿 기반 작업 정의 범위 확장)
 - **변경 내용**: ActionType enum 추가, ActionDefinition 도메인 모델 신규, AutomationProject m_arrActions 필드 추가, ProjectSerializer [actions] 섹션 Save/Load, PROJECT_VERSION 1→2
