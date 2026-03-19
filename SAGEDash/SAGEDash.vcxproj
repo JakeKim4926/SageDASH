@@ -251,6 +251,7 @@
     <ClInclude Include="..\src\infrastructure\ftp\FtpActionHandler.h" />
     <ClInclude Include="..\src\ui\dialog\ApiSendDialog.h" />
     <ClInclude Include="..\src\ui\dialog\FtpUploadDialog.h" />
+    <ClInclude Include="..\src\ui\dialog\BatchDialog.h" />
     <ClInclude Include="..\src\domain\IExecutionStep.h" />
     <ClInclude Include="..\src\domain\ExecutionContext.h" />
     <ClInclude Include="..\src\domain\AutomationProject.h" />
@@ -303,6 +304,7 @@
     <ClCompile Include="..\src\infrastructure\ftp\FtpActionHandler.cpp" />
     <ClCompile Include="..\src\ui\dialog\ApiSendDialog.cpp" />
     <ClCompile Include="..\src\ui\dialog\FtpUploadDialog.cpp" />
+    <ClCompile Include="..\src\ui\dialog\BatchDialog.cpp" />
     <ClCompile Include="..\src\infrastructure\csv\CsvOutputWriter.cpp" />
     <ClCompile Include="..\src\infrastructure\excel\ExcelOutputWriter.cpp" />
     <ClCompile Include="..\src\infrastructure\persistence\ProjectSerializer.cpp" />
