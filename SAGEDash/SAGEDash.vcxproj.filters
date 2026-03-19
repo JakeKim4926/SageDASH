@@ -63,6 +63,12 @@
     <Filter Include="헤더 파일\infrastructure\mail">
       <UniqueIdentifier>{AA000063-0000-0000-0000-000000000063}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\infrastructure\api">
+      <UniqueIdentifier>{AA000064-0000-0000-0000-000000000064}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\ui\dialog">
+      <UniqueIdentifier>{AA000065-0000-0000-0000-000000000065}</UniqueIdentifier>
+    </Filter>
     <Filter Include="헤더 파일\infrastructure\persistence">
       <UniqueIdentifier>{AA000057-0000-0000-0000-000000000057}</UniqueIdentifier>
     </Filter>
@@ -131,6 +137,12 @@
     </Filter>
     <Filter Include="소스 파일\infrastructure\mail">
       <UniqueIdentifier>{BB000063-0000-0000-0000-000000000063}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\infrastructure\api">
+      <UniqueIdentifier>{BB000064-0000-0000-0000-000000000064}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ui\dialog">
+      <UniqueIdentifier>{BB000065-0000-0000-0000-000000000065}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\infrastructure\logging">
       <UniqueIdentifier>{AA000053-0000-0000-0000-000000000053}</UniqueIdentifier>
@@ -202,6 +214,12 @@
     </ClInclude>
     <ClInclude Include="..\src\infrastructure\mail\EmailActionHandler.h">
       <Filter>헤더 파일\infrastructure\mail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\infrastructure\api\ApiActionHandler.h">
+      <Filter>헤더 파일\infrastructure\api</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\dialog\ApiSendDialog.h">
+      <Filter>헤더 파일\ui\dialog</Filter>
     </ClInclude>
     <ClInclude Include="..\src\domain\IExecutionStep.h">
       <Filter>헤더 파일\domain</Filter>
@@ -393,6 +411,12 @@
     </ClCompile>
     <ClCompile Include="..\src\infrastructure\mail\EmailActionHandler.cpp">
       <Filter>소스 파일\infrastructure\mail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\infrastructure\api\ApiActionHandler.cpp">
+      <Filter>소스 파일\infrastructure\api</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ui\dialog\ApiSendDialog.cpp">
+      <Filter>소스 파일\ui\dialog</Filter>
     </ClCompile>
     <ClCompile Include="..\src\infrastructure\logging\SageLogger.cpp">
       <Filter>소스 파일\infrastructure\logging</Filter>
