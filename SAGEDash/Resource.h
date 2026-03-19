@@ -156,6 +156,12 @@
 #define ID_PIPELINE_RUN                 32776
 #define ID_FILE_OPEN_FOLDER             32777
 #define ID_FILE_EMAIL_ACTION            32778
+#define ID_FILE_API_ACTION              32779
+
+// Dialog controls
+#define IDD_API_SEND                    310
+#define IDC_EDIT_API_URL                1001
+#define IDC_COMBO_METHOD                1002
 
 // Log (10501~10599)
 #define IDS_LOG_EXPORT_OK               10501
@@ -175,6 +181,10 @@
 // 이메일 액션 로그 (10901~)
 #define IDS_LOG_EMAIL_OK                10901
 #define IDS_LOG_EMAIL_FAIL              10902
+
+// API 전송 액션 로그 (11001~)
+#define IDS_LOG_API_OK                  11001
+#define IDS_LOG_API_FAIL                11002
 
 // Next default values for new objects
 // 

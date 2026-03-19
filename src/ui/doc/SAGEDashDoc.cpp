@@ -13,6 +13,8 @@
 #include "ProjectService.h"
 #include "PipelineRunner.h"
 #include "EmailActionHandler.h"
+#include "ApiActionHandler.h"
+#include "ApiSendDialog.h"
 #include "SageException.h"
 #include "SageMgr.h"
 #include "Resource.h"
@@ -32,6 +34,8 @@ BEGIN_MESSAGE_MAP(CSAGEDashDoc, CDocument)
     ON_COMMAND(ID_FILE_OPEN_FOLDER,              &CSAGEDashDoc::OnFileOpenFolder)
     ON_COMMAND(ID_FILE_EMAIL_ACTION,             &CSAGEDashDoc::OnFileEmailAction)
     ON_UPDATE_COMMAND_UI(ID_FILE_EMAIL_ACTION,   &CSAGEDashDoc::OnUpdateFileEmailAction)
+    ON_COMMAND(ID_FILE_API_ACTION,               &CSAGEDashDoc::OnFileApiAction)
+    ON_UPDATE_COMMAND_UI(ID_FILE_API_ACTION,     &CSAGEDashDoc::OnUpdateFileApiAction)
     ON_COMMAND(ID_PIPELINE_RUN,                  &CSAGEDashDoc::OnPipelineRun)
     ON_UPDATE_COMMAND_UI(ID_PIPELINE_RUN,     &CSAGEDashDoc::OnUpdatePipelineRun)
 END_MESSAGE_MAP()
@@ -411,6 +415,48 @@ void CSAGEDashDoc::OnFileEmailAction()
 }
 
 void CSAGEDashDoc::OnUpdateFileEmailAction(CCmdUI* pCmdUI)
+{
+    pCmdUI->Enable(m_isDataLoaded);
+}
+
+void CSAGEDashDoc::OnFileApiAction()
+{
+    if (!m_isDataLoaded)
+        return;
+
+    ApiSendDialog dlg(AfxGetMainWnd());
+    if (dlg.DoModal() != IDOK)
+        return;
+
+    CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+
+    try {
+        ApiActionHandler handler(dlg.m_strUrl, dlg.m_strMethod);
+        handler.Execute(m_data);
+
+        CString strLog, strFmt;
+        strFmt.LoadString(IDS_LOG_API_OK);
+        strLog.Format(strFmt, (LPCTSTR)dlg.m_strUrl);
+        sageMgr.Log(strLog);
+        if (pFrame != nullptr)
+            pFrame->LogMessage(strLog);
+    } catch (const SageException& e) {
+        CString strLog, strFmt;
+        strFmt.LoadString(IDS_LOG_API_FAIL);
+        strLog.Format(strFmt, (LPCTSTR)e.GetMessage());
+        sageMgr.Log(strLog);
+        if (pFrame != nullptr)
+            pFrame->LogMessage(strLog);
+        AfxMessageBox(e.GetMessage(), MB_OK | MB_ICONWARNING);
+    } catch (...) {
+        CString strMsg = _T("알 수 없는 오류가 발생했습니다.");
+        if (pFrame != nullptr)
+            pFrame->LogMessage(strMsg);
+        AfxMessageBox(strMsg, MB_OK | MB_ICONWARNING);
+    }
+}
+
+void CSAGEDashDoc::OnUpdateFileApiAction(CCmdUI* pCmdUI)
 {
     pCmdUI->Enable(m_isDataLoaded);
 }
