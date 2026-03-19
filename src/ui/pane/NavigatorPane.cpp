@@ -23,6 +23,7 @@ NavigatorPane::~NavigatorPane()
 BEGIN_MESSAGE_MAP(NavigatorPane, CDockablePane)
     ON_WM_CREATE()
     ON_WM_SIZE()
+    ON_WM_ERASEBKGND()
     ON_NOTIFY(NM_CUSTOMDRAW, 1, OnCustomDraw)
     ON_NOTIFY(TVN_SELCHANGED, 1, OnSelChanged)
 END_MESSAGE_MAP()
@@ -36,17 +37,22 @@ int NavigatorPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
     rectDummy.SetRectEmpty();
 
     if (!m_wndTree.Create(
-            WS_CHILD | WS_VISIBLE | TVS_HASBUTTONS | TVS_SHOWSELALWAYS,
+            WS_CHILD | WS_VISIBLE | TVS_SHOWSELALWAYS | TVS_NOTOOLTIPS | TVS_FULLROWSELECT,
             rectDummy, this, 1))
     {
         TRACE0("네비게이터 트리를 만들지 못했습니다.\n");
         return -1;
     }
 
+    m_wndTree.SetBkColor(COLOR_SURFACE);
+    m_wndTree.SetTextColor(COLOR_TEXT_MID);
+    m_wndTree.SetIndent(4);
+
     CString str;
 
     // INPUT 섹션
     str.LoadString(IDS_NAV_SECTION_INPUT);
+    str.MakeUpper();
     HTREEITEM hInput = InsertNavItem(str, TVI_ROOT, NAV_ITEM_SECTION);
     str.LoadString(IDS_NAV_ITEM_FILE);
     m_hFile = InsertNavItem(str, hInput, NAV_ITEM_ACTIVE);
@@ -54,6 +60,7 @@ int NavigatorPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
     // PIPELINE 섹션
     str.LoadString(IDS_NAV_SECTION_PIPELINE);
+    str.MakeUpper();
     HTREEITEM hPipeline = InsertNavItem(str, TVI_ROOT, NAV_ITEM_SECTION);
     str.LoadString(IDS_NAV_ITEM_PREVIEW);
     m_hPreview = InsertNavItem(str, hPipeline, NAV_ITEM_DISABLED);
@@ -67,6 +74,7 @@ int NavigatorPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
     // ACTIONS 섹션
     str.LoadString(IDS_NAV_SECTION_ACTIONS);
+    str.MakeUpper();
     HTREEITEM hActions = InsertNavItem(str, TVI_ROOT, NAV_ITEM_SECTION);
     str.LoadString(IDS_NAV_ITEM_EXPORT);
     InsertNavItem(str, hActions, NAV_ITEM_DISABLED);
@@ -96,6 +104,14 @@ void NavigatorPane::OnSize(UINT nType, int cx, int cy)
 
     if (m_wndTree.GetSafeHwnd() != nullptr)
         m_wndTree.SetWindowPos(nullptr, 0, 0, cx, cy, SWP_NOZORDER | SWP_NOACTIVATE);
+}
+
+BOOL NavigatorPane::OnEraseBkgnd(CDC* pDC)
+{
+    CRect rect;
+    GetClientRect(&rect);
+    pDC->FillSolidRect(&rect, COLOR_SURFACE);
+    return TRUE;
 }
 
 void NavigatorPane::ActivatePipelineItems(BOOL bActive)
@@ -168,12 +184,12 @@ void NavigatorPane::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
     if (hSel == nullptr)
         return;
 
-    // ACTIVE 상태인 항목만 반응한다
+    // ACTIVE / CURRENT 상태인 항목만 반응한다
     NavItemType type = (NavItemType)m_wndTree.GetItemData(hSel);
     CString strLog;
-    strLog.Format(_T("[NAV] OnSelChanged — ItemData=%d (0=SECTION,1=ACTIVE,2=DISABLED)"), (int)type);
+    strLog.Format(_T("[NAV] OnSelChanged — ItemData=%d (0=SECTION,1=ACTIVE,2=DISABLED,3=CURRENT)"), (int)type);
     sageMgr.Log(strLog);
-    if (type != NAV_ITEM_ACTIVE)
+    if (type != NAV_ITEM_ACTIVE && type != NAV_ITEM_CURRENT)
         return;
 
     CWnd* pMain = AfxGetMainWnd();
