@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-19] feature/api-action
+- **목적**: Phase 5 Step 8 (5-B) — HTTP/HTTPS API 전송 액션 추가
+- **변경 내용**: `ApiActionHandler` 구현 (WinHTTP, URL 파싱, JSON 직렬화, POST/PUT, HTTP 상태 검증), `ApiSendDialog` (URL 입력 + Method 선택), 메뉴 항목·로그 문자열 추가
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/31
+- **결과**: merged into develop
+
 ## [2026-03-19] feature/email-action
 - **목적**: Phase 5 Step 7 (5-B) — 이메일 발송 액션 추가
 - **변경 내용**: `IActionHandler` 인터페이스 신규 정의, `EmailActionHandler` 구현 (Simple MAPI, MAPI32.DLL 동적 로드, MAPISendMailW/MAPISendMail, 임시 CSV 첨부 후 메일 작성창 오픈), 메뉴 항목·로그 문자열 추가
