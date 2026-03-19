@@ -233,6 +233,9 @@
     <ClInclude Include="..\src\ui\dialog\FtpUploadDialog.h">
       <Filter>헤더 파일\ui\dialog</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\ui\dialog\BatchDialog.h">
+      <Filter>헤더 파일\ui\dialog</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\domain\IExecutionStep.h">
       <Filter>헤더 파일\domain</Filter>
     </ClInclude>
@@ -452,6 +455,9 @@
       <Filter>소스 파일\ui\dialog</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ui\dialog\FtpUploadDialog.cpp">
+      <Filter>소스 파일\ui\dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ui\dialog\BatchDialog.cpp">
       <Filter>소스 파일\ui\dialog</Filter>
     </ClCompile>
     <ClCompile Include="..\src\infrastructure\logging\SageLogger.cpp">

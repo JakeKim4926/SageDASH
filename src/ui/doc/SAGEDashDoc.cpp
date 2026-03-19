@@ -17,6 +17,7 @@
 #include "ApiSendDialog.h"
 #include "FtpActionHandler.h"
 #include "FtpUploadDialog.h"
+#include "BatchDialog.h"
 #include "SageException.h"
 #include "SageMgr.h"
 #include "Resource.h"
@@ -40,6 +41,8 @@ BEGIN_MESSAGE_MAP(CSAGEDashDoc, CDocument)
     ON_UPDATE_COMMAND_UI(ID_FILE_API_ACTION,     &CSAGEDashDoc::OnUpdateFileApiAction)
     ON_COMMAND(ID_FILE_FTP_ACTION,               &CSAGEDashDoc::OnFileFtpAction)
     ON_UPDATE_COMMAND_UI(ID_FILE_FTP_ACTION,     &CSAGEDashDoc::OnUpdateFileFtpAction)
+    ON_COMMAND(ID_AUTOMATION_BATCH,              &CSAGEDashDoc::OnAutomationBatch)
+    ON_UPDATE_COMMAND_UI(ID_AUTOMATION_BATCH,    &CSAGEDashDoc::OnUpdateAutomationBatch)
     ON_COMMAND(ID_PIPELINE_RUN,                  &CSAGEDashDoc::OnPipelineRun)
     ON_UPDATE_COMMAND_UI(ID_PIPELINE_RUN,     &CSAGEDashDoc::OnUpdatePipelineRun)
 END_MESSAGE_MAP()
@@ -507,6 +510,17 @@ void CSAGEDashDoc::OnFileFtpAction()
 void CSAGEDashDoc::OnUpdateFileFtpAction(CCmdUI* pCmdUI)
 {
     pCmdUI->Enable(m_isDataLoaded);
+}
+
+void CSAGEDashDoc::OnAutomationBatch()
+{
+    BatchDialog dlg(m_project, AfxGetMainWnd());
+    dlg.DoModal();
+}
+
+void CSAGEDashDoc::OnUpdateAutomationBatch(CCmdUI* pCmdUI)
+{
+    pCmdUI->Enable(TRUE);
 }
 
 #ifdef _DEBUG
