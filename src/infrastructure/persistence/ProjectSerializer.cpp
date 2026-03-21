@@ -3,6 +3,7 @@
 #include "framework.h"
 #include "ProjectSerializer.h"
 #include "SageException.h"
+#include "Resource.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -46,8 +47,10 @@ void ProjectSerializer::Save(const AutomationProject& project, const CString& st
 {
     CStdioFile file;
     if (!file.Open(strFilePath, CFile::modeCreate | CFile::modeWrite | CFile::typeText)) {
+        CString strFmt;
+        strFmt.LoadString(IDS_ERR_PROJECT_SAVE);
         CString msg;
-        msg.Format(_T("프로젝트 파일을 저장할 수 없습니다: %s"), (LPCTSTR)strFilePath);
+        msg.Format(strFmt, (LPCTSTR)strFilePath);
         throw SageException(msg);
     }
 
@@ -126,8 +129,10 @@ void ProjectSerializer::Load(const CString& strFilePath, AutomationProject& outP
 {
     CStdioFile file;
     if (!file.Open(strFilePath, CFile::modeRead | CFile::typeText)) {
+        CString strFmt;
+        strFmt.LoadString(IDS_ERR_PROJECT_LOAD);
         CString msg;
-        msg.Format(_T("프로젝트 파일을 열 수 없습니다: %s"), (LPCTSTR)strFilePath);
+        msg.Format(strFmt, (LPCTSTR)strFilePath);
         throw SageException(msg);
     }
 
