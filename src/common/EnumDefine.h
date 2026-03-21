@@ -29,7 +29,9 @@ enum CenterViewMode
     VIEW_MODE_GRID       = 0,   // 데이터 미리보기 그리드
     VIEW_MODE_MAPPING    = 1,   // 컬럼 매핑
     VIEW_MODE_VALIDATION = 2,   // 데이터 검증
-    VIEW_MODE_DASHBOARD  = 3,   // WebView2 대시보드 (Phase 4-7 활성화)
+    VIEW_MODE_DASHBOARD  = 3,   // WebView2 대시보드
+    VIEW_MODE_REPORT     = 4,   // WebView2 검증 리포트
+    VIEW_MODE_ANALYSIS   = 5,   // WebView2 컬럼 분석
 };
 
 // ============================================================
