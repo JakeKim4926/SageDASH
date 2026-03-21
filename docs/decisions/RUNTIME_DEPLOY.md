@@ -92,4 +92,5 @@ xcopy /E /Y /I "$(SolutionDir)web" "$(OutDir)web"
 | Phase 1~3 | exe + MFC 런타임만 |
 | Phase 4 | exe + WebView2Loader.dll + web/ 추가 |
 | Phase 5~6 | 동일 구조 유지, web/ 파일 증가 |
-| v1.0 | 인스톨러 패키지 (NSIS 또는 WiX) 검토 |
+| v0.5 | 현재 단계 — develop 브랜치 기준 |
+| v1.0 | 인스톨러 패키지 (NSIS 또는 WiX) 검토 예정 |
