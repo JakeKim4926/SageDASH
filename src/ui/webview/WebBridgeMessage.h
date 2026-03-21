@@ -7,14 +7,23 @@
 //   모든 메시지 포맷:
 //   { "type": "<타입>", "version": "1.0", "payload": { ... } }
 //
-//   C++ → Web 메시지 타입:
-//   - "native:ready"   WebView2 초기화 완료 알림
-//   - "data:summary"   열린 파일 요약 (Phase 4-7 실제 연동)
+//   메시지 타입 상수 (C++ → Web):
+//   - BRIDGE_TYPE_NATIVE_READY   WebView2 초기화 완료 알림
+//   - BRIDGE_TYPE_DATA_SUMMARY   열린 파일 요약
 //
-//   Web → C++ 메시지 타입:
-//   - "web:request-summary"  웹 UI가 데이터 요약 요청
-//   - "web:action"           웹 UI 버튼 액션 트리거 (Phase 4-7)
+//   메시지 타입 상수 (Web → C++):
+//   - BRIDGE_TYPE_WEB_REQUEST_SUMMARY  웹 UI가 데이터 요약 요청
+//   - BRIDGE_TYPE_WEB_ACTION           웹 UI 버튼 액션 트리거
 // ---------------------------------------------------------------
+
+// C++ → Web
+constexpr LPCTSTR BRIDGE_TYPE_NATIVE_READY          = _T("native:ready");
+constexpr LPCTSTR BRIDGE_TYPE_DATA_SUMMARY          = _T("data:summary");
+
+// Web → C++
+constexpr LPCTSTR BRIDGE_TYPE_WEB_REQUEST_SUMMARY   = _T("web:request-summary");
+constexpr LPCTSTR BRIDGE_TYPE_WEB_ACTION            = _T("web:action");
+
 class WebBridgeMessage
 {
 public:
