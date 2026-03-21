@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-21] feature/web-report-analysis
+- **목적**: Phase 6-B — 리포트/분석 화면 웹화
+- **변경 내용**: VIEW_MODE_REPORT/ANALYSIS enum 추가, Navigator Report/Analysis 항목 추가, WebBridgeMessage BuildValidationReport/BuildColumnAnalysis 빌더 구현, web/report.html(검증 결과 리포트), web/analysis.html(컬럼 채움율 분석) 신규 생성, IDS 10212/10213 String Table 추가
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/42
+- **결과**: merged into develop
+
 ## [2026-03-21] feature/bridge-common
 - **목적**: Phase 6-B — 브릿지 공통화 (메시지 타입 상수화 + JS 라우터 모듈 분리)
 - **변경 내용**: WebBridgeMessage.h에 BRIDGE_TYPE_* constexpr 상수 4종 추가, WebBridgeMessage.cpp/SAGEDashView.cpp 문자열 리터럴 → 상수 교체, web/bridge.js 생성(SageBridge.on/send API + 메시지 라우터), dashboard.html 인라인 브릿지 코드 → bridge.js 방식으로 교체
