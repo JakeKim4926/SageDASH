@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAGEDash Analysis</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="page-header">
+  <span class="page-title"><span class="accent-bar"></span>Column Analysis</span>
+  <span class="page-status" id="statusText">Waiting for data...</span>
+</div>
+
+<div id="summarySection" style="display:none;">
+  <div class="summary-row">
+    <div class="kpi-card accent">
+      <div class="kpi-label">Data Rows</div>
+      <div class="kpi-value" id="summaryRows">—</div>
+    </div>
+    <div class="kpi-card accent">
+      <div class="kpi-label">Columns</div>
+      <div class="kpi-value" id="summaryCols">—</div>
+    </div>
+  </div>
+
+  <div class="section-label">Columns</div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th style="width:180px;">Column</th>
+        <th style="width:70px;">Filled</th>
+        <th style="width:70px;">Empty</th>
+        <th>Fill Rate</th>
+      </tr>
+    </thead>
+    <tbody id="analysisTbody"></tbody>
+  </table>
+</div>
+
+<div class="empty-state" id="emptyState">
+  No data loaded. Open a file to view the analysis.
+</div>
+
+<script src="bridge.js"></script>
+<script>
+  function renderAnalysis(payload) {
+    var rowCount = payload.rowCount;
+    var columns  = payload.columns || [];
+
+    document.getElementById('summaryRows').textContent = rowCount.toLocaleString();
+    document.getElementById('summaryCols').textContent = columns.length;
+    document.getElementById('statusText').textContent  = 'Analysis loaded';
+    document.getElementById('emptyState').style.display     = 'none';
+    document.getElementById('summarySection').style.display = 'block';
+
+    var tbody = document.getElementById('analysisTbody');
+    tbody.innerHTML = '';
+    for (var i = 0; i < columns.length; i++) {
+      var col   = columns[i];
+      var total = col.filledCount + col.emptyCount;
+      var pct   = total > 0 ? Math.round(col.filledCount / total * 100) : 0;
+      var barClass = pct >= 90 ? '' : (pct >= 60 ? 'mid' : 'low');
+
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td>' + esc(col.name) + '</td>' +
+        '<td>' + col.filledCount.toLocaleString() + '</td>' +
+        '<td>' + col.emptyCount.toLocaleString() + '</td>' +
+        '<td><div class="fill-bar-wrap">' +
+          '<div class="fill-bar-bg"><div class="fill-bar ' + barClass + '" style="width:' + pct + '%"></div></div>' +
+          '<span class="fill-pct">' + pct + '%</span>' +
+        '</div></td>';
+      tbody.appendChild(tr);
+    }
+  }
+
+  function esc(str) {
+    return String(str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  SageBridge.on('native:ready', function() {
+    SageBridge.send('web:request-analysis', {});
+  });
+
+  SageBridge.on('data:column-analysis', function(payload) {
+    renderAnalysis(payload);
+  });
+
+  document.getElementById('emptyState').style.display = 'block';
+</script>
+</body>
+</html>

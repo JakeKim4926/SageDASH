@@ -10,6 +10,11 @@ CString OutputStep::GetName() const
 
 BOOL OutputStep::Execute(ExecutionContext& ctx)
 {
+    if (ctx.IsCancelled()) {
+        ctx.m_strLog += _T("[출력] 취소됨\r\n");
+        return FALSE;
+    }
+
     if (ctx.m_strOutputPath.IsEmpty()) {
         ctx.m_strLog += _T("[출력] 경로 없음 — 건너뜀\r\n");
         return TRUE;

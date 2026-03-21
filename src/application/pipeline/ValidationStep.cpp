@@ -10,6 +10,11 @@ CString ValidationStep::GetName() const
 
 BOOL ValidationStep::Execute(ExecutionContext& ctx)
 {
+    if (ctx.IsCancelled()) {
+        ctx.m_strLog += _T("[검증] 취소됨\r\n");
+        return FALSE;
+    }
+
     if (ctx.m_arrValidationRules.empty()) {
         ctx.m_strLog += _T("[검증] 규칙 없음 — 건너뜀\r\n");
         return TRUE;

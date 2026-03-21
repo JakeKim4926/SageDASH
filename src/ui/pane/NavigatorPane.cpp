@@ -82,6 +82,10 @@ int NavigatorPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
     InsertNavItem(str, hActions, NAV_ITEM_DISABLED);
     str.LoadString(IDS_NAV_ITEM_DASHBOARD);
     m_hDashboard = InsertNavItem(str, hActions, NAV_ITEM_DISABLED);
+    str.LoadString(IDS_NAV_ITEM_REPORT);
+    m_hReport    = InsertNavItem(str, hActions, NAV_ITEM_DISABLED);
+    str.LoadString(IDS_NAV_ITEM_ANALYSIS);
+    m_hAnalysis  = InsertNavItem(str, hActions, NAV_ITEM_DISABLED);
     m_wndTree.Expand(hActions, TVE_EXPAND);
 
     return 0;
@@ -126,6 +130,8 @@ void NavigatorPane::ActivatePipelineItems(BOOL bActive)
     m_wndTree.SetItemData(m_hMapping,    (DWORD_PTR)type);
     m_wndTree.SetItemData(m_hValidation, (DWORD_PTR)type);
     m_wndTree.SetItemData(m_hDashboard,  (DWORD_PTR)type);
+    m_wndTree.SetItemData(m_hReport,     (DWORD_PTR)type);
+    m_wndTree.SetItemData(m_hAnalysis,   (DWORD_PTR)type);
     m_wndTree.Invalidate();
 }
 
@@ -139,6 +145,8 @@ void NavigatorPane::SetActiveMode(CenterViewMode eMode)
     m_wndTree.SetItemData(m_hMapping,    (DWORD_PTR)NAV_ITEM_ACTIVE);
     m_wndTree.SetItemData(m_hValidation, (DWORD_PTR)NAV_ITEM_ACTIVE);
     m_wndTree.SetItemData(m_hDashboard,  (DWORD_PTR)NAV_ITEM_ACTIVE);
+    m_wndTree.SetItemData(m_hReport,     (DWORD_PTR)NAV_ITEM_ACTIVE);
+    m_wndTree.SetItemData(m_hAnalysis,   (DWORD_PTR)NAV_ITEM_ACTIVE);
 
     switch (eMode) {
     case VIEW_MODE_GRID:
@@ -152,6 +160,12 @@ void NavigatorPane::SetActiveMode(CenterViewMode eMode)
         break;
     case VIEW_MODE_DASHBOARD:
         m_wndTree.SetItemData(m_hDashboard, (DWORD_PTR)NAV_ITEM_CURRENT);
+        break;
+    case VIEW_MODE_REPORT:
+        m_wndTree.SetItemData(m_hReport, (DWORD_PTR)NAV_ITEM_CURRENT);
+        break;
+    case VIEW_MODE_ANALYSIS:
+        m_wndTree.SetItemData(m_hAnalysis, (DWORD_PTR)NAV_ITEM_CURRENT);
         break;
     }
 
@@ -206,6 +220,10 @@ void NavigatorPane::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
         pMain->PostMessage(WM_SWITCH_CENTER_VIEW, (WPARAM)VIEW_MODE_VALIDATION);
     } else if (hSel == m_hDashboard) {
         pMain->PostMessage(WM_SWITCH_CENTER_VIEW, (WPARAM)VIEW_MODE_DASHBOARD);
+    } else if (hSel == m_hReport) {
+        pMain->PostMessage(WM_SWITCH_CENTER_VIEW, (WPARAM)VIEW_MODE_REPORT);
+    } else if (hSel == m_hAnalysis) {
+        pMain->PostMessage(WM_SWITCH_CENTER_VIEW, (WPARAM)VIEW_MODE_ANALYSIS);
     }
 }
 

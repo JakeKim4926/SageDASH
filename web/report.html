@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAGEDash Report</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .data-table tr.row-error td  { background: var(--error-bg); }
+  .data-table tr.row-warn  td  { background: var(--warning-bg); }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <span class="page-title"><span class="accent-bar"></span>Validation Report</span>
+  <span class="page-status" id="statusText">Waiting for data...</span>
+</div>
+
+<div class="kpi-grid">
+  <div class="kpi-card error">
+    <div class="kpi-label">Errors</div>
+    <div class="kpi-value" id="kpiErrors">—</div>
+  </div>
+  <div class="kpi-card warning">
+    <div class="kpi-label">Warnings</div>
+    <div class="kpi-value" id="kpiWarnings">—</div>
+  </div>
+  <div class="kpi-card success" id="kpiStatusCard">
+    <div class="kpi-label">Status</div>
+    <div class="kpi-value" id="kpiStatus">—</div>
+  </div>
+</div>
+
+<div id="issuesSection" style="display:none;">
+  <div class="section-label">Issues</div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th style="width:60px;">Row</th>
+        <th style="width:120px;">Column</th>
+        <th>Message</th>
+        <th style="width:80px;">Severity</th>
+      </tr>
+    </thead>
+    <tbody id="issuesTbody"></tbody>
+  </table>
+  <div class="note-text" id="truncateNote" style="display:none;"></div>
+</div>
+
+<div class="empty-state" id="emptyState">
+  No data loaded. Open a file to view the report.
+</div>
+
+<script src="bridge.js"></script>
+<script>
+  function renderReport(payload) {
+    var errors   = payload.errorCount;
+    var warnings = payload.warningCount;
+    var total    = payload.totalIssues;
+    var issues   = payload.issues || [];
+
+    document.getElementById('kpiErrors').textContent   = errors;
+    document.getElementById('kpiWarnings').textContent = warnings;
+
+    var statusEl   = document.getElementById('kpiStatus');
+    var statusCard = document.getElementById('kpiStatusCard');
+    if (errors > 0) {
+      statusEl.textContent  = 'Failed';
+      statusCard.className  = 'kpi-card error';
+    } else if (warnings > 0) {
+      statusEl.textContent  = 'Warning';
+      statusCard.className  = 'kpi-card warning';
+    } else {
+      statusEl.textContent  = 'OK';
+      statusCard.className  = 'kpi-card success';
+    }
+
+    document.getElementById('statusText').textContent  = 'Report loaded';
+    document.getElementById('emptyState').style.display = 'none';
+
+    var tbody = document.getElementById('issuesTbody');
+    tbody.innerHTML = '';
+    for (var i = 0; i < issues.length; i++) {
+      var issue = issues[i];
+      var tr    = document.createElement('tr');
+      tr.className = issue.severity === 'error' ? 'row-error' : 'row-warn';
+      tr.innerHTML =
+        '<td>' + (issue.row >= 0 ? issue.row : '—') + '</td>' +
+        '<td>' + esc(issue.column) + '</td>' +
+        '<td>' + esc(issue.message) + '</td>' +
+        '<td><span class="badge badge-' + (issue.severity === 'error' ? 'error' : 'warning') + '">' +
+        issue.severity + '</span></td>';
+      tbody.appendChild(tr);
+    }
+
+    if (issues.length > 0 || total === 0) {
+      document.getElementById('issuesSection').style.display = 'block';
+    }
+    if (payload.truncated) {
+      var note = document.getElementById('truncateNote');
+      note.textContent    = 'Showing first ' + issues.length + ' of ' + total + ' issues.';
+      note.style.display  = 'block';
+    }
+  }
+
+  function esc(str) {
+    return String(str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  SageBridge.on('native:ready', function() {
+    SageBridge.send('web:request-report', {});
+  });
+
+  SageBridge.on('data:validation-report', function(payload) {
+    renderReport(payload);
+  });
+
+  document.getElementById('emptyState').style.display = 'block';
+</script>
+</body>
+</html>

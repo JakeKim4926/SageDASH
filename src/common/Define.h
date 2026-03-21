@@ -36,6 +36,9 @@
 // ============================================================
 #define WM_SWITCH_CENTER_VIEW  (WM_USER + 1)  // wParam = CenterViewMode
 #define WM_WEBBRIDGE_MESSAGE   (WM_USER + 2)  // lParam = new CString*(JSON), 수신측 delete
+#define WM_BATCH_PROGRESS      (WM_USER + 3)  // wParam = 완료 건수, lParam = 전체 건수
+#define WM_BATCH_JOB_DONE      (WM_USER + 4)  // wParam = 작업 인덱스, lParam = new BatchResult*(수신측 delete)
+#define WM_BATCH_COMPLETE      (WM_USER + 5)  // lParam = new BatchSummary*(수신측 delete)
 
 // ============================================================
 // 공통 컨트롤
@@ -155,6 +158,11 @@ constexpr int FOLDER_SCAN_MAX_FILES = 10000;   // 스캔 최대 파일 수
 // DB 조회 (.dbq)
 // ============================================================
 constexpr int DB_QUERY_MAX_ROWS = 10000;        // 최대 조회 행 수
+
+// ============================================================
+// 배치 실행
+// ============================================================
+constexpr DWORD BATCH_SHUTDOWN_TIMEOUT_MS = 5000;  // 앱/문서 종료 시 배치 완료 대기 타임아웃 (ms)
 
 // ============================================================
 // PropertiesPane — 레이아웃

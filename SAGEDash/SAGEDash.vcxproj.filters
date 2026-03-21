@@ -233,6 +233,9 @@
     <ClInclude Include="..\src\ui\dialog\FtpUploadDialog.h">
       <Filter>헤더 파일\ui\dialog</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\ui\dialog\BatchDialog.h">
+      <Filter>헤더 파일\ui\dialog</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\domain\IExecutionStep.h">
       <Filter>헤더 파일\domain</Filter>
     </ClInclude>
@@ -240,6 +243,9 @@
       <Filter>헤더 파일\domain</Filter>
     </ClInclude>
     <ClInclude Include="..\src\domain\AutomationProject.h">
+      <Filter>헤더 파일\domain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\domain\ActionDefinition.h">
       <Filter>헤더 파일\domain</Filter>
     </ClInclude>
     <ClInclude Include="..\src\infrastructure\persistence\ProjectSerializer.h">
@@ -251,6 +257,18 @@
     <ClInclude Include="..\src\application\PipelineRunner.h">
       <Filter>헤더 파일\application</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\application\BatchRunner.h">
+      <Filter>헤더 파일\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\domain\BatchJob.h">
+      <Filter>헤더 파일\domain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\domain\BatchResult.h">
+      <Filter>헤더 파일\domain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\domain\BatchSummary.h">
+      <Filter>헤더 파일\domain</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\application\pipeline\InputStep.h">
       <Filter>헤더 파일\application\pipeline</Filter>
     </ClInclude>
@@ -261,6 +279,9 @@
       <Filter>헤더 파일\application\pipeline</Filter>
     </ClInclude>
     <ClInclude Include="..\src\application\pipeline\OutputStep.h">
+      <Filter>헤더 파일\application\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\application\pipeline\ActionStep.h">
       <Filter>헤더 파일\application\pipeline</Filter>
     </ClInclude>
     <ClInclude Include="..\src\application\IInputReader.h">
@@ -388,6 +409,9 @@
     <ClCompile Include="..\src\application\PipelineRunner.cpp">
       <Filter>소스 파일\application</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\application\BatchRunner.cpp">
+      <Filter>소스 파일\application</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\application\pipeline\InputStep.cpp">
       <Filter>소스 파일\application\pipeline</Filter>
     </ClCompile>
@@ -398,6 +422,9 @@
       <Filter>소스 파일\application\pipeline</Filter>
     </ClCompile>
     <ClCompile Include="..\src\application\pipeline\OutputStep.cpp">
+      <Filter>소스 파일\application\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\application\pipeline\ActionStep.cpp">
       <Filter>소스 파일\application\pipeline</Filter>
     </ClCompile>
     <ClCompile Include="..\src\infrastructure\csv\CsvInputReader.cpp">
@@ -434,6 +461,9 @@
       <Filter>소스 파일\ui\dialog</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ui\dialog\FtpUploadDialog.cpp">
+      <Filter>소스 파일\ui\dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ui\dialog\BatchDialog.cpp">
       <Filter>소스 파일\ui\dialog</Filter>
     </ClCompile>
     <ClCompile Include="..\src\infrastructure\logging\SageLogger.cpp">

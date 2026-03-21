@@ -98,6 +98,8 @@
 #define IDS_NAV_ITEM_EXPORT             10209
 #define IDS_NAV_ITEM_SCHEDULE           10210
 #define IDS_NAV_ITEM_DASHBOARD          10211
+#define IDS_NAV_ITEM_REPORT             10212
+#define IDS_NAV_ITEM_ANALYSIS           10213
 
 // View (10301~10399)
 #define IDS_VIEW_GRID_ROW_NUM           10301
@@ -199,6 +201,39 @@
 // FTP 업로드 액션 로그 (11101~)
 #define IDS_LOG_FTP_OK                  11101
 #define IDS_LOG_FTP_FAIL                11102
+
+// 배치 실행 다이얼로그 (11201~)
+#define IDD_BATCH                       312
+#define IDC_LIST_BATCH_FILES            1020
+#define IDC_BTN_ADD_FILES               1021
+#define IDC_BTN_REMOVE_FILE             1022
+#define IDC_BTN_CLEAR_FILES             1023
+#define IDC_PROGRESS_BATCH              1024
+#define IDC_LIST_BATCH_LOG              1025
+#define IDC_STATIC_BATCH_SUMMARY        1026
+#define IDC_BTN_START_BATCH             1027
+#define ID_AUTOMATION_BATCH             32781
+
+#define IDS_LOG_BATCH_START             11201
+#define IDS_LOG_BATCH_JOB_OK            11202
+#define IDS_LOG_BATCH_JOB_FAIL          11203
+#define IDS_LOG_BATCH_DONE              11204
+#define IDS_LOG_BATCH_CANCELLED         11205
+#define IDS_BATCH_FILE_FILTER           11206
+#define IDS_BATCH_SUMMARY_FMT           11207
+#define IDS_BATCH_SUMMARY_CANCELLED     11208
+#define IDS_BATCH_BTN_CANCEL            11209
+#define IDS_BATCH_BTN_CLOSE             11210
+#define IDS_BATCH_BTN_CANCELLING        11211
+#define IDS_BATCH_ERR_EMPTY_DATA        11212
+#define IDS_BATCH_ERR_UNKNOWN           11213
+
+// 공통 오류 메시지 (12001~)
+#define IDS_ERR_FILE_OPEN               12001
+#define IDS_ERR_FILE_EMPTY              12002
+#define IDS_ERR_PROJECT_SAVE            12003
+#define IDS_ERR_PROJECT_LOAD            12004
+#define IDS_ERR_UNKNOWN_EXT             12005
 
 // Next default values for new objects
 // 

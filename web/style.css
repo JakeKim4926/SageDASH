@@ -1,0 +1,263 @@
+/* ================================================================
+   SAGEDash Web UI — 공통 스타일 시트
+   디자인 시스템 색상 토큰, 타이포그래피, 공통 컴포넌트를 정의한다.
+   모든 WebView2 화면은 이 파일을 로드한 뒤 화면별 스타일을 추가한다.
+   ================================================================ */
+
+/* ---- 색상 토큰 ---- */
+:root {
+  --frame:           #E4E2DD;
+  --surface:         #F4F2EE;
+  --surface-alt:     #E9E7E2;
+  --white:           #FDFCFA;
+  --cream:           #F9F8F5;
+
+  --text:            #2A2926;
+  --text-mid:        #5C5850;
+  --text-dim:        #8A857C;
+  --text-ghost:      #B0ACA4;
+  --text-muted:      #CBC7C0;
+
+  --accent:          #4A6D8C;
+  --accent-light:    #E3EBF2;
+  --accent-dark:     #35536C;
+  --selection:       #D4E3F0;
+  --selection-border:#9BBAD4;
+
+  --error:           #B84840;
+  --error-bg:        #FAEEEC;
+  --success:         #5E8548;
+  --success-bg:      #EEF3EA;
+  --warning:         #A07E28;
+  --warning-bg:      #F7F2E4;
+
+  --border:          #D8D5CE;
+  --border-light:    #E5E2DC;
+}
+
+/* ---- 리셋 ---- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---- 베이스 ---- */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 12px;
+  color: var(--text);
+  background: var(--surface);
+  padding: 12px;
+}
+
+/* ---- 페이지 헤더 ---- */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.page-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.page-status {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+/* ---- 액센트 바 ---- */
+.accent-bar {
+  display: inline-block;
+  width: 3px;
+  height: 16px;
+  background: var(--accent);
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+/* ---- 섹션 라벨 ---- */
+.section-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+
+/* ---- KPI 그리드 ---- */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.kpi-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 12px;
+}
+
+.kpi-card.accent  { border-left: 3px solid var(--accent); }
+.kpi-card.error   { border-left: 3px solid var(--error); }
+.kpi-card.warning { border-left: 3px solid var(--warning); }
+.kpi-card.success { border-left: 3px solid var(--success); }
+
+.kpi-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+
+.kpi-value {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.kpi-card.accent  .kpi-value { color: var(--accent-dark); }
+.kpi-card.error   .kpi-value { color: var(--error); }
+.kpi-card.warning .kpi-value { color: var(--warning); }
+.kpi-card.success .kpi-value { color: var(--success); }
+
+.kpi-sub {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+/* ---- 정보 테이블 ---- */
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--white);
+  border: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+
+.info-table td {
+  padding: 4px 12px;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 12px;
+}
+
+.info-table tr:last-child td { border-bottom: none; }
+
+.info-table .label-col {
+  color: var(--text-mid);
+  width: 140px;
+}
+
+.info-table .value-col {
+  color: var(--text);
+}
+
+/* ---- 데이터 테이블 ---- */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--white);
+  border: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+
+.data-table th {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-dim);
+  text-align: left;
+  padding: 4px 12px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.data-table td {
+  padding: 4px 12px;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 12px;
+}
+
+.data-table tr:nth-child(even) td { background: var(--cream); }
+.data-table tr:last-child td { border-bottom: none; }
+
+/* ---- 뱃지 ---- */
+.badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+}
+
+.badge-error   { background: var(--error-bg);   color: var(--error); }
+.badge-warning { background: var(--warning-bg); color: var(--warning); }
+.badge-success { background: var(--success-bg); color: var(--success); }
+.badge-accent  { background: var(--accent-light); color: var(--accent-dark); }
+
+/* ---- 빈 상태 ---- */
+.empty-state {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--text-ghost);
+  font-size: 12px;
+}
+
+/* ---- 보조 텍스트 ---- */
+.note-text {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+/* ---- 요약 행 (2컬럼) ---- */
+.summary-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+/* ---- 채움율 바 ---- */
+.fill-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fill-bar-bg {
+  flex: 1;
+  background: var(--surface-alt);
+  height: 6px;
+  border-radius: 2px;
+  overflow: hidden;
+  min-width: 60px;
+}
+
+.fill-bar {
+  height: 100%;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+.fill-bar.mid  { background: var(--warning); }
+.fill-bar.low  { background: var(--error); }
+
+.fill-pct {
+  font-size: 11px;
+  color: var(--text-mid);
+  min-width: 32px;
+  text-align: right;
+}

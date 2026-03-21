@@ -1,5 +1,59 @@
 # PR 작업 로그
 
+## [2026-03-21] feature/productize
+- **목적**: Phase 6-C 제품화 정리 — 기본 템플릿, 사용자 메시지 정리, 아키텍처/개발자 문서화
+- **변경 내용**: templates/ 기본 템플릿 2종, IDS_ERR_* 공통 에러 메시지 5종 추가, ProjectSerializer 하드코딩 제거, docs/architecture/ARCHITECTURE.md 신규, docs/guides/DEV_GUIDE.md 신규
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/44
+- **결과**: merged into develop
+
+## [2026-03-21] feature/web-polish
+- **목적**: Phase 6-B 마무리 — 카드형 요약 강화, UI 스타일 통일, Runtime 배포 정책 문서화
+- **변경 내용**: web/style.css 신규(공통 CSS 변수/컴포넌트), dashboard.html stat-card 섹션 추가, report/analysis.html 인라인 CSS 제거 후 style.css 적용, docs/decisions/RUNTIME_DEPLOY.md 신규(배포 구조/Post-Build xcopy/WebView2 런타임 정책)
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/43
+- **결과**: merged into develop
+
+## [2026-03-21] feature/web-report-analysis
+- **목적**: Phase 6-B — 리포트/분석 화면 웹화
+- **변경 내용**: VIEW_MODE_REPORT/ANALYSIS enum 추가, Navigator Report/Analysis 항목 추가, WebBridgeMessage BuildValidationReport/BuildColumnAnalysis 빌더 구현, web/report.html(검증 결과 리포트), web/analysis.html(컬럼 채움율 분석) 신규 생성, IDS 10212/10213 String Table 추가
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/42
+- **결과**: merged into develop
+
+## [2026-03-21] feature/bridge-common
+- **목적**: Phase 6-B — 브릿지 공통화 (메시지 타입 상수화 + JS 라우터 모듈 분리)
+- **변경 내용**: WebBridgeMessage.h에 BRIDGE_TYPE_* constexpr 상수 4종 추가, WebBridgeMessage.cpp/SAGEDashView.cpp 문자열 리터럴 → 상수 교체, web/bridge.js 생성(SageBridge.on/send API + 메시지 라우터), dashboard.html 인라인 브릿지 코드 → bridge.js 방식으로 교체
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/41
+- **결과**: merged into develop
+
+## [2026-03-21] feature/batch-stability
+- **목적**: Phase 6-A 완료 — 배치 실행 안정화 + 예외/로그/복구 흐름 정리
+- **변경 내용**: BatchRunner 소멸자(DuplicateHandle + WaitForSingleObject 5s 안전 종료), ExecutionContext m_pCancelFlag + IsCancelled() 추가, MappingStep/ValidationStep/OutputStep 취소 플래그 체크, BatchRunner sageMgr.Log() 파일 로그 기록, BatchDialog 취소 중 UI 피드백(m_isCancelRequested + "Cancelling..." 버튼), OutputWnd 로그 연동, 하드코딩 문자열 String Table 전환(IDS 11209~11213), BATCH_SHUTDOWN_TIMEOUT_MS 상수 추가
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/39
+- **결과**: merged into develop
+
+## [2026-03-21] feature/action-step
+- **목적**: Phase 5-C — ActionStep 추가 및 PipelineRunner 후속 액션 확장 (PR #33 충돌 우회 후 신규 코드만 추출)
+- **변경 내용**: ActionStep(IActionHandler를 IExecutionStep으로 래핑), PipelineRunner::Run(ctx, arrExtra) 오버로드 추가, RunSteps() 헬퍼 함수 추출, vcxproj/filters 파일 등록
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/40
+- **결과**: merged into develop
+
+## [2026-03-20] feature/batch-dialog
+- **목적**: Phase 6-A — 배치 실행 다이얼로그 구현 (BatchRunner UI 연결)
+- **변경 내용**: BatchDialog(파일 목록/진행률/결과 로그/요약), SAGEDashDoc OnAutomationBatch, Resource.h/rc 배치 리소스, Automation 메뉴 항목 추가
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/38
+- **결과**: merged into develop
+
+## [2026-03-20] feature/batch-runner
+- **목적**: Phase 6-A — 배치 실행 엔진 구현 (작업 큐 + 스레드 + 진행률 + 취소 + 집계)
+- **변경 내용**: BatchJob/BatchResult/BatchSummary 도메인 모델, BatchRunner(AfxBeginThread 기반 워커 스레드), WM_BATCH_PROGRESS/JOB_DONE/COMPLETE 메시지 추가
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/37
+- **결과**: merged into develop
+
+## [2026-03-20] feature/project-action-serialization
+- **목적**: Phase 5 완료 — AutomationProject에 후속 액션 직렬화 통합 (템플릿 기반 작업 정의 범위 확장)
+- **변경 내용**: ActionType enum 추가, ActionDefinition 도메인 모델 신규, AutomationProject m_arrActions 필드 추가, ProjectSerializer [actions] 섹션 Save/Load, PROJECT_VERSION 1→2
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/36
+- **결과**: merged into develop
+
 ## [2026-03-19] feature/ftp-upload
 - **목적**: Phase 5 Step 9 (5-B) — FTP 업로드 시스템 업로드 액션 초안
 - **변경 내용**: `FtpActionHandler` 구현 (WinInet FTP, InternetConnect/FtpPutFile, 임시 CSV 생성 후 업로드), `FtpUploadDialog` (Host/Port/User/Pass/RemoteDir/Filename), 메뉴·로그 문자열 추가
