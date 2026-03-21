@@ -1,5 +1,17 @@
 # PR 작업 로그
 
+## [2026-03-21] feature/batch-stability
+- **목적**: Phase 6-A 완료 — 배치 실행 안정화 + 예외/로그/복구 흐름 정리
+- **변경 내용**: BatchRunner 소멸자(DuplicateHandle + WaitForSingleObject 5s 안전 종료), ExecutionContext m_pCancelFlag + IsCancelled() 추가, MappingStep/ValidationStep/OutputStep 취소 플래그 체크, BatchRunner sageMgr.Log() 파일 로그 기록, BatchDialog 취소 중 UI 피드백(m_isCancelRequested + "Cancelling..." 버튼), OutputWnd 로그 연동, 하드코딩 문자열 String Table 전환(IDS 11209~11213), BATCH_SHUTDOWN_TIMEOUT_MS 상수 추가
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/39
+- **결과**: merged into develop
+
+## [2026-03-21] feature/action-step
+- **목적**: Phase 5-C — ActionStep 추가 및 PipelineRunner 후속 액션 확장 (PR #33 충돌 우회 후 신규 코드만 추출)
+- **변경 내용**: ActionStep(IActionHandler를 IExecutionStep으로 래핑), PipelineRunner::Run(ctx, arrExtra) 오버로드 추가, RunSteps() 헬퍼 함수 추출, vcxproj/filters 파일 등록
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/40
+- **결과**: merged into develop
+
 ## [2026-03-20] feature/batch-dialog
 - **목적**: Phase 6-A — 배치 실행 다이얼로그 구현 (BatchRunner UI 연결)
 - **변경 내용**: BatchDialog(파일 목록/진행률/결과 로그/요약), SAGEDashDoc OnAutomationBatch, Resource.h/rc 배치 리소스, Automation 메뉴 항목 추가
