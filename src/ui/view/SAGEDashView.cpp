@@ -437,7 +437,7 @@ LRESULT CSAGEDashView::OnWebBridgeMessage(WPARAM /*wParam*/, LPARAM lParam)
 	CString strType = WebBridgeMessage::ParseType(*pStrJson);
 	sageMgr.Log(_T("[SAGEDashView] Web → Native type: ") + strType);
 
-	if (strType == _T("web:request-summary")) {
+	if (strType == BRIDGE_TYPE_WEB_REQUEST_SUMMARY) {
 		CSAGEDashDoc* pDoc = GetDocument();
 		if (pDoc != nullptr && pDoc->HasData()) {
 			const TabularData& data = pDoc->GetData();

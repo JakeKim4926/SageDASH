@@ -173,6 +173,7 @@
   </table>
 </div>
 
+<script src="bridge.js"></script>
 <script>
   function updateDashboard(payload) {
     var rows = payload.rowCount;
@@ -191,15 +192,12 @@
     document.getElementById('mainContent').style.display = 'block';
   }
 
-  window.chrome.webview.addEventListener('message', function(e) {
-    var msg = JSON.parse(e.data);
-    if (msg.type === 'native:ready') {
-      window.chrome.webview.postMessage(
-        JSON.stringify({ type: 'web:request-summary', version: '1.0', payload: {} })
-      );
-    } else if (msg.type === 'data:summary') {
-      updateDashboard(msg.payload);
-    }
+  SageBridge.on('native:ready', function() {
+    SageBridge.send('web:request-summary', {});
+  });
+
+  SageBridge.on('data:summary', function(payload) {
+    updateDashboard(payload);
   });
 
   // Show empty state initially

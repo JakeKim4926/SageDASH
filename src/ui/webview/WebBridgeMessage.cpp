@@ -3,7 +3,7 @@
 
 CString WebBridgeMessage::BuildNativeReady()
 {
-    return Build(_T("native:ready"), _T("{}"));
+    return Build(BRIDGE_TYPE_NATIVE_READY, _T("{}"));
 }
 
 CString WebBridgeMessage::BuildDataSummary(int nRowCount, int nColCount, const CString& strFileName)
@@ -12,7 +12,7 @@ CString WebBridgeMessage::BuildDataSummary(int nRowCount, int nColCount, const C
     strPayload.Format(
         _T("{\"rowCount\":%d,\"colCount\":%d,\"fileName\":\"%s\"}"),
         nRowCount, nColCount, (LPCTSTR)EscapeString(strFileName));
-    return Build(_T("data:summary"), strPayload);
+    return Build(BRIDGE_TYPE_DATA_SUMMARY, strPayload);
 }
 
 CString WebBridgeMessage::Build(const CString& strType, const CString& strPayloadJson)
