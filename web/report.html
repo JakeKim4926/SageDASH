@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAGEDash Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 12px;
+    color: #2A2926;
+    background: #F4F2EE;
+    padding: 12px;
+  }
+
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #D8D5CE;
+  }
+
+  .page-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #2A2926;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .accent-bar {
+    display: inline-block;
+    width: 3px;
+    height: 16px;
+    background: #4A6D8C;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+
+  .page-status {
+    font-size: 11px;
+    color: #8A857C;
+  }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .kpi-card {
+    background: #FDFCFA;
+    border: 1px solid #D8D5CE;
+    padding: 12px;
+  }
+
+  .kpi-card.error { border-left: 3px solid #B84840; }
+  .kpi-card.warning { border-left: 3px solid #A07E28; }
+  .kpi-card.ok { border-left: 3px solid #5E8548; }
+
+  .kpi-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #8A857C;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+  }
+
+  .kpi-value {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .kpi-card.error .kpi-value   { color: #B84840; }
+  .kpi-card.warning .kpi-value { color: #A07E28; }
+  .kpi-card.ok .kpi-value      { color: #5E8548; }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #8A857C;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+  }
+
+  .issues-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #FDFCFA;
+    border: 1px solid #D8D5CE;
+    margin-bottom: 8px;
+  }
+
+  .issues-table th {
+    font-size: 11px;
+    font-weight: 600;
+    color: #8A857C;
+    text-align: left;
+    padding: 4px 12px;
+    background: #F4F2EE;
+    border-bottom: 1px solid #D8D5CE;
+  }
+
+  .issues-table td {
+    padding: 4px 12px;
+    border-bottom: 1px solid #E5E2DC;
+    font-size: 12px;
+  }
+
+  .issues-table tr:last-child td { border-bottom: none; }
+
+  .issues-table tr.row-error  td { background: #FAEEEC; }
+  .issues-table tr.row-warn   td { background: #F7F2E4; }
+
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 2px;
+  }
+
+  .badge-error   { background: #FAEEEC; color: #B84840; }
+  .badge-warning { background: #F7F2E4; color: #A07E28; }
+
+  .empty-state {
+    text-align: center;
+    padding: 32px 16px;
+    color: #B0ACA4;
+    font-size: 12px;
+  }
+
+  .truncate-note {
+    font-size: 11px;
+    color: #8A857C;
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <span class="page-title"><span class="accent-bar"></span>Validation Report</span>
+  <span class="page-status" id="statusText">Waiting for data...</span>
+</div>
+
+<div class="kpi-grid">
+  <div class="kpi-card error">
+    <div class="kpi-label">Errors</div>
+    <div class="kpi-value" id="kpiErrors">—</div>
+  </div>
+  <div class="kpi-card warning">
+    <div class="kpi-label">Warnings</div>
+    <div class="kpi-value" id="kpiWarnings">—</div>
+  </div>
+  <div class="kpi-card ok" id="kpiStatusCard">
+    <div class="kpi-label">Status</div>
+    <div class="kpi-value" id="kpiStatus">—</div>
+  </div>
+</div>
+
+<div id="issuesSection" style="display:none;">
+  <div class="section-label">Issues</div>
+  <table class="issues-table">
+    <thead>
+      <tr>
+        <th style="width:60px;">Row</th>
+        <th style="width:120px;">Column</th>
+        <th>Message</th>
+        <th style="width:80px;">Severity</th>
+      </tr>
+    </thead>
+    <tbody id="issuesTbody"></tbody>
+  </table>
+  <div class="truncate-note" id="truncateNote" style="display:none;"></div>
+</div>
+
+<div class="empty-state" id="emptyState">
+  No data loaded. Open a file to view the report.
+</div>
+
+<script src="bridge.js"></script>
+<script>
+  function renderReport(payload) {
+    var errors   = payload.errorCount;
+    var warnings = payload.warningCount;
+    var total    = payload.totalIssues;
+    var issues   = payload.issues || [];
+
+    document.getElementById('kpiErrors').textContent   = errors;
+    document.getElementById('kpiWarnings').textContent = warnings;
+
+    var statusEl   = document.getElementById('kpiStatus');
+    var statusCard = document.getElementById('kpiStatusCard');
+    if (errors > 0) {
+      statusEl.textContent = 'Failed';
+      statusCard.className = 'kpi-card error';
+    } else if (warnings > 0) {
+      statusEl.textContent = 'Warning';
+      statusCard.className = 'kpi-card warning';
+    } else {
+      statusEl.textContent = 'OK';
+      statusCard.className = 'kpi-card ok';
+    }
+
+    document.getElementById('statusText').textContent = 'Report loaded';
+    document.getElementById('emptyState').style.display = 'none';
+
+    var tbody = document.getElementById('issuesTbody');
+    tbody.innerHTML = '';
+    for (var i = 0; i < issues.length; i++) {
+      var issue = issues[i];
+      var tr = document.createElement('tr');
+      tr.className = issue.severity === 'error' ? 'row-error' : 'row-warn';
+      tr.innerHTML =
+        '<td>' + (issue.row >= 0 ? issue.row : '—') + '</td>' +
+        '<td>' + escapeHtml(issue.column) + '</td>' +
+        '<td>' + escapeHtml(issue.message) + '</td>' +
+        '<td><span class="badge badge-' + (issue.severity === 'error' ? 'error' : 'warning') + '">' +
+        issue.severity + '</span></td>';
+      tbody.appendChild(tr);
+    }
+
+    if (issues.length > 0 || total === 0) {
+      document.getElementById('issuesSection').style.display = 'block';
+    }
+    if (payload.truncated) {
+      var note = document.getElementById('truncateNote');
+      note.textContent = 'Showing first ' + issues.length + ' of ' + total + ' issues.';
+      note.style.display = 'block';
+    }
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  SageBridge.on('native:ready', function() {
+    SageBridge.send('web:request-report', {});
+  });
+
+  SageBridge.on('data:validation-report', function(payload) {
+    renderReport(payload);
+  });
+
+  document.getElementById('emptyState').style.display = 'block';
+</script>
+</body>
+</html>

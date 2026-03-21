@@ -7,6 +7,7 @@
 #include "SAGEDashDoc.h"
 #include "SAGEDashView.h"
 #include "TabularData.h"
+#include "ValidationResult.h"
 #include "Define.h"
 #include "Resource.h"
 #include "SageMgr.h"
@@ -96,7 +97,10 @@ void CSAGEDashView::UpdateLayout(int cx, int cy)
 	BOOL bGrid       = (m_eViewMode == VIEW_MODE_GRID);
 	BOOL bMapping    = (m_eViewMode == VIEW_MODE_MAPPING);
 	BOOL bValidation = (m_eViewMode == VIEW_MODE_VALIDATION);
-	BOOL bDashboard  = (m_eViewMode == VIEW_MODE_DASHBOARD);
+	BOOL bWebView    = (m_eViewMode == VIEW_MODE_DASHBOARD ||
+	                    m_eViewMode == VIEW_MODE_REPORT    ||
+	                    m_eViewMode == VIEW_MODE_ANALYSIS);
+	BOOL bDashboard  = bWebView;  // 레이아웃 분기용 — WebView 모드 전체 동일
 
 	// Grid 모드: 검색바 + 그리드
 	if (m_edtSearch.GetSafeHwnd() != nullptr) {
@@ -116,9 +120,9 @@ void CSAGEDashView::UpdateLayout(int cx, int cy)
 		m_wndValidation.ShowWindow(bValidation ? SW_SHOW : SW_HIDE);
 	}
 
-	// Dashboard 모드: WebView 전체 영역
+	// WebView 모드 (Dashboard / Report / Analysis): 전체 영역
 	if (m_wndWebView.GetSafeHwnd() != nullptr) {
-		m_wndWebView.ShowWindow(bDashboard ? SW_SHOW : SW_HIDE);
+		m_wndWebView.ShowWindow(bWebView ? SW_SHOW : SW_HIDE);
 	}
 
 	// 각 모드별 위치/크기 설정
@@ -171,14 +175,23 @@ void CSAGEDashView::SwitchViewMode(CenterViewMode eMode)
 		}
 	}
 
-	if (eMode == VIEW_MODE_DASHBOARD) {
+	if (eMode == VIEW_MODE_DASHBOARD || eMode == VIEW_MODE_REPORT || eMode == VIEW_MODE_ANALYSIS) {
 		TCHAR szPath[MAX_PATH] = {};
 		GetModuleFileName(nullptr, szPath, MAX_PATH);
 		CString strExeDir(szPath);
 		int nSlash = strExeDir.ReverseFind(_T('\\'));
 		if (nSlash >= 0)
 			strExeDir = strExeDir.Left(nSlash + 1);
-		CString strUrl = _T("file:///") + strExeDir + _T("web\\dashboard.html");
+
+		CString strFile;
+		if (eMode == VIEW_MODE_REPORT)
+			strFile = _T("web\\report.html");
+		else if (eMode == VIEW_MODE_ANALYSIS)
+			strFile = _T("web\\analysis.html");
+		else
+			strFile = _T("web\\dashboard.html");
+
+		CString strUrl = _T("file:///") + strExeDir + strFile;
 		strUrl.Replace(_T('\\'), _T('/'));
 		m_wndWebView.Navigate(strUrl);
 	}
@@ -446,6 +459,22 @@ LRESULT CSAGEDashView::OnWebBridgeMessage(WPARAM /*wParam*/, LPARAM lParam)
 			int nColCount = (sheet.GetRowCount() > 0) ? (int)sheet.m_arrRows[0].size() : 0;
 			CString strFileName = pDoc->GetTitle();
 			CString strMsg = WebBridgeMessage::BuildDataSummary(nRowCount, nColCount, strFileName);
+			m_wndWebView.PostWebMessage(strMsg);
+		}
+	} else if (strType == BRIDGE_TYPE_WEB_REQUEST_REPORT) {
+		CSAGEDashDoc* pDoc = GetDocument();
+		if (pDoc != nullptr && pDoc->HasData()) {
+			const DataSheet& sheet = pDoc->GetData().GetSheet(0);
+			// 검증 규칙 없이 현재 데이터 기준 빈 ValidationResult 전송 (실행 후 결과는 향후 확장)
+			ValidationResult emptyResult;
+			CString strMsg = WebBridgeMessage::BuildValidationReport(emptyResult);
+			m_wndWebView.PostWebMessage(strMsg);
+		}
+	} else if (strType == BRIDGE_TYPE_WEB_REQUEST_ANALYSIS) {
+		CSAGEDashDoc* pDoc = GetDocument();
+		if (pDoc != nullptr && pDoc->HasData()) {
+			const DataSheet& sheet = pDoc->GetData().GetSheet(0);
+			CString strMsg = WebBridgeMessage::BuildColumnAnalysis(sheet);
 			m_wndWebView.PostWebMessage(strMsg);
 		}
 	}

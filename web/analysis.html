@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAGEDash Analysis</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 12px;
+    color: #2A2926;
+    background: #F4F2EE;
+    padding: 12px;
+  }
+
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #D8D5CE;
+  }
+
+  .page-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #2A2926;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .accent-bar {
+    display: inline-block;
+    width: 3px;
+    height: 16px;
+    background: #4A6D8C;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+
+  .page-status {
+    font-size: 11px;
+    color: #8A857C;
+  }
+
+  .summary-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .summary-card {
+    background: #FDFCFA;
+    border: 1px solid #D8D5CE;
+    padding: 12px;
+    flex: 1;
+  }
+
+  .summary-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #8A857C;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+  }
+
+  .summary-value {
+    font-size: 22px;
+    font-weight: 600;
+    color: #2A2926;
+    line-height: 1;
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #8A857C;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+  }
+
+  .analysis-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #FDFCFA;
+    border: 1px solid #D8D5CE;
+  }
+
+  .analysis-table th {
+    font-size: 11px;
+    font-weight: 600;
+    color: #8A857C;
+    text-align: left;
+    padding: 4px 12px;
+    background: #F4F2EE;
+    border-bottom: 1px solid #D8D5CE;
+  }
+
+  .analysis-table td {
+    padding: 4px 12px;
+    border-bottom: 1px solid #E5E2DC;
+    font-size: 12px;
+  }
+
+  .analysis-table tr:nth-child(even) td { background: #F9F8F5; }
+  .analysis-table tr:last-child td { border-bottom: none; }
+
+  .fill-bar-bg {
+    background: #E9E7E2;
+    height: 6px;
+    border-radius: 2px;
+    overflow: hidden;
+    min-width: 80px;
+  }
+
+  .fill-bar {
+    height: 100%;
+    background: #4A6D8C;
+    border-radius: 2px;
+  }
+
+  .fill-bar.low { background: #B84840; }
+  .fill-bar.mid { background: #A07E28; }
+
+  .pct-text {
+    font-size: 11px;
+    color: #5C5850;
+    margin-left: 6px;
+  }
+
+  .bar-cell {
+    display: flex;
+    align-items: center;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 32px 16px;
+    color: #B0ACA4;
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <span class="page-title"><span class="accent-bar"></span>Column Analysis</span>
+  <span class="page-status" id="statusText">Waiting for data...</span>
+</div>
+
+<div id="summarySection" style="display:none;">
+  <div class="summary-row">
+    <div class="summary-card">
+      <div class="summary-label">Data Rows</div>
+      <div class="summary-value" id="summaryRows">—</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-label">Columns</div>
+      <div class="summary-value" id="summaryCols">—</div>
+    </div>
+  </div>
+
+  <div class="section-label">Columns</div>
+  <table class="analysis-table">
+    <thead>
+      <tr>
+        <th style="width:180px;">Column</th>
+        <th style="width:80px;">Filled</th>
+        <th style="width:80px;">Empty</th>
+        <th>Fill Rate</th>
+      </tr>
+    </thead>
+    <tbody id="analysisTbody"></tbody>
+  </table>
+</div>
+
+<div class="empty-state" id="emptyState">
+  No data loaded. Open a file to view the analysis.
+</div>
+
+<script src="bridge.js"></script>
+<script>
+  function renderAnalysis(payload) {
+    var rowCount = payload.rowCount;
+    var columns  = payload.columns || [];
+
+    document.getElementById('summaryRows').textContent = rowCount.toLocaleString();
+    document.getElementById('summaryCols').textContent = columns.length;
+    document.getElementById('statusText').textContent  = 'Analysis loaded';
+    document.getElementById('emptyState').style.display   = 'none';
+    document.getElementById('summarySection').style.display = 'block';
+
+    var tbody = document.getElementById('analysisTbody');
+    tbody.innerHTML = '';
+    for (var i = 0; i < columns.length; i++) {
+      var col   = columns[i];
+      var total = col.filledCount + col.emptyCount;
+      var pct   = total > 0 ? Math.round(col.filledCount / total * 100) : 0;
+      var barClass = pct >= 90 ? '' : (pct >= 60 ? 'mid' : 'low');
+
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td>' + escapeHtml(col.name) + '</td>' +
+        '<td>' + col.filledCount.toLocaleString() + '</td>' +
+        '<td>' + col.emptyCount.toLocaleString() + '</td>' +
+        '<td><div class="bar-cell">' +
+          '<div class="fill-bar-bg"><div class="fill-bar ' + barClass + '" style="width:' + pct + '%"></div></div>' +
+          '<span class="pct-text">' + pct + '%</span>' +
+        '</div></td>';
+      tbody.appendChild(tr);
+    }
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  SageBridge.on('native:ready', function() {
+    SageBridge.send('web:request-analysis', {});
+  });
+
+  SageBridge.on('data:column-analysis', function(payload) {
+    renderAnalysis(payload);
+  });
+
+  document.getElementById('emptyState').style.display = 'block';
+</script>
+</body>
+</html>
