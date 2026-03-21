@@ -44,4 +44,5 @@ private:
 
     AutomationProject m_project;
     BatchRunner       m_runner;
+    BOOL              m_isCancelRequested; // 취소 요청 중 여부 (중복 요청 방지)
 };

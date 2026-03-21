@@ -8,6 +8,7 @@
 #include "SageException.h"
 #include "SageMgr.h"
 #include "Define.h"
+#include "Resource.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -25,7 +26,21 @@ BatchRunner::BatchRunner()
     : m_hNotify(nullptr)
     , m_nCancelFlag(0)
     , m_nRunningFlag(0)
+    , m_hThreadHandle(NULL)
 {
+}
+
+BatchRunner::~BatchRunner()
+{
+    if (IsRunning()) {
+        RequestCancel();
+        if (m_hThreadHandle != NULL)
+            ::WaitForSingleObject(m_hThreadHandle, BATCH_SHUTDOWN_TIMEOUT_MS);
+    }
+    if (m_hThreadHandle != NULL) {
+        ::CloseHandle(m_hThreadHandle);
+        m_hThreadHandle = NULL;
+    }
 }
 
 BOOL BatchRunner::IsRunning() const
@@ -49,10 +64,20 @@ void BatchRunner::Start(const std::vector<BatchJob>& arrJobs, HWND hNotify)
     InterlockedExchange(&m_nCancelFlag, 0);
     InterlockedExchange(&m_nRunningFlag, 1);
 
+    if (m_hThreadHandle != NULL) {
+        ::CloseHandle(m_hThreadHandle);
+        m_hThreadHandle = NULL;
+    }
+
     BatchThreadParam* pParam = new BatchThreadParam;
     pParam->pRunner = this;
 
-    AfxBeginThread(RunThread, pParam, THREAD_PRIORITY_BELOW_NORMAL);
+    CWinThread* pThread = AfxBeginThread(RunThread, pParam, THREAD_PRIORITY_BELOW_NORMAL);
+    if (pThread != nullptr) {
+        ::DuplicateHandle(::GetCurrentProcess(), pThread->m_hThread,
+                          ::GetCurrentProcess(), &m_hThreadHandle,
+                          0, FALSE, DUPLICATE_SAME_ACCESS);
+    }
 }
 
 UINT __cdecl BatchRunner::RunThread(LPVOID pParam)
@@ -92,9 +117,10 @@ void BatchRunner::RunInternal()
             svcWorkbook.LoadFromFile(job.GetInputPath(), data);
 
             if (data.GetSheetCount() == 0 || data.GetSheet(0).GetRowCount() == 0) {
+                CString strFmt;
+                strFmt.LoadString(IDS_BATCH_ERR_EMPTY_DATA);
                 CString strErr;
-                strErr.Format(_T("입력 파일에 데이터가 없습니다: %s"),
-                              (LPCTSTR)job.GetInputPath());
+                strErr.Format(strFmt, (LPCTSTR)job.GetInputPath());
                 throw SageException(strErr);
             }
 
@@ -117,8 +143,10 @@ void BatchRunner::RunInternal()
             pResult->SetSuccess(FALSE);
             pResult->SetErrorMessage(e.GetMessage());
         } catch (...) {
+            CString strErr;
+            strErr.LoadString(IDS_BATCH_ERR_UNKNOWN);
             pResult->SetSuccess(FALSE);
-            pResult->SetErrorMessage(_T("알 수 없는 오류가 발생했습니다."));
+            pResult->SetErrorMessage(strErr);
         }
 
         CString strJobDone;
