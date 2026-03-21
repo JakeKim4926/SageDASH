@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-21] feature/web-polish
+- **목적**: Phase 6-B 마무리 — 카드형 요약 강화, UI 스타일 통일, Runtime 배포 정책 문서화
+- **변경 내용**: web/style.css 신규(공통 CSS 변수/컴포넌트), dashboard.html stat-card 섹션 추가, report/analysis.html 인라인 CSS 제거 후 style.css 적용, docs/decisions/RUNTIME_DEPLOY.md 신규(배포 구조/Post-Build xcopy/WebView2 런타임 정책)
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/43
+- **결과**: merged into develop
+
 ## [2026-03-21] feature/web-report-analysis
 - **목적**: Phase 6-B — 리포트/분석 화면 웹화
 - **변경 내용**: VIEW_MODE_REPORT/ANALYSIS enum 추가, Navigator Report/Analysis 항목 추가, WebBridgeMessage BuildValidationReport/BuildColumnAnalysis 빌더 구현, web/report.html(검증 결과 리포트), web/analysis.html(컬럼 채움율 분석) 신규 생성, IDS 10212/10213 String Table 추가
