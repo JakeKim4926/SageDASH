@@ -228,6 +228,13 @@
 #define IDS_BATCH_ERR_EMPTY_DATA        11212
 #define IDS_BATCH_ERR_UNKNOWN           11213
 
+// 공통 오류 메시지 (12001~)
+#define IDS_ERR_FILE_OPEN               12001
+#define IDS_ERR_FILE_EMPTY              12002
+#define IDS_ERR_PROJECT_SAVE            12003
+#define IDS_ERR_PROJECT_LOAD            12004
+#define IDS_ERR_UNKNOWN_EXT             12005
+
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
