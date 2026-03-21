@@ -15,7 +15,17 @@ class ExecutionContext
 public:
     ExecutionContext()
         : m_pSourceSheet(nullptr)
+        , m_pCancelFlag(nullptr)
     {}
+
+    // 취소 플래그 (BatchRunner에서 주입, nullptr이면 취소 체크 없음)
+    volatile LONG*                m_pCancelFlag;
+
+    BOOL IsCancelled() const {
+        if (!m_pCancelFlag) return FALSE;
+        return InterlockedCompareExchange(
+            const_cast<volatile LONG*>(m_pCancelFlag), 0, 0) != 0;
+    }
 
     // 입력
     const DataSheet*              m_pSourceSheet;

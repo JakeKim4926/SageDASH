@@ -220,6 +220,11 @@
 #define IDS_BATCH_FILE_FILTER           11206
 #define IDS_BATCH_SUMMARY_FMT           11207
 #define IDS_BATCH_SUMMARY_CANCELLED     11208
+#define IDS_BATCH_BTN_CANCEL            11209
+#define IDS_BATCH_BTN_CLOSE             11210
+#define IDS_BATCH_BTN_CANCELLING        11211
+#define IDS_BATCH_ERR_EMPTY_DATA        11212
+#define IDS_BATCH_ERR_UNKNOWN           11213
 
 // Next default values for new objects
 // 

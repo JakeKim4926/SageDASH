@@ -2,6 +2,7 @@
 #include "pch.h"
 #include "framework.h"
 #include "BatchDialog.h"
+#include "MainFrm.h"
 #include "Resource.h"
 #include "Define.h"
 
@@ -22,6 +23,7 @@ END_MESSAGE_MAP()
 BatchDialog::BatchDialog(const AutomationProject& project, CWnd* pParent)
     : CDialogEx(IDD_BATCH, pParent)
     , m_project(project)
+    , m_isCancelRequested(FALSE)
 {
 }
 
@@ -40,7 +42,18 @@ BOOL BatchDialog::OnInitDialog()
 void BatchDialog::OnCancel()
 {
     if (m_runner.IsRunning()) {
+        if (m_isCancelRequested)
+            return; // 이미 취소 요청 중 — 중복 요청 무시
+        m_isCancelRequested = TRUE;
         m_runner.RequestCancel();
+
+        CWnd* pClose = GetDlgItem(IDCANCEL);
+        if (pClose) {
+            CString strCancelling;
+            strCancelling.LoadString(IDS_BATCH_BTN_CANCELLING);
+            pClose->SetWindowText(strCancelling);
+            pClose->EnableWindow(FALSE);
+        }
         return;
     }
     CDialogEx::OnCancel();
@@ -155,6 +168,10 @@ LRESULT BatchDialog::OnBatchJobDone(WPARAM wParam, LPARAM lParam)
     }
     AppendLog(strMsg);
 
+    CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+    if (pFrame)
+        pFrame->LogMessage(strMsg);
+
     delete pResult;
     return 0;
 }
@@ -165,6 +182,7 @@ LRESULT BatchDialog::OnBatchComplete(WPARAM wParam, LPARAM lParam)
     if (!pSummary)
         return 0;
 
+    m_isCancelRequested = FALSE;
     SetRunningState(FALSE);
 
     if (pSummary->IsCancelled()) {
@@ -196,6 +214,10 @@ LRESULT BatchDialog::OnBatchComplete(WPARAM wParam, LPARAM lParam)
     }
     SetDlgItemText(IDC_STATIC_BATCH_SUMMARY, strSummary);
 
+    CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+    if (pFrame)
+        pFrame->LogMessage(strSummary);
+
     delete pSummary;
     return 0;
 }
@@ -208,8 +230,12 @@ void BatchDialog::SetRunningState(BOOL isRunning)
     GetDlgItem(IDC_BTN_START_BATCH)->EnableWindow(!isRunning);
 
     CWnd* pClose = GetDlgItem(IDCANCEL);
-    if (pClose)
-        pClose->SetWindowText(isRunning ? _T("Cancel") : _T("Close"));
+    if (pClose) {
+        CString strBtn;
+        strBtn.LoadString(isRunning ? IDS_BATCH_BTN_CANCEL : IDS_BATCH_BTN_CLOSE);
+        pClose->SetWindowText(strBtn);
+        pClose->EnableWindow(TRUE);
+    }
 }
 
 void BatchDialog::AppendLog(const CString& strMessage)
