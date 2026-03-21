@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-21] feature/productize
+- **목적**: Phase 6-C 제품화 정리 — 기본 템플릿, 사용자 메시지 정리, 아키텍처/개발자 문서화
+- **변경 내용**: templates/ 기본 템플릿 2종, IDS_ERR_* 공통 에러 메시지 5종 추가, ProjectSerializer 하드코딩 제거, docs/architecture/ARCHITECTURE.md 신규, docs/guides/DEV_GUIDE.md 신규
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/44
+- **결과**: merged into develop
+
 ## [2026-03-21] feature/web-polish
 - **목적**: Phase 6-B 마무리 — 카드형 요약 강화, UI 스타일 통일, Runtime 배포 정책 문서화
 - **변경 내용**: web/style.css 신규(공통 CSS 변수/컴포넌트), dashboard.html stat-card 섹션 추가, report/analysis.html 인라인 CSS 제거 후 style.css 적용, docs/decisions/RUNTIME_DEPLOY.md 신규(배포 구조/Post-Build xcopy/WebView2 런타임 정책)
