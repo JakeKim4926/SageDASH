@@ -1,5 +1,11 @@
 # PR 작업 로그
 
+## [2026-03-21] feature/bridge-common
+- **목적**: Phase 6-B — 브릿지 공통화 (메시지 타입 상수화 + JS 라우터 모듈 분리)
+- **변경 내용**: WebBridgeMessage.h에 BRIDGE_TYPE_* constexpr 상수 4종 추가, WebBridgeMessage.cpp/SAGEDashView.cpp 문자열 리터럴 → 상수 교체, web/bridge.js 생성(SageBridge.on/send API + 메시지 라우터), dashboard.html 인라인 브릿지 코드 → bridge.js 방식으로 교체
+- **PR 링크**: https://github.com/JakeKim4926/SageDASH/pull/41
+- **결과**: merged into develop
+
 ## [2026-03-21] feature/batch-stability
 - **목적**: Phase 6-A 완료 — 배치 실행 안정화 + 예외/로그/복구 흐름 정리
 - **변경 내용**: BatchRunner 소멸자(DuplicateHandle + WaitForSingleObject 5s 안전 종료), ExecutionContext m_pCancelFlag + IsCancelled() 추가, MappingStep/ValidationStep/OutputStep 취소 플래그 체크, BatchRunner sageMgr.Log() 파일 로그 기록, BatchDialog 취소 중 UI 피드백(m_isCancelRequested + "Cancelling..." 버튼), OutputWnd 로그 연동, 하드코딩 문자열 String Table 전환(IDS 11209~11213), BATCH_SHUTDOWN_TIMEOUT_MS 상수 추가
